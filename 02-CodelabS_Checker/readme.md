@@ -9,7 +9,7 @@ Mas, antes de colocar a mão na massa, você precisa nos ajudar a combater uma p
 * Cod lab
 * Codalab
 * Codeslab
-* Codlab
+* Codeleb
 * e o mais propagado socialmente o Codelab*S*
 
 Em sua reunião do **Boost**, nossa frente focada em desenvolvimento prático, você presenciou o desabafo de seus responsáveis de frente, Shogo e Otavio: eles estão exaustos de ver o nome do grupo ser distorcido de tantas formas.
