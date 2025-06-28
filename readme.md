@@ -59,7 +59,7 @@ Mãos à obra\! Acesse a pasta do desafio que você escolheu e siga as instruç�
 
 #### 4\. Salve e Envie seu Progresso
 
-Conforme for avançando, salve suas alterações com commits claros e envie-as para o seu fork no GitHub:
+Conforme for avançando, salve suas alterações com commits claros e envie-as para este repositório:
 
 ```bash
 # Adiciona todos os arquivos modificados
