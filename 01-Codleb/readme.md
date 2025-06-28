@@ -27,7 +27,8 @@ Mãos a obra! O destino do Learn está nas suas mãos.
 
 O **Codle** é uma releitura do clássico jogo de palavras “Termo”/“Wordle”, em que o usuário tenta adivinhar uma palavra de 5 letras em até 6 tentativas.  
 
-**IMAGEM AQUI!**
+![image](https://github.com/user-attachments/assets/d7413b10-44e4-480b-b2f9-8688a00630b9)
+
 
 Sua principal missão neste projeto é **desenvolver uma interface web que recrie a experiência de um jogo de palavras no estilo "Termo" ou "Wordle"**. Se por acaso você viveu em uma caverna nos últimos anos e ainda não sabe do que se trata, recomendamos fortemente que jogue o desafio de hoje e se divirta aprendendo: [Termo.ooo](https://term.ooo/).
 
