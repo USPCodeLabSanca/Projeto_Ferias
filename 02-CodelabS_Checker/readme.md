@@ -186,5 +186,5 @@ Não se preocupe se esses conceitos são novos! A ideia é aprender fazendo.
 ---
 ## 🚀 Bom Desenvolvimento !!
 
-Desejamos a você um **ótimo desenvolvimento!** Este é um projeto desafiador, mas incrivelmente recompensador, que irá expandir suas habilidades em desenvolvimento web frontend. Não hesite em buscar ajuda, compartilhar seu progresso e tirar dúvidas com os membros do Codelab.
+Desejamos a você um **ótimo desenvolvimento!** Este é um projeto desafiador, mas incrivelmente recompensador, que irá expandir suas habilidades em desenvolvimento backend. Não hesite em buscar ajuda, compartilhar seu progresso e tirar dúvidas com os membros do Codelab.
 
