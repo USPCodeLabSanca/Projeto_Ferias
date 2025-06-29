@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/association-path.ts"],
+  "sourcesContent": ["import { BaseSqlExpression, SQL_IDENTIFIER } from './base-sql-expression.js';\n\nexport class AssociationPath extends BaseSqlExpression {\n  declare protected readonly [SQL_IDENTIFIER]: 'associationPath';\n\n  constructor(\n    readonly associationPath: readonly string[],\n    readonly attributeName: string,\n  ) {\n    super();\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iCAAkD;AAE3C,MAAM,wBAAwB,6CAAkB;AAAA,EAGrD,YACW,iBACA,eACT;AACA,UAAM;AAHG;AACA;AAAA,EAGX;AACF;",
+  "names": []
+}

@@ -1,0 +1,1 @@
+{"root":["../src/AggregateError.ts","../src/Deferred.ts","../src/Pool.ts","../src/TimeoutError.ts","../src/index.ts","../src/helpers/defaultTo.ts"],"version":"5.8.2"}

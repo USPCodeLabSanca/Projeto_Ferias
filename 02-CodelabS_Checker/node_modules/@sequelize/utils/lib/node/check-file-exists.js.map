@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/node/check-file-exists.ts"],
+  "sourcesContent": ["import fs from 'node:fs/promises';\nimport { isNodeError } from './is-node-error.js';\n\nexport async function checkFileExists(path: string): Promise<boolean> {\n  try {\n    await fs.access(path);\n\n    return true;\n  } catch (error) {\n    if (isNodeError(error) && error.code === 'ENOENT') {\n      return false;\n    }\n\n    throw error;\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sBAAe;AACf,2BAA4B;AAE5B,eAAsB,gBAAgB,MAAgC;AACpE,MAAI;AACF,UAAM,gBAAAA,QAAG,OAAO,IAAI;AAEpB,WAAO;AAAA,EACT,SAAS,OAAO;AACd,YAAI,kCAAY,KAAK,KAAK,MAAM,SAAS,UAAU;AACjD,aAAO;AAAA,IACT;AAEA,UAAM;AAAA,EACR;AACF;",
+  "names": ["fs"]
+}

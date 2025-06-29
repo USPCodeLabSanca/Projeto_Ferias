@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/base-sql-expression.ts"],
+  "sourcesContent": ["import type { AssociationPath } from './association-path.js';\nimport type { Attribute } from './attribute.js';\nimport type { Cast } from './cast.js';\nimport type { Col } from './col.js';\nimport type { DialectAwareFn } from './dialect-aware-fn.js';\nimport type { Fn } from './fn.js';\nimport type { Identifier } from './identifier.js';\nimport type { JsonPath } from './json-path.js';\nimport type { List } from './list.js';\nimport type { Literal } from './literal.js';\nimport type { Value } from './value.js';\nimport type { Where } from './where.js';\n\n/**\n * A symbol that can be used as the key for a static property on a BaseSqlExpression class to uniquely identify it.\n */\nexport declare const SQL_IDENTIFIER: unique symbol;\n\n/**\n * Utility functions for representing SQL functions, and columns that should be escaped.\n * Please do not use these functions directly, use Sequelize.fn and Sequelize.col instead.\n *\n * @private\n */\nexport class BaseSqlExpression {\n  declare protected readonly [SQL_IDENTIFIER]: string;\n}\n\nexport type DynamicSqlExpression =\n  | List\n  | Value\n  | Identifier\n  | Attribute\n  | Fn\n  | DialectAwareFn\n  | Col\n  | Cast\n  | Literal\n  | Where\n  | JsonPath\n  | AssociationPath;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAwBO,MAAM,kBAAkB;AAE/B;",
+  "names": []
+}

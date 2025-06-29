@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-function.ts"],
+  "sourcesContent": ["import type {\n  AssertionFunction,\n  NegatedAssertionFunction,\n} from '../_internal/build-predicate-function.js';\nimport { buildAssertionFunction, toBe } from '../_internal/build-predicate-function.js';\n\nconst tuple = buildAssertionFunction<Function>((value: unknown): value is Function => {\n  return typeof value === 'function';\n}, toBe('a function'));\n\n/**\n * Returns true if a value is a function:\n *\n * isFunction(() => {}); // true\n * isFunction(class A {}); // true\n * isFunction((class {}).bind()); // true\n */\nexport const isFunction: AssertionFunction<Function> = tuple[0];\nexport const isNotFunction: NegatedAssertionFunction<Function> = tuple[1];\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,sCAA6C;AAE7C,MAAM,YAAQ,wDAAiC,CAAC,UAAsC;AACpF,SAAO,OAAO,UAAU;AAC1B,OAAG,sCAAK,YAAY,CAAC;AASd,MAAM,aAA0C,MAAM,CAAC;AACvD,MAAM,gBAAoD,MAAM,CAAC;",
+  "names": []
+}

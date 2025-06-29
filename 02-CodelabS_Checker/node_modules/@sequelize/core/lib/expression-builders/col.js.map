@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/col.ts"],
+  "sourcesContent": ["import { BaseSqlExpression, SQL_IDENTIFIER } from './base-sql-expression.js';\n\n/**\n * Do not use me directly. Use {@link sql.col}\n */\nexport class Col extends BaseSqlExpression {\n  declare protected readonly [SQL_IDENTIFIER]: 'col';\n\n  readonly identifiers: string[];\n\n  constructor(...identifiers: string[]) {\n    super();\n\n    // TODO: verify whether the \"more than one identifier\" case is still needed\n    this.identifiers = identifiers;\n  }\n}\n\n/**\n * Creates an object which represents a column in the DB, this allows referencing another column in your query.\n * This is often useful in conjunction with {@link sql.fn}, {@link sql.where} and {@link sql} which interpret strings as values and not column names.\n *\n * Col works similarly to {@link sql.identifier}, but \"*\" has special meaning, for backwards compatibility.\n *\n * \u26A0\uFE0F We recommend using {@link sql.identifier}, or {@link sql.attribute} instead.\n *\n * @param identifiers The name of the column\n */\nexport function col(...identifiers: string[]): Col {\n  return new Col(...identifiers);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iCAAkD;AAK3C,MAAM,YAAY,6CAAkB;AAAA,EAGhC;AAAA,EAET,eAAe,aAAuB;AACpC,UAAM;AAGN,SAAK,cAAc;AAAA,EACrB;AACF;AAYO,SAAS,OAAO,aAA4B;AACjD,SAAO,IAAI,IAAI,GAAG,WAAW;AAC/B;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/iterator-utils/count.ts"],
+  "sourcesContent": ["/**\n * Counts how many elements in the iterable match the predicate.\n *\n * @param iterable\n * @param cb\n * @returns how many elements in the iterable match the predicate.\n */\nexport function count<In>(\n  iterable: Iterable<In>,\n  cb: (item: In, index: number) => boolean,\n): number {\n  let i = 0;\n  let currentCount = 0;\n\n  for (const item of iterable) {\n    if (cb(item, i++)) {\n      currentCount++;\n    }\n  }\n\n  return currentCount;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAOO,SAAS,MACd,UACA,IACQ;AACR,MAAI,IAAI;AACR,MAAI,eAAe;AAEnB,aAAW,QAAQ,UAAU;AAC3B,QAAI,GAAG,MAAM,GAAG,GAAG;AACjB;AAAA,IACF;AAAA,EACF;AAEA,SAAO;AACT;",
+  "names": []
+}

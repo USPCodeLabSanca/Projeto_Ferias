@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/json-sql-null.ts"],
+  "sourcesContent": ["import type { AbstractDialect } from '../abstract-dialect/dialect.js';\nimport { DialectAwareFn } from './dialect-aware-fn.js';\nimport { literal } from './literal.js';\n\nclass JsonNullClass extends DialectAwareFn {\n  get maxArgCount() {\n    return 0;\n  }\n\n  get minArgCount() {\n    return 0;\n  }\n\n  supportsDialect(): boolean {\n    return true;\n  }\n\n  applyForDialect(dialect: AbstractDialect): string {\n    return dialect.escapeJson(null);\n  }\n}\n\n/**\n * null as a JSON value\n */\nexport const JSON_NULL = JsonNullClass.build();\n\n/**\n * null as an SQL value\n */\nexport const SQL_NULL = literal('NULL');\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AACA,8BAA+B;AAC/B,qBAAwB;AAExB,MAAM,sBAAsB,uCAAe;AAAA,EACzC,IAAI,cAAc;AAChB,WAAO;AAAA,EACT;AAAA,EAEA,IAAI,cAAc;AAChB,WAAO;AAAA,EACT;AAAA,EAEA,kBAA2B;AACzB,WAAO;AAAA,EACT;AAAA,EAEA,gBAAgB,SAAkC;AAChD,WAAO,QAAQ,WAAW,IAAI;AAAA,EAChC;AACF;AAKO,MAAM,YAAY,cAAc,MAAM;AAKtC,MAAM,eAAW,wBAAQ,MAAM;",
+  "names": []
+}

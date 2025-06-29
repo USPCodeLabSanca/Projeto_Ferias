@@ -1,0 +1,104 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ParseError = exports.SyntaxNode = exports.ReferenceRange = exports.Reference = void 0;
+class Reference {
+    constructor(line, col, index) {
+        this.line = line;
+        this.col = col;
+        this.index = index;
+    }
+    advance(newline = false) {
+        if (newline) {
+            this.col = 1;
+            this.line++;
+            this.index++;
+        }
+        else {
+            this.index++;
+            this.col++;
+        }
+    }
+    valueOf() {
+        return this.index;
+    }
+    clone() {
+        return new Reference(this.line, this.col, this.index);
+    }
+    toString() {
+        return `(${this.line}:${this.col})`;
+    }
+}
+exports.Reference = Reference;
+class ReferenceRange {
+    constructor(from, to) {
+        this.start = from;
+        this.end = to;
+    }
+    span(other) {
+        if (other.start.index < this.start.index) {
+            this.start = other.start;
+        }
+        if (other.end.index > this.end.index) {
+            this.end = other.end;
+        }
+    }
+    valueOf() {
+        return this.end.index;
+    }
+    clone() {
+        return new ReferenceRange(this.start.clone(), this.end.clone());
+    }
+    toString() {
+        return `${this.start.toString()} -> ${this.end.toString()}`;
+    }
+}
+exports.ReferenceRange = ReferenceRange;
+class SyntaxNode {
+    constructor(type, value, ref) {
+        this.type = type;
+        this.ref = ref;
+        this.value = value;
+        this.reach = null;
+    }
+    getReach() {
+        if (this.reach) {
+            return this.reach;
+        }
+        if (typeof this.value == "string") {
+            return null;
+        }
+        if (this.value.length == 0) {
+            return null;
+        }
+        return this.value[this.value.length - 1].getReach();
+    }
+    flat() {
+        if (Array.isArray(this.value)) {
+            return this.value
+                .map(x => x.flat())
+                .reduce((prev, x) => prev + x, "");
+        }
+        else {
+            return this.value;
+        }
+    }
+}
+exports.SyntaxNode = SyntaxNode;
+class ParseError {
+    constructor(msg, ref) {
+        this.stack = [];
+        this.msg = msg;
+        this.ref = ref;
+    }
+    add_stack(elm) {
+        this.stack.unshift(elm);
+    }
+    hasStack() {
+        return this.stack.length > 0;
+    }
+    toString() {
+        return `Parse Error: ${this.msg} ${this.ref.toString()}` +
+            (this.hasStack() ? "\nstack: " + this.stack.join(" -> ") : "");
+    }
+}
+exports.ParseError = ParseError;

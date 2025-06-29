@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/value.ts"],
+  "sourcesContent": ["import { BaseSqlExpression, SQL_IDENTIFIER } from './base-sql-expression.js';\n\n/**\n * Used to represent a value that will either be escaped to a literal, or a bind parameter.\n * You do not need to use this function directly, it will be used automatically when you interpolate parameters\n * in a template string tagged with {@link sql}.\n */\nexport class Value extends BaseSqlExpression {\n  declare protected readonly [SQL_IDENTIFIER]: 'value';\n\n  constructor(readonly value: unknown) {\n    super();\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iCAAkD;AAO3C,MAAM,cAAc,6CAAkB;AAAA,EAG3C,YAAqB,OAAgB;AACnC,UAAM;AADa;AAAA,EAErB;AACF;",
+  "names": []
+}

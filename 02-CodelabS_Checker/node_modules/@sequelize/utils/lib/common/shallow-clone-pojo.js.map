@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/shallow-clone-pojo.ts"],
+  "sourcesContent": ["import { pojo } from './pojo.js';\nimport { isPlainObject } from './predicates/is-plain-object.js';\n\nexport function shallowClonePojo<T extends object>(obj: T): T {\n  isPlainObject.assert(obj);\n\n  return Object.assign(pojo(), obj);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,kBAAqB;AACrB,6BAA8B;AAEvB,SAAS,iBAAmC,KAAW;AAC5D,uCAAc,OAAO,GAAG;AAExB,SAAO,OAAO,WAAO,kBAAK,GAAG,GAAG;AAClC;",
+  "names": []
+}

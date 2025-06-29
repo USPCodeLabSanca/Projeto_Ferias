@@ -1,0 +1,80 @@
+import { SyntaxNode, ParseError, Reference } from "./syntax";
+export declare type Expression = Literal | CharRange | Term | Not | Omit | Gather | Select | Sequence;
+export declare enum Count {
+    One = "1",
+    ZeroToOne = "?",
+    ZeroToMany = "*",
+    OneToMany = "+"
+}
+export declare function ParseCount(count: string): Count;
+export declare class Literal {
+    value: string;
+    count: Count;
+    constructor(json: any);
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    match(input: string, cursor: Reference): Boolean;
+    serialize(): any;
+}
+export declare class CharRange extends Literal {
+    to: string;
+    constructor(json: any);
+    match(input: string, cursor: Reference): Boolean;
+    matchChar(char: string, offset: number): boolean;
+    serialize(): any;
+}
+export declare class Gather {
+    expr: Expression;
+    constructor(json: any);
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    serialize(): any;
+}
+export declare class Omit extends Gather {
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    serialize(): any;
+}
+export declare class Not {
+    expr: Expression;
+    count: Count;
+    constructor(json: any);
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    serialize(): any;
+}
+export declare class Term {
+    value: string;
+    count: Count;
+    constructor(json: any);
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    serialize(): any;
+}
+export declare class Select {
+    exprs: Expression[];
+    count: Count;
+    constructor(json: any);
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    parseSingle(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    serialize(): any;
+}
+export declare class Sequence extends Select {
+    constructor(json: any);
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    parseSingle(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    serialize(): any;
+}
+export declare class Rule {
+    name: string;
+    seq: Expression;
+    verbose: boolean;
+    constructor(name: string, json: any);
+    parse(input: string, ctx: Parser, cursor: Reference): SyntaxNode | ParseError;
+    setVerbose(mode: boolean): void;
+    serialize(): any;
+}
+export declare class Parser {
+    terms: Map<string, Rule>;
+    constructor(json: any);
+    getRule(name: string): Rule;
+    addRule(name: string, rule: Rule): void;
+    parse(input: string, partial?: boolean, entry?: string): SyntaxNode | ParseError;
+    setVerbose(mode: boolean): void;
+    serialize(): any;
+}

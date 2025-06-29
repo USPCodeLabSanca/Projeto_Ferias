@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/__tests__/shallow-clone-pojo.test.ts"],
+  "sourcesContent": ["import { shallowClonePojo } from '@sequelize/utils';\nimport { expect } from 'chai';\n\ndescribe('shallowClonePojo', () => {\n  it('returns a shallow copy of the provided object', () => {\n    const obj = { a: 1, b: 2 };\n    const clonedObj = shallowClonePojo(obj);\n    expect(clonedObj).to.deep.equal(obj);\n    expect(clonedObj).to.not.equal(obj);\n  });\n\n  it('does not copy nested objects', () => {\n    const obj = { a: 1, b: { c: 3 } };\n    const clonedObj = shallowClonePojo(obj);\n    expect(clonedObj.b).to.equal(obj.b);\n  });\n\n  it('throws an error when provided a non-plain object', () => {\n    const nonPlainObject = new Date();\n    expect(() => shallowClonePojo(nonPlainObject)).to.throw();\n  });\n});\n"],
+  "mappings": ";AAAA,mBAAiC;AACjC,kBAAuB;AAEvB,SAAS,oBAAoB,MAAM;AACjC,KAAG,iDAAiD,MAAM;AACxD,UAAM,MAAM,EAAE,GAAG,GAAG,GAAG,EAAE;AACzB,UAAM,gBAAY,+BAAiB,GAAG;AACtC,4BAAO,SAAS,EAAE,GAAG,KAAK,MAAM,GAAG;AACnC,4BAAO,SAAS,EAAE,GAAG,IAAI,MAAM,GAAG;AAAA,EACpC,CAAC;AAED,KAAG,gCAAgC,MAAM;AACvC,UAAM,MAAM,EAAE,GAAG,GAAG,GAAG,EAAE,GAAG,EAAE,EAAE;AAChC,UAAM,gBAAY,+BAAiB,GAAG;AACtC,4BAAO,UAAU,CAAC,EAAE,GAAG,MAAM,IAAI,CAAC;AAAA,EACpC,CAAC;AAED,KAAG,oDAAoD,MAAM;AAC3D,UAAM,iBAAiB,oBAAI,KAAK;AAChC,4BAAO,UAAM,+BAAiB,cAAc,CAAC,EAAE,GAAG,MAAM;AAAA,EAC1D,CAAC;AACH,CAAC;",
+  "names": []
+}

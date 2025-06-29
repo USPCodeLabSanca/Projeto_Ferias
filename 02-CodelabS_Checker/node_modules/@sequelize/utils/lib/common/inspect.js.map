@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/inspect.ts"],
+  "sourcesContent": ["import { isAnyObject } from './predicates/is-any-object.js';\nimport { isBigInt } from './predicates/is-big-int.js';\nimport { isFunction } from './predicates/is-function.js';\nimport { isString } from './predicates/is-string.js';\n\n/**\n * Stringify a value, for use in debug messages.\n * This is a bare-bones implementation of node:util's inspect method, designed to run in any environment.\n *\n * @param value The value to stringify\n * @returns A string representation of the value\n */\nexport function inspect(value: unknown): string {\n  if (isString(value)) {\n    return JSON.stringify(value);\n  }\n\n  if (isBigInt(value)) {\n    return `${String(value)}n`;\n  }\n\n  if (isFunction(value)) {\n    return `[function ${value.name || '(anonymous)'}]`;\n  }\n\n  if (isAnyObject(value)) {\n    return Object.prototype.toString.call(value);\n  }\n\n  return String(value);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,2BAA4B;AAC5B,wBAAyB;AACzB,yBAA2B;AAC3B,uBAAyB;AASlB,SAAS,QAAQ,OAAwB;AAC9C,UAAI,2BAAS,KAAK,GAAG;AACnB,WAAO,KAAK,UAAU,KAAK;AAAA,EAC7B;AAEA,UAAI,4BAAS,KAAK,GAAG;AACnB,WAAO,GAAG,OAAO,KAAK,CAAC;AAAA,EACzB;AAEA,UAAI,+BAAW,KAAK,GAAG;AACrB,WAAO,aAAa,MAAM,QAAQ,aAAa;AAAA,EACjD;AAEA,UAAI,kCAAY,KAAK,GAAG;AACtB,WAAO,OAAO,UAAU,SAAS,KAAK,KAAK;AAAA,EAC7C;AAEA,SAAO,OAAO,KAAK;AACrB;",
+  "names": []
+}

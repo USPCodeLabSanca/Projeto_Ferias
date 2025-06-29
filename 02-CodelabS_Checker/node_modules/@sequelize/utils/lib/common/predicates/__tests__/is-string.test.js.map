@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/common/predicates/__tests__/is-string.test.ts"],
+  "sourcesContent": ["import { isString, upcast } from '@sequelize/utils';\nimport { expect } from 'chai';\nimport { expectTypeOf } from 'expect-type';\n\ndescribe('isString', () => {\n  it('returns true for string', () => {\n    expect(isString('string')).to.be.true;\n  });\n\n  it('returns false for non-string', () => {\n    expect(isString(42)).to.be.false;\n    expect(\n      isString({\n        [Symbol.toPrimitive]() {\n          return 'test';\n        },\n      }),\n    ).to.be.false;\n  });\n\n  it('narrows the TypeScript type', () => {\n    const value = upcast<string | null>(null);\n    if (isString(value)) {\n      expectTypeOf(value).toEqualTypeOf<string>();\n    } else {\n      expectTypeOf(value).toEqualTypeOf<null>();\n    }\n  });\n});\n"],
+  "mappings": ";AAAA,mBAAiC;AACjC,kBAAuB;AACvB,yBAA6B;AAE7B,SAAS,YAAY,MAAM;AACzB,KAAG,2BAA2B,MAAM;AAClC,gCAAO,uBAAS,QAAQ,CAAC,EAAE,GAAG,GAAG;AAAA,EACnC,CAAC;AAED,KAAG,gCAAgC,MAAM;AACvC,gCAAO,uBAAS,EAAE,CAAC,EAAE,GAAG,GAAG;AAC3B;AAAA,UACE,uBAAS;AAAA,QACP,CAAC,OAAO,WAAW,IAAI;AACrB,iBAAO;AAAA,QACT;AAAA,MACF,CAAC;AAAA,IACH,EAAE,GAAG,GAAG;AAAA,EACV,CAAC;AAED,KAAG,+BAA+B,MAAM;AACtC,UAAM,YAAQ,qBAAsB,IAAI;AACxC,YAAI,uBAAS,KAAK,GAAG;AACnB,2CAAa,KAAK,EAAE,cAAsB;AAAA,IAC5C,OAAO;AACL,2CAAa,KAAK,EAAE,cAAoB;AAAA,IAC1C;AAAA,EACF,CAAC;AACH,CAAC;",
+  "names": []
+}

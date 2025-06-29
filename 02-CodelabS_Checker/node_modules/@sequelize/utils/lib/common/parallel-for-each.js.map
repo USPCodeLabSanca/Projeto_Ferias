@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/parallel-for-each.ts"],
+  "sourcesContent": ["import { map } from './iterator-utils/map.js';\nimport type { AllowPromise } from './types.js';\n\n/**\n * Executes async code in parallel for each entry of an array.\n *\n * @param iterable The value to iterate\n * @param callback The function to call with each entry of the array\n * @returns A promise that resolves once each callback is done executing (and their promise resolved)\n */\nexport async function parallelForEach<T>(\n  iterable: Iterable<T>,\n  callback: (value: T, index: number) => AllowPromise<void>,\n): Promise<void> {\n  await Promise.all(map(iterable, callback));\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iBAAoB;AAUpB,eAAsB,gBACpB,UACA,UACe;AACf,QAAM,QAAQ,QAAI,gBAAI,UAAU,QAAQ,CAAC;AAC3C;",
+  "names": []
+}

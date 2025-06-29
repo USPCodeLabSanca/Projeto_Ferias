@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/abstract-dialect/query-generator.internal-types.ts"],
+  "sourcesContent": ["import type { Nullish } from '@sequelize/utils';\nimport type { Literal } from '../expression-builders/literal.js';\nimport type { BindOrReplacements } from '../sequelize.js';\n\nexport interface AddLimitOffsetOptions {\n  limit?: number | Literal | Nullish;\n  offset?: number | Literal | Nullish;\n  replacements?: BindOrReplacements | undefined;\n}\n\nexport interface AttributeToSqlOptions {\n  context: 'addColumn' | 'changeColumn' | 'createTable';\n  schema?: string;\n  table: string;\n  withoutForeignKeyConstraints?: boolean;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

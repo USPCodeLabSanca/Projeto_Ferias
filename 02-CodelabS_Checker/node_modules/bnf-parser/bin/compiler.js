@@ -1,0 +1,178 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Compile = void 0;
+const parser_1 = require("./parser");
+const syntax_1 = require("./syntax");
+function BuildRule(rule) {
+    if (rule.type != "def") {
+        throw new Error(`Unknown internal error, expected "def" got "${rule.type}"`);
+    }
+    return new parser_1.Rule(rule.value[0].value, BuildExpr(rule.value[1]));
+}
+function BuildExpr(expr) {
+    var _a;
+    if (expr.type != "expr") {
+        throw new Error(`Unknown internal error, expected "expr" got "${expr.type}"`);
+    }
+    let base = {
+        type: "sequence",
+        count: "1",
+        exprs: [BuildOperand(expr.value[0])]
+    };
+    for (let pair of expr.value[1].value) {
+        let operator = pair.value[0];
+        let operand = BuildOperand(pair.value[1]);
+        switch (operator.value) {
+            case "":
+            case "|":
+                let desire = operator.value == "|" ? "select" : "sequence";
+                if (base.type != desire) {
+                    if (base.type == "range" || ((_a = base.exprs) === null || _a === void 0 ? void 0 : _a.length) != 1) {
+                        base = {
+                            type: desire,
+                            count: "1",
+                            exprs: [base, operand]
+                        };
+                        continue;
+                    }
+                    else {
+                        base.type = desire;
+                        base.exprs.push(operand);
+                        continue;
+                    }
+                }
+                base.exprs.push(operand);
+                continue;
+            case "->":
+                let a = base.exprs.pop();
+                if (a.type != "literal" || operand.type != "literal") {
+                    throw new Error(`Attempting to make a range between two non literals at ${operator.ref.toString()}`);
+                }
+                if (a.value.length != 1 || operand.value.length != 1) {
+                    throw new Error(`Attempting to make a range non single characters at ${operator.ref.toString()}`);
+                }
+                let action = {
+                    type: "range",
+                    value: a.value,
+                    to: operand.value,
+                    count: operand.count
+                };
+                if (base.exprs.length == 0) {
+                    base = action;
+                }
+                else {
+                    base.exprs.push(action);
+                }
+                continue;
+            default:
+                throw new Error(`Unknown operator "${operator.value}"`);
+        }
+    }
+    return base;
+}
+function FlatternConstant(expr) {
+    if (expr.type != "constant") {
+        throw new Error(`Unknown internal error, expected "constant" got "${expr.type}"`);
+    }
+    let str = expr.value[0];
+    let inner = str.value[0];
+    let out = "";
+    if (!Array.isArray(inner.value)) {
+        throw new TypeError("Internal logic failure. Unexpected string");
+    }
+    for (let charNode of inner.value) {
+        if (charNode.type == "literal") {
+            out += charNode.value;
+        }
+        else {
+            let esc = charNode.value;
+            switch (esc[1].value) {
+                case "b":
+                    out += "\b";
+                    break;
+                case "f":
+                    out += "\f";
+                    break;
+                case "n":
+                    out += "\n";
+                    break;
+                case "r":
+                    out += "\r";
+                    break;
+                case "t":
+                    out += "\t";
+                    break;
+                case "v":
+                    out += "\v";
+                    break;
+                default: out += esc[1].value;
+            }
+        }
+    }
+    return out;
+}
+function BuildOperand(expr) {
+    if (expr.type != "expr_arg") {
+        throw new Error(`Unknown internal error, expected "expr_arg" got "${expr.type}"`);
+    }
+    let component = expr.value;
+    let prefixes = component[0].value;
+    let countStr = component[2].value;
+    let base = {
+        count: (0, parser_1.ParseCount)(countStr == "" ? "1" : countStr)
+    };
+    switch (component[1].type) {
+        case "constant":
+            component[1].value = FlatternConstant(component[1]);
+        case "name":
+            base.type = component[1].type == "constant" ? "literal" : "term";
+            base.value = component[1].value;
+            break;
+        case "expr_brackets":
+            let res = BuildExpr(component[1].value[0]);
+            res.count = base.count;
+            base = res;
+            break;
+        default:
+            throw new Error(`Unknown operand type ${component[1].type}`);
+    }
+    if (prefixes[2].value == "!") {
+        base = {
+            type: "not",
+            expr: base,
+            count: base.count
+        };
+        base.expr.count = "1";
+    }
+    if (prefixes[1].value == "...") {
+        base = {
+            type: "gather",
+            expr: base
+        };
+    }
+    if (prefixes[0].value == "%") {
+        base = {
+            type: "omit",
+            expr: base
+        };
+    }
+    return base;
+}
+function Compile(tree) {
+    if (!(tree instanceof syntax_1.SyntaxNode)) {
+        throw new TypeError("Cannot compile syntax tree, as Syntax node is not provided");
+    }
+    let syntax = new parser_1.Parser({});
+    for (let node of tree.value[0].value) {
+        if (node instanceof syntax_1.SyntaxNode &&
+            node.value[0] instanceof syntax_1.SyntaxNode) {
+            let rule = BuildRule(node.value[0]);
+            syntax.addRule(rule.name, rule);
+        }
+        else {
+            throw new Error("Malformed syntax tree");
+        }
+    }
+    return syntax;
+}
+exports.Compile = Compile;

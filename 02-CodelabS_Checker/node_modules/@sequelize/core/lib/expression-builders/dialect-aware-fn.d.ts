@@ -1,0 +1,49 @@
+import type { Class } from 'type-fest';
+import type { AbstractDialect } from '../abstract-dialect/dialect.js';
+import type { EscapeOptions } from '../abstract-dialect/query-generator-typescript.js';
+import type { Expression } from '../sequelize.js';
+import { BaseSqlExpression } from './base-sql-expression.js';
+/**
+ * Unlike {@link sql.fn}, this class does not accept a function name.
+ * It must instead be extended by a class that implements the {@link applyForDialect} method, in which
+ * the function name is provided.
+ *
+ * The goal of this class is to allow dialect-specific functions to be used in a cross-dialect way.
+ * For instance, an extension of this class could be used to represent the `LOWER` function in a cross-dialect way,
+ * by generating the correct SQL function name based on which dialect is used.
+ */
+export declare abstract class DialectAwareFn extends BaseSqlExpression {
+    readonly args: readonly Expression[];
+    constructor(...args: DialectAwareFn['args']);
+    get maxArgCount(): number;
+    get minArgCount(): number;
+    abstract supportsDialect(dialect: AbstractDialect): boolean;
+    abstract applyForDialect(dialect: AbstractDialect, options?: EscapeOptions): string;
+    supportsJavaScript(): boolean;
+    applyForJavaScript(): unknown;
+    /**
+     * This getter is designed to be used as an attribute's default value.
+     * This is useful when the SQL version must be bypassed due to a limitation of the dialect that Sequelize cannot detect,
+     * such as a missing extension.
+     *
+     * ```ts
+     * const User = sequelize.define('User', {
+     *   uuid: {
+     *     type: DataTypes.UUID,
+     *     defaultValue: sql.uuidV4.asJavaScript,
+     *   },
+     * });
+     * ```
+     */
+    get asJavaScript(): () => unknown;
+    static build<M extends DialectAwareFn>(this: Class<M>, ...args: DialectAwareFn['args']): M;
+}
+/**
+ * Unquotes JSON values.
+ */
+export declare class Unquote extends DialectAwareFn {
+    get maxArgCount(): number;
+    get minArgCount(): number;
+    supportsDialect(dialect: AbstractDialect): boolean;
+    applyForDialect(dialect: AbstractDialect, options?: EscapeOptions): string;
+}

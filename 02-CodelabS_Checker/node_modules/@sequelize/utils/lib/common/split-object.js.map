@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/split-object.ts"],
+  "sourcesContent": ["import { pojo } from './pojo.js';\n\n/**\n * Splits an object into two objects, one containing the keys provided and the other containing the rest.\n *\n * @param object The object to split\n * @param keys The keys to pick from the object\n * @returns A tuple where the first element is an object containing the picked keys and the second element is an object containing the rest\n */\nexport function splitObject<Obj extends object, Keys extends ReadonlyArray<keyof Obj>>(\n  object: Obj,\n  keys: Keys,\n): [Pick<Obj, Keys[number]>, Omit<Obj, Keys[number]>] {\n  const picked: any = pojo();\n  const omitted: any = pojo();\n\n  for (const key of Object.keys(object) as Array<keyof Obj>) {\n    if (keys.includes(key)) {\n      picked[key] = object[key];\n    } else {\n      omitted[key] = object[key];\n    }\n  }\n\n  return [picked, omitted];\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,kBAAqB;AASd,SAAS,YACd,QACA,MACoD;AACpD,QAAM,aAAc,kBAAK;AACzB,QAAM,cAAe,kBAAK;AAE1B,aAAW,OAAO,OAAO,KAAK,MAAM,GAAuB;AACzD,QAAI,KAAK,SAAS,GAAG,GAAG;AACtB,aAAO,GAAG,IAAI,OAAO,GAAG;AAAA,IAC1B,OAAO;AACL,cAAQ,GAAG,IAAI,OAAO,GAAG;AAAA,IAC3B;AAAA,EACF;AAEA,SAAO,CAAC,QAAQ,OAAO;AACzB;",
+  "names": []
+}

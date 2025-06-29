@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/iterator-utils/find.ts"],
+  "sourcesContent": ["export function find<Val>(iterable: Iterable<Val>, cb: (item: Val) => boolean): Val | undefined {\n  for (const item of iterable) {\n    if (cb(item)) {\n      return item;\n    }\n  }\n\n  return undefined;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,SAAS,KAAU,UAAyB,IAA6C;AAC9F,aAAW,QAAQ,UAAU;AAC3B,QAAI,GAAG,IAAI,GAAG;AACZ,aAAO;AAAA,IACT;AAAA,EACF;AAEA,SAAO;AACT;",
+  "names": []
+}

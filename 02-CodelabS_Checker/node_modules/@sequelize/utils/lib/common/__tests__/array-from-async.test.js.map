@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/__tests__/array-from-async.test.ts"],
+  "sourcesContent": ["import { arrayFromAsync } from '@sequelize/utils';\nimport { expect } from 'chai';\n\ndescribe('arrayFromAsync', () => {\n  it('returns an array from an async iterable', async () => {\n    async function* asyncGenerator() {\n      yield 1;\n      yield 2;\n      // eslint-disable-next-line -- redundant but still needs to be tested\n      yield Promise.resolve(3);\n    }\n\n    const result = await arrayFromAsync(asyncGenerator());\n\n    expect(result).to.deep.eq([1, 2, 3]);\n  });\n});\n"],
+  "mappings": ";AAAA,mBAA+B;AAC/B,kBAAuB;AAEvB,SAAS,kBAAkB,MAAM;AAC/B,KAAG,2CAA2C,YAAY;AACxD,oBAAgB,iBAAiB;AAC/B,YAAM;AACN,YAAM;AAEN,YAAM,QAAQ,QAAQ,CAAC;AAAA,IACzB;AAEA,UAAM,SAAS,UAAM,6BAAe,eAAe,CAAC;AAEpD,4BAAO,MAAM,EAAE,GAAG,KAAK,GAAG,CAAC,GAAG,GAAG,CAAC,CAAC;AAAA,EACrC,CAAC;AACH,CAAC;",
+  "names": []
+}

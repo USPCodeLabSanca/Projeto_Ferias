@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-valid-number-syntax.ts"],
+  "sourcesContent": ["const BASE10_NUMBER_REGEX = /^-?[0-9]*(\\.[0-9]+)?([eE][-+]?[0-9]+)?$/;\n\n/**\n * Determines if the string follows the \"number\" syntax: Base 10 numbers that can have a decimal part\n * and be written using the scientific notation.\n *\n * Does not determine whether the value could be represented using the Number type. Use {@link parseFiniteNumber} for that.\n *\n * @param value\n */\nexport function isValidNumberSyntax(value: string): boolean {\n  return value !== '' && value !== '-' && BASE10_NUMBER_REGEX.test(value);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,MAAM,sBAAsB;AAUrB,SAAS,oBAAoB,OAAwB;AAC1D,SAAO,UAAU,MAAM,UAAU,OAAO,oBAAoB,KAAK,KAAK;AACxE;",
+  "names": []
+}

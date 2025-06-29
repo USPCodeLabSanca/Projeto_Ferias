@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/_model-internals/get-belongs-to-associations-with-target.ts"],
+  "sourcesContent": ["import { BelongsToAssociation } from '../associations/index.js';\nimport type { ModelStatic } from '../model.js';\n\n/**\n * Returns all BelongsTo associations in the entire Sequelize instance that target the given model.\n *\n * @param target\n */\nexport function getBelongsToAssociationsWithTarget(target: ModelStatic): BelongsToAssociation[] {\n  const sequelize = target.sequelize;\n\n  const associations: BelongsToAssociation[] = [];\n  for (const model of sequelize.models) {\n    for (const association of Object.values(model.associations)) {\n      if (association instanceof BelongsToAssociation && association.target === target) {\n        associations.push(association);\n      }\n    }\n  }\n\n  return associations;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,0BAAqC;AAQ9B,SAAS,mCAAmC,QAA6C;AAC9F,QAAM,YAAY,OAAO;AAEzB,QAAM,eAAuC,CAAC;AAC9C,aAAW,SAAS,UAAU,QAAQ;AACpC,eAAW,eAAe,OAAO,OAAO,MAAM,YAAY,GAAG;AAC3D,UAAI,uBAAuB,4CAAwB,YAAY,WAAW,QAAQ;AAChF,qBAAa,KAAK,WAAW;AAAA,MAC/B;AAAA,IACF;AAAA,EACF;AAEA,SAAO;AACT;",
+  "names": []
+}

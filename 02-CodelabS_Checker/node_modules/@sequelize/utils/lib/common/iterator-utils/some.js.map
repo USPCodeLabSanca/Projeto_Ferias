@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/iterator-utils/some.ts"],
+  "sourcesContent": ["export function some<In>(iterable: Iterable<In>, cb: (item: In) => boolean): boolean {\n  for (const item of iterable) {\n    if (cb(item)) {\n      return true;\n    }\n  }\n\n  return false;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,SAAS,KAAS,UAAwB,IAAoC;AACnF,aAAW,QAAQ,UAAU;AAC3B,QAAI,GAAG,IAAI,GAAG;AACZ,aAAO;AAAA,IACT;AAAA,EACF;AAEA,SAAO;AACT;",
+  "names": []
+}

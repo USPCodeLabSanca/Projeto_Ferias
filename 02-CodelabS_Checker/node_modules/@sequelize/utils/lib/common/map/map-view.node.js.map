@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/map/map-view.node.ts"],
+  "sourcesContent": ["import NodeUtil, { type InspectOptions } from 'node:util';\nimport { pojo } from '../pojo.js';\nimport { MapView } from './map-view.js';\n\n// @ts-expect-error -- this node-specific extension is not declared on base class\nMapView.prototype[NodeUtil.inspect.custom] = function inspect(\n  depth: number,\n  options: InspectOptions,\n): string {\n  const newOptions = Object.assign(pojo(), options, {\n    depth: options.depth == null ? null : options.depth - 1,\n  });\n\n  return NodeUtil.inspect(this.toMutableMap(), newOptions).replace(/^Map/, 'MapView');\n};\n\nexport { MapView } from './map-view.js';\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,uBAA8C;AAC9C,kBAAqB;AACrB,sBAAwB;AAcxB,IAAAA,mBAAwB;AAXxB,wBAAQ,UAAU,iBAAAC,QAAS,QAAQ,MAAM,IAAI,SAAS,QACpD,OACA,SACQ;AACR,QAAM,aAAa,OAAO,WAAO,kBAAK,GAAG,SAAS;AAAA,IAChD,OAAO,QAAQ,SAAS,OAAO,OAAO,QAAQ,QAAQ;AAAA,EACxD,CAAC;AAED,SAAO,iBAAAA,QAAS,QAAQ,KAAK,aAAa,GAAG,UAAU,EAAE,QAAQ,QAAQ,SAAS;AACpF;",
+  "names": ["import_map_view", "NodeUtil"]
+}

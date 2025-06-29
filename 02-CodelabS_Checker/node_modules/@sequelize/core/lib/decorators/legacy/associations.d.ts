@@ -1,0 +1,10 @@
+import type { MaybeForwardedModelStatic } from '../../associations/helpers.js';
+import type { BelongsToManyOptions, BelongsToOptions, HasManyOptions, HasOneOptions } from '../../associations/index.js';
+import type { AttributeNames, Model, ModelStatic } from '../../model.js';
+import type { Sequelize } from '../../sequelize.js';
+export type AssociationType = 'BelongsTo' | 'HasOne' | 'HasMany' | 'BelongsToMany';
+export declare function HasOne<Target extends Model>(target: MaybeForwardedModelStatic<Target>, optionsOrForeignKey: Omit<HasOneOptions<string, AttributeNames<Target>>, 'as'> | AttributeNames<Target>): (source: Model, associationName: string | symbol) => void;
+export declare function HasMany<Target extends Model>(target: MaybeForwardedModelStatic<Target>, optionsOrForeignKey: Omit<HasManyOptions<string, AttributeNames<Target>>, 'as'> | AttributeNames<Target>): (source: Model, associationName: string | symbol) => void;
+export declare function BelongsTo<SourceKey extends string, Target extends Model>(target: MaybeForwardedModelStatic<Target>, optionsOrForeignKey: Omit<BelongsToOptions<SourceKey, AttributeNames<Target>>, 'as'> | SourceKey): (source: Model, associationName: string) => void;
+export declare function BelongsToMany(target: MaybeForwardedModelStatic, options: Omit<BelongsToManyOptions, 'as'>): PropertyDecorator;
+export declare function initDecoratedAssociations(source: ModelStatic, sequelize: Sequelize): void;

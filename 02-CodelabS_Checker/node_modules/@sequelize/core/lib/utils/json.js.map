@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/json.ts"],
+  "sourcesContent": ["/**\n * Returns a JSON path identifier that is safe to use in a JSON path.\n *\n * @param identifier - The identifier to quote.\n */\nfunction quoteJsonPathIdentifier(identifier: string): string {\n  if (/^[a-z_][a-z0-9_]*$/i.test(identifier)) {\n    return identifier;\n  }\n\n  // Escape backslashes and double quotes\n  return `\"${identifier.replaceAll(/[\"\\\\]/g, s => `\\\\${s}`)}\"`;\n}\n\n/**\n * Builds a JSON path expression from a path.\n *\n * @param path - The path to build the expression from.\n */\nexport function buildJsonPath(path: ReadonlyArray<number | string>): string {\n  let jsonPathStr = '$';\n  for (const pathElement of path) {\n    if (typeof pathElement === 'number') {\n      jsonPathStr += `[${pathElement}]`;\n    } else {\n      jsonPathStr += `.${quoteJsonPathIdentifier(pathElement)}`;\n    }\n  }\n\n  return jsonPathStr;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAKA,SAAS,wBAAwB,YAA4B;AAC3D,MAAI,sBAAsB,KAAK,UAAU,GAAG;AAC1C,WAAO;AAAA,EACT;AAGA,SAAO,IAAI,WAAW,WAAW,UAAU,OAAK,KAAK,CAAC,EAAE,CAAC;AAC3D;AAOO,SAAS,cAAc,MAA8C;AAC1E,MAAI,cAAc;AAClB,aAAW,eAAe,MAAM;AAC9B,QAAI,OAAO,gBAAgB,UAAU;AACnC,qBAAe,IAAI,WAAW;AAAA,IAChC,OAAO;AACL,qBAAe,IAAI,wBAAwB,WAAW,CAAC;AAAA,IACzD;AAAA,EACF;AAEA,SAAO;AACT;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/comparators/localized-string-comparator.ts"],
+  "sourcesContent": ["import type { Comparator } from './comparator.js';\nimport { SortDirection } from './comparator.js';\n\n/**\n * Returns a comparator that sorts strings alphabetically using `localeCompare`.\n * The collator includes many options to sort numerically, to ignore the case, to ignore accents, etc\u2026\n *\n * @param locale The locale of the strings\n * @param direction The sort direction\n * @param options collator options\n */\nexport function localizedStringComparator(\n  locale: string,\n  direction: SortDirection = SortDirection.ASC,\n  options?: Omit<Intl.CollatorOptions, 'usage'>,\n): Comparator<string> {\n  return (a, b) => {\n    return a.localeCompare(b, locale, { usage: 'sort', ...options }) * direction;\n  };\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AACA,wBAA8B;AAUvB,SAAS,0BACd,QACA,YAA2B,gCAAc,KACzC,SACoB;AACpB,SAAO,CAAC,GAAG,MAAM;AACf,WAAO,EAAE,cAAc,GAAG,QAAQ,EAAE,OAAO,QAAQ,GAAG,QAAQ,CAAC,IAAI;AAAA,EACrE;AACF;",
+  "names": []
+}

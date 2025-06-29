@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/list.ts"],
+  "sourcesContent": ["import { BaseSqlExpression, SQL_IDENTIFIER } from './base-sql-expression.js';\n\n/**\n * Use {@link sql.list} instead.\n */\nexport class List extends BaseSqlExpression {\n  declare protected readonly [SQL_IDENTIFIER]: 'list';\n\n  constructor(readonly values: unknown[]) {\n    super();\n  }\n}\n\n/**\n * Used to represent an SQL list of values, e.g. `WHERE id IN (1, 2, 3)`. This ensure that the array is interpreted\n * as an SQL list, and not as an SQL Array.\n *\n * @example\n * ```ts\n * sequelize.query(sql`SELECT * FROM users WHERE id IN ${list([1, 2, 3])}`);\n * ```\n *\n * Will generate:\n *\n * ```sql\n * SELECT * FROM users WHERE id IN (1, 2, 3)\n * ```\n *\n * @param values The members of the list.\n */\nexport function list(values: unknown[]): List {\n  return new List(values);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iCAAkD;AAK3C,MAAM,aAAa,6CAAkB;AAAA,EAG1C,YAAqB,QAAmB;AACtC,UAAM;AADa;AAAA,EAErB;AACF;AAmBO,SAAS,KAAK,QAAyB;AAC5C,SAAO,IAAI,KAAK,MAAM;AACxB;",
+  "names": []
+}

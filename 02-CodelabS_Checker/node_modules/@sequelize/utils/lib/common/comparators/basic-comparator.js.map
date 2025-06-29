@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/comparators/basic-comparator.ts"],
+  "sourcesContent": ["import type { Comparator } from './comparator.js';\nimport { SortDirection } from './comparator.js';\n\n/**\n * A comparator that uses the comparison operators (>, <) to determine the order of any value.\n *\n * Works well for:\n * - numbers\n * - bigints\n * - unlocalized strings\n * - Date objects\n *\n * This should be used with caution as other comparators can be better suited to this task.\n * For instance, you may prefer to sort strings with {@link localizedStringComparator} instead\n * of relying on their unicode codepoints.\n *\n * @param direction The sort direction.\n */\nexport function basicComparator<T>(direction: SortDirection = SortDirection.ASC): Comparator<T> {\n  return function naivelyCompare(a: T, b: T) {\n    if (a > b) {\n      return direction;\n    }\n\n    if (a < b) {\n      return -direction;\n    }\n\n    return 0;\n  };\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AACA,wBAA8B;AAiBvB,SAAS,gBAAmB,YAA2B,gCAAc,KAAoB;AAC9F,SAAO,SAAS,eAAe,GAAM,GAAM;AACzC,QAAI,IAAI,GAAG;AACT,aAAO;AAAA,IACT;AAEA,QAAI,IAAI,GAAG;AACT,aAAO,CAAC;AAAA,IACV;AAEA,WAAO;AAAA,EACT;AACF;",
+  "names": []
+}

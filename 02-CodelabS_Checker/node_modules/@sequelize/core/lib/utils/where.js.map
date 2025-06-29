@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/where.ts"],
+  "sourcesContent": ["import { Op as operators } from '../operators.js';\n\n/**\n * getComplexKeys\n *\n * @param obj\n * @returns All keys including operators\n * @private\n */\nexport function getComplexKeys(obj: object): Array<string | symbol> {\n  return [...getOperators(obj), ...Object.keys(obj)];\n}\n\n/**\n * getComplexSize\n *\n * @param obj\n * @returns Length of object properties including operators if obj is array returns its length\n * @private\n */\nexport function getComplexSize(obj: object | any[]): number {\n  return Array.isArray(obj) ? obj.length : getComplexKeys(obj).length;\n}\n\nconst operatorsSet = new Set(Object.values(operators));\n\n/**\n * getOperators\n *\n * @param obj\n * @returns All operators properties of obj\n * @private\n */\nexport function getOperators(obj: object): symbol[] {\n  return Object.getOwnPropertySymbols(obj).filter(s => operatorsSet.has(s));\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,uBAAgC;AASzB,SAAS,eAAe,KAAqC;AAClE,SAAO,CAAC,GAAG,aAAa,GAAG,GAAG,GAAG,OAAO,KAAK,GAAG,CAAC;AACnD;AASO,SAAS,eAAe,KAA6B;AAC1D,SAAO,MAAM,QAAQ,GAAG,IAAI,IAAI,SAAS,eAAe,GAAG,EAAE;AAC/D;AAEA,MAAM,eAAe,IAAI,IAAI,OAAO,OAAO,iBAAAA,EAAS,CAAC;AAS9C,SAAS,aAAa,KAAuB;AAClD,SAAO,OAAO,sBAAsB,GAAG,EAAE,OAAO,OAAK,aAAa,IAAI,CAAC,CAAC;AAC1E;",
+  "names": ["operators"]
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/node/list-files-recursive.ts"],
+  "sourcesContent": ["import fs from 'node:fs/promises';\nimport path from 'node:path';\n\n/**\n * Async generator that yields every file present in the specified folder, and is sub-folders\n *\n * @param dir\n */\nexport async function* listFilesRecursive(dir: string): AsyncGenerator<string, void> {\n  const entries = await fs.readdir(dir, { withFileTypes: true });\n  for (const entry of entries) {\n    const entryPath = path.resolve(dir, entry.name);\n\n    if (entry.isDirectory()) {\n      yield* listFilesRecursive(entryPath);\n    } else {\n      yield entryPath;\n    }\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sBAAe;AACf,uBAAiB;AAOjB,gBAAuB,mBAAmB,KAA2C;AACnF,QAAM,UAAU,MAAM,gBAAAA,QAAG,QAAQ,KAAK,EAAE,eAAe,KAAK,CAAC;AAC7D,aAAW,SAAS,SAAS;AAC3B,UAAM,YAAY,iBAAAC,QAAK,QAAQ,KAAK,MAAM,IAAI;AAE9C,QAAI,MAAM,YAAY,GAAG;AACvB,aAAO,mBAAmB,SAAS;AAAA,IACrC,OAAO;AACL,YAAM;AAAA,IACR;AAAA,EACF;AACF;",
+  "names": ["fs", "path"]
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-iterable.ts"],
+  "sourcesContent": ["import type {\n  AssertionFunction,\n  NegatedAssertionFunction,\n} from '../_internal/build-predicate-function.js';\nimport { buildAssertionFunction, toBe } from '../_internal/build-predicate-function.js';\nimport { isFunction } from './is-function.js';\n\nconst tuple = buildAssertionFunction((value: unknown): value is Iterable<unknown> => {\n  // @ts-expect-error -- TS does not allow accessing Symbol.iterator like this.\n  return value != null && isFunction(value[Symbol.iterator]);\n}, toBe('an iterable'));\n\n/**\n * Returns true if the value is null or undefined.\n *\n * @param value The value to compare.\n */\nexport const isIterable: AssertionFunction<Iterable<unknown>> = tuple[0];\nexport const isNotIterable: NegatedAssertionFunction<Iterable<unknown>> = tuple[1];\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,sCAA6C;AAC7C,yBAA2B;AAE3B,MAAM,YAAQ,wDAAuB,CAAC,UAA+C;AAEnF,SAAO,SAAS,YAAQ,+BAAW,MAAM,OAAO,QAAQ,CAAC;AAC3D,OAAG,sCAAK,aAAa,CAAC;AAOf,MAAM,aAAmD,MAAM,CAAC;AAChE,MAAM,gBAA6D,MAAM,CAAC;",
+  "names": []
+}

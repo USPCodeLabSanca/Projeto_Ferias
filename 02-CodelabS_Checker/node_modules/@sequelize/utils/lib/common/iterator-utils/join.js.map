@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/iterator-utils/join.ts"],
+  "sourcesContent": ["export function join(iterable: Iterable<string>, glue: string): string {\n  const iterator = iterable[Symbol.iterator]();\n  const first = iterator.next();\n  if (first.done) {\n    return '';\n  }\n\n  let result = String(first.value);\n\n  let item;\n  while (((item = iterator.next()), !item.done)) {\n    result += glue + String(item.value);\n  }\n\n  return result;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,SAAS,KAAK,UAA4B,MAAsB;AACrE,QAAM,WAAW,SAAS,OAAO,QAAQ,EAAE;AAC3C,QAAM,QAAQ,SAAS,KAAK;AAC5B,MAAI,MAAM,MAAM;AACd,WAAO;AAAA,EACT;AAEA,MAAI,SAAS,OAAO,MAAM,KAAK;AAE/B,MAAI;AACJ,SAAS,OAAO,SAAS,KAAK,GAAI,CAAC,KAAK,MAAO;AAC7C,cAAU,OAAO,OAAO,KAAK,KAAK;AAAA,EACpC;AAEA,SAAO;AACT;",
+  "names": []
+}

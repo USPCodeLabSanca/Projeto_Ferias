@@ -1,0 +1,59 @@
+{
+  "name": "sequelize-pool",
+  "description": "Resource pooling for Node.JS",
+  "version": "8.0.1",
+  "author": "Sushant <sushantdhiman@outlook.com>",
+  "keywords": [
+    "pool",
+    "pooling",
+    "throttle",
+    "sequelize"
+  ],
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/sushantdhiman/sequelize-pool.git"
+  },
+  "files": [
+    "lib",
+    "types"
+  ],
+  "types": "types",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.23.0",
+    "@types/node": "^10.x",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.5",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "tap": "^21.1.0",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.28.1",
+    "typedoc-plugin-markdown": "^4.6.0",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">= 10.0.0"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig-build.json",
+    "types": "tsc",
+    "test": "npm run lint && npm run test:raw",
+    "lint": "eslint --ext .ts src/**/* test/**/*",
+    "pretty": "prettier src test --write",
+    "docs": "typedoc --tsconfig tsconfig-doc.json",
+    "test:raw": "tap test/**/*-test.ts"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "tap": {
+    "disable-coverage": false,
+    "allow-incomplete-coverage": true
+  },
+  "license": "MIT"
+}

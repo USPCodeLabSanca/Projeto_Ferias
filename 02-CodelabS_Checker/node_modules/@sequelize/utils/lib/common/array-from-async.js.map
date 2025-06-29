@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/array-from-async.ts"],
+  "sourcesContent": ["/**\n * Implements https://github.com/tc39/proposal-array-from-async\n * This function works like Array.from, but accepts async iterators instead of sync iterators.\n *\n * @param asyncIterable An async iterable\n * @returns A promise that resolves to an array that includes all items yielded by the async iterable.\n */\nexport async function arrayFromAsync<T>(asyncIterable: AsyncIterable<T>): Promise<T[]> {\n  const out = [];\n  for await (const v of asyncIterable) {\n    out.push(await v);\n  }\n\n  return out;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAOA,eAAsB,eAAkB,eAA+C;AACrF,QAAM,MAAM,CAAC;AACb,mBAAiB,KAAK,eAAe;AACnC,QAAI,KAAK,MAAM,CAAC;AAAA,EAClB;AAEA,SAAO;AACT;",
+  "names": []
+}

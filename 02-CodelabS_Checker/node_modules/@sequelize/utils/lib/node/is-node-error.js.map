@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/node/is-node-error.ts"],
+  "sourcesContent": ["import type {\n  AssertionFunction,\n  NegatedAssertionFunction,\n} from '../common/_internal/build-predicate-function.js';\nimport { buildAssertionFunction, toBe } from '../common/_internal/build-predicate-function.js';\n\nconst tuple = buildAssertionFunction((value: unknown): value is NodeJS.ErrnoException => {\n  return value instanceof Error && 'code' in value;\n}, toBe('a NodeJS.ErrnoException'));\n\n/**\n * Returns true if the value is a node error.\n *\n * @param value The value to compare.\n */\nexport const isNodeError: AssertionFunction<NodeJS.ErrnoException> = tuple[0];\nexport const isNotNodeError: NegatedAssertionFunction<NodeJS.ErrnoException> = tuple[1];\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,sCAA6C;AAE7C,MAAM,YAAQ,wDAAuB,CAAC,UAAmD;AACvF,SAAO,iBAAiB,SAAS,UAAU;AAC7C,OAAG,sCAAK,yBAAyB,CAAC;AAO3B,MAAM,cAAwD,MAAM,CAAC;AACrE,MAAM,iBAAkE,MAAM,CAAC;",
+  "names": []
+}

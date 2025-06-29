@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/dialect.test.ts"],
+  "sourcesContent": ["import { Sequelize } from '@sequelize/core';\nimport type { MySqlConnectionOptions } from '@sequelize/mysql';\nimport { MySqlDialect } from '@sequelize/mysql';\nimport { expect } from 'chai';\n\ndescribe('MariaDbDialect#parseConnectionUrl', () => {\n  const dialect = new Sequelize({ dialect: MySqlDialect }).dialect;\n\n  it('parses connection URL', () => {\n    const options: MySqlConnectionOptions = dialect.parseConnectionUrl(\n      'mysql://user:password@localhost:1234/dbname?charset=utf8mb4',\n    );\n\n    expect(options).to.deep.eq({\n      host: 'localhost',\n      port: 1234,\n      user: 'user',\n      password: 'password',\n      database: 'dbname',\n      charset: 'utf8mb4',\n    });\n  });\n});\n"],
+  "mappings": ";AAAA,kBAA0B;AAE1B,mBAA6B;AAC7B,kBAAuB;AAEvB,SAAS,qCAAqC,MAAM;AAClD,QAAM,UAAU,IAAI,sBAAU,EAAE,SAAS,0BAAa,CAAC,EAAE;AAEzD,KAAG,yBAAyB,MAAM;AAChC,UAAM,UAAkC,QAAQ;AAAA,MAC9C;AAAA,IACF;AAEA,4BAAO,OAAO,EAAE,GAAG,KAAK,GAAG;AAAA,MACzB,MAAM;AAAA,MACN,MAAM;AAAA,MACN,MAAM;AAAA,MACN,UAAU;AAAA,MACV,UAAU;AAAA,MACV,SAAS;AAAA,IACX,CAAC;AAAA,EACH,CAAC;AACH,CAAC;",
+  "names": []
+}

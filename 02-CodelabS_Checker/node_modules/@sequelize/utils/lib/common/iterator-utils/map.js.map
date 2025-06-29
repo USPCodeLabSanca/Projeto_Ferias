@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/iterator-utils/map.ts"],
+  "sourcesContent": ["/**\n * Like {@link Array#map}, but works with any iterable.\n *\n * @param iterable\n * @param cb\n * @returns an iterator.\n */\nexport function* map<In, Out>(\n  iterable: Iterable<In>,\n  cb: (item: In, index: number) => Out,\n): Generator<Out, void> {\n  let i = 0;\n\n  for (const item of iterable) {\n    yield cb(item, i++);\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAOO,UAAU,IACf,UACA,IACsB;AACtB,MAAI,IAAI;AAER,aAAW,QAAQ,UAAU;AAC3B,UAAM,GAAG,MAAM,GAAG;AAAA,EACpB;AACF;",
+  "names": []
+}

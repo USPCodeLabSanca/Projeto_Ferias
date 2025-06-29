@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/common/predicates/__tests__/is-error.test.ts"],
+  "sourcesContent": ["import { isError, upcast } from '@sequelize/utils';\nimport { expect } from 'chai';\nimport { expectTypeOf } from 'expect-type';\n\ndescribe('isError', () => {\n  it('returns true for Error', () => {\n    expect(isError(new Error('test'))).to.be.true;\n  });\n\n  it('returns true for Error subclasses', () => {\n    expect(isError(new TypeError('test'))).to.be.true;\n  });\n\n  it('returns false for non-Error', () => {\n    expect(isError({})).to.be.false;\n  });\n\n  it('narrows the TypeScript type', () => {\n    const value = upcast<Error | null>(null);\n    if (isError(value)) {\n      expectTypeOf(value).toEqualTypeOf<Error>();\n    } else {\n      expectTypeOf(value).toEqualTypeOf<null>();\n    }\n  });\n});\n"],
+  "mappings": ";AAAA,mBAAgC;AAChC,kBAAuB;AACvB,yBAA6B;AAE7B,SAAS,WAAW,MAAM;AACxB,KAAG,0BAA0B,MAAM;AACjC,gCAAO,sBAAQ,IAAI,MAAM,MAAM,CAAC,CAAC,EAAE,GAAG,GAAG;AAAA,EAC3C,CAAC;AAED,KAAG,qCAAqC,MAAM;AAC5C,gCAAO,sBAAQ,IAAI,UAAU,MAAM,CAAC,CAAC,EAAE,GAAG,GAAG;AAAA,EAC/C,CAAC;AAED,KAAG,+BAA+B,MAAM;AACtC,gCAAO,sBAAQ,CAAC,CAAC,CAAC,EAAE,GAAG,GAAG;AAAA,EAC5B,CAAC;AAED,KAAG,+BAA+B,MAAM;AACtC,UAAM,YAAQ,qBAAqB,IAAI;AACvC,YAAI,sBAAQ,KAAK,GAAG;AAClB,2CAAa,KAAK,EAAE,cAAqB;AAAA,IAC3C,OAAO;AACL,2CAAa,KAAK,EAAE,cAAoB;AAAA,IAC1C;AAAA,EACF,CAAC;AACH,CAAC;",
+  "names": []
+}

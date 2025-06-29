@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/common/predicates/__tests__/is-function.test.ts"],
+  "sourcesContent": ["import { isFunction, upcast } from '@sequelize/utils';\nimport { expect } from 'chai';\nimport { expectTypeOf } from 'expect-type';\n\ndescribe('isFunction', () => {\n  it('returns true for function', () => {\n    expect(isFunction(() => {})).to.be.true;\n  });\n\n  it('returns true for class', () => {\n    class Test {}\n\n    expect(isFunction(Test)).to.be.true;\n  });\n\n  it('returns false for non-function', () => {\n    expect(isFunction({})).to.be.false;\n  });\n\n  it('narrows the TypeScript type', () => {\n    const value = upcast<Function | null>(null);\n    if (isFunction(value)) {\n      expectTypeOf(value).toEqualTypeOf<Function>();\n    } else {\n      expectTypeOf(value).toEqualTypeOf<null>();\n    }\n  });\n});\n"],
+  "mappings": ";AAAA,mBAAmC;AACnC,kBAAuB;AACvB,yBAA6B;AAE7B,SAAS,cAAc,MAAM;AAC3B,KAAG,6BAA6B,MAAM;AACpC,gCAAO,yBAAW,MAAM;AAAA,IAAC,CAAC,CAAC,EAAE,GAAG,GAAG;AAAA,EACrC,CAAC;AAED,KAAG,0BAA0B,MAAM;AAAA,IACjC,MAAM,KAAK;AAAA,IAAC;AAEZ,gCAAO,yBAAW,IAAI,CAAC,EAAE,GAAG,GAAG;AAAA,EACjC,CAAC;AAED,KAAG,kCAAkC,MAAM;AACzC,gCAAO,yBAAW,CAAC,CAAC,CAAC,EAAE,GAAG,GAAG;AAAA,EAC/B,CAAC;AAED,KAAG,+BAA+B,MAAM;AACtC,UAAM,YAAQ,qBAAwB,IAAI;AAC1C,YAAI,yBAAW,KAAK,GAAG;AACrB,2CAAa,KAAK,EAAE,cAAwB;AAAA,IAC9C,OAAO;AACL,2CAAa,KAAK,EAAE,cAAoB;AAAA,IAC1C;AAAA,EACF,CAAC;AACH,CAAC;",
+  "names": []
+}

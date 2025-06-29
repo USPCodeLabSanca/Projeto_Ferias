@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/get-synchronized-type-keys.ts"],
+  "sourcesContent": ["/**\n * This strange piece of code is used to get a runtime array of keys that is guaranteed to be in sync with the keys of the provided interface.\n *\n * @param input\n * @example\n * ```ts\n * export interface Db2DialectOptions {\n *   db2Module?: Db2Module;\n * }\n *\n * const DIALECT_OPTION_NAMES = getSynchronizedKeys<Db2DialectOptions>({\n *   // if a key is missing, TypeScript will throw an error\n *   db2Module: undefined,\n * });\n *\n * // Output is ['db2Module']\n *\n * @param input\n */\nexport function getSynchronizedTypeKeys<Interface>(\n  input: Record<keyof Interface, undefined>,\n): ReadonlyArray<keyof Interface> {\n  return Object.freeze(Object.keys(input) as Array<keyof Interface>);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAmBO,SAAS,wBACd,OACgC;AAChC,SAAO,OAAO,OAAO,OAAO,KAAK,KAAK,CAA2B;AACnE;",
+  "names": []
+}

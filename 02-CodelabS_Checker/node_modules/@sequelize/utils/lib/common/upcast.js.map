@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/upcast.ts"],
+  "sourcesContent": ["/**\n * This empty function serves as a safe upcast mechanism.\n *\n * See https://github.com/microsoft/TypeScript/issues/47920 to learn more.\n *\n * @param val The value to upcast.\n */\nexport const upcast = <T>(val: T): T => val;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAOO,MAAM,SAAS,CAAI,QAAc;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/query-types.ts"],
+  "sourcesContent": ["/**\n * An enum of query types used by {@link Sequelize#query}.\n */\nexport enum QueryTypes {\n  SELECT = 'SELECT',\n  INSERT = 'INSERT',\n  UPDATE = 'UPDATE',\n  BULKUPDATE = 'BULKUPDATE',\n  DELETE = 'DELETE',\n  UPSERT = 'UPSERT',\n  SHOWINDEXES = 'SHOWINDEXES',\n  DESCRIBE = 'DESCRIBE',\n  RAW = 'RAW',\n  SHOWCONSTRAINTS = 'SHOWCONSTRAINTS',\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGO,IAAK,aAAL,kBAAKA,gBAAL;AACL,EAAAA,YAAA,YAAS;AACT,EAAAA,YAAA,YAAS;AACT,EAAAA,YAAA,YAAS;AACT,EAAAA,YAAA,gBAAa;AACb,EAAAA,YAAA,YAAS;AACT,EAAAA,YAAA,YAAS;AACT,EAAAA,YAAA,iBAAc;AACd,EAAAA,YAAA,cAAW;AACX,EAAAA,YAAA,SAAM;AACN,EAAAA,YAAA,qBAAkB;AAVR,SAAAA;AAAA,GAAA;",
+  "names": ["QueryTypes"]
+}

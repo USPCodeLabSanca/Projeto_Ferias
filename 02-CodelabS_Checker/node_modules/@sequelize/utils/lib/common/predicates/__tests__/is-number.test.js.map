@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/common/predicates/__tests__/is-number.test.ts"],
+  "sourcesContent": ["import { isNumber, upcast } from '@sequelize/utils';\nimport { expect } from 'chai';\nimport { expectTypeOf } from 'expect-type';\n\ndescribe('isNumber', () => {\n  it('returns true for number', () => {\n    expect(isNumber(42)).to.be.true;\n  });\n\n  it('returns false for non-number', () => {\n    expect(isNumber('42')).to.be.false;\n    expect(isNumber(42n)).to.be.false;\n  });\n\n  it('narrows the TypeScript type', () => {\n    const value = upcast<number | null>(null);\n    if (isNumber(value)) {\n      expectTypeOf(value).toEqualTypeOf<number>();\n    } else {\n      expectTypeOf(value).toEqualTypeOf<null>();\n    }\n  });\n});\n"],
+  "mappings": ";AAAA,mBAAiC;AACjC,kBAAuB;AACvB,yBAA6B;AAE7B,SAAS,YAAY,MAAM;AACzB,KAAG,2BAA2B,MAAM;AAClC,gCAAO,uBAAS,EAAE,CAAC,EAAE,GAAG,GAAG;AAAA,EAC7B,CAAC;AAED,KAAG,gCAAgC,MAAM;AACvC,gCAAO,uBAAS,IAAI,CAAC,EAAE,GAAG,GAAG;AAC7B,gCAAO,uBAAS,GAAG,CAAC,EAAE,GAAG,GAAG;AAAA,EAC9B,CAAC;AAED,KAAG,+BAA+B,MAAM;AACtC,UAAM,YAAQ,qBAAsB,IAAI;AACxC,YAAI,uBAAS,KAAK,GAAG;AACnB,2CAAa,KAAK,EAAE,cAAsB;AAAA,IAC5C,OAAO;AACL,2CAAa,KAAK,EAAE,cAAoB;AAAA,IAC1C;AAAA,EACF,CAAC;AACH,CAAC;",
+  "names": []
+}

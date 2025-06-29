@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/literal.ts"],
+  "sourcesContent": ["import { BaseSqlExpression, SQL_IDENTIFIER } from './base-sql-expression.js';\n\n/**\n * Do not use me directly. Use {@link sql.literal}\n */\nexport class Literal extends BaseSqlExpression {\n  declare protected readonly [SQL_IDENTIFIER]: 'literal';\n\n  readonly val: ReadonlyArray<string | BaseSqlExpression>;\n\n  constructor(val: string | Array<string | BaseSqlExpression>) {\n    super();\n\n    this.val = Array.isArray(val) ? val : [val];\n  }\n}\n\n/**\n * Creates an object representing a literal, i.e. something that will not be escaped.\n * We recommend using {@link sql} for a better DX.\n *\n * @param val literal value\n */\nexport function literal(val: string | Array<string | BaseSqlExpression>): Literal {\n  return new Literal(val);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iCAAkD;AAK3C,MAAM,gBAAgB,6CAAkB;AAAA,EAGpC;AAAA,EAET,YAAY,KAAiD;AAC3D,UAAM;AAEN,SAAK,MAAM,MAAM,QAAQ,GAAG,IAAI,MAAM,CAAC,GAAG;AAAA,EAC5C;AACF;AAQO,SAAS,QAAQ,KAA0D;AAChF,SAAO,IAAI,QAAQ,GAAG;AACxB;",
+  "names": []
+}

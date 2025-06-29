@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/generic/sql-fragment.ts"],
+  "sourcesContent": ["import type { Nullish } from '@sequelize/utils';\n\nexport type SQLFragment = string | Nullish | SQLFragment[];\nexport type TruthySQLFragment = string | SQLFragment[];\n"],
+  "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

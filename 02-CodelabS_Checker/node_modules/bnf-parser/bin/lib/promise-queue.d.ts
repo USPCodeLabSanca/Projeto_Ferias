@@ -1,0 +1,12 @@
+export declare class PromiseQueue {
+    private _queue;
+    constructor();
+    /**
+     * Hangs until trigger is called
+     */
+    wait(): Promise<void>;
+    /**
+     * Allows all hanging waits to return
+     */
+    trigger(): void;
+}

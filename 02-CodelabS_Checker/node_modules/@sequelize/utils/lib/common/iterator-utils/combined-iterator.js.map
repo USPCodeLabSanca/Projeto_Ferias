@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/iterator-utils/combined-iterator.ts"],
+  "sourcesContent": ["/**\n * Combines two iterables, they will be iterated in order\n *\n * @param iterables\n */\nexport function* combinedIterator<T>(\n  ...iterables: Array<Iterable<T>>\n): Generator<T, void, undefined> {\n  for (const iterable of iterables) {\n    yield* iterable;\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAKO,UAAU,oBACZ,WAC4B;AAC/B,aAAW,YAAY,WAAW;AAChC,WAAO;AAAA,EACT;AACF;",
+  "names": []
+}

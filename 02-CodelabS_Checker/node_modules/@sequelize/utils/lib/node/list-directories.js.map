@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/node/list-directories.ts"],
+  "sourcesContent": ["import type { PathLike } from 'node:fs';\nimport fs from 'node:fs/promises';\n\nexport async function listDirectories(directory: PathLike): Promise<string[]> {\n  const entries = await fs.readdir(directory, { withFileTypes: true });\n\n  return entries.filter(entry => entry.isDirectory()).map(entry => entry.name);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AACA,sBAAe;AAEf,eAAsB,gBAAgB,WAAwC;AAC5E,QAAM,UAAU,MAAM,gBAAAA,QAAG,QAAQ,WAAW,EAAE,eAAe,KAAK,CAAC;AAEnE,SAAO,QAAQ,OAAO,WAAS,MAAM,YAAY,CAAC,EAAE,IAAI,WAAS,MAAM,IAAI;AAC7E;",
+  "names": ["fs"]
+}

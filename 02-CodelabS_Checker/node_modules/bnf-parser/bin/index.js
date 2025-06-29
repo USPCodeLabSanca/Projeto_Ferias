@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.experimental = exports.ReferenceRange = exports.Reference = exports.ParseError = exports.SyntaxNode = exports.Compile = exports.Parser = exports.BNF = void 0;
+const syntax_1 = require("./syntax");
+Object.defineProperty(exports, "SyntaxNode", { enumerable: true, get: function () { return syntax_1.SyntaxNode; } });
+Object.defineProperty(exports, "ParseError", { enumerable: true, get: function () { return syntax_1.ParseError; } });
+Object.defineProperty(exports, "Reference", { enumerable: true, get: function () { return syntax_1.Reference; } });
+Object.defineProperty(exports, "ReferenceRange", { enumerable: true, get: function () { return syntax_1.ReferenceRange; } });
+const compiler_1 = require("./compiler");
+Object.defineProperty(exports, "Compile", { enumerable: true, get: function () { return compiler_1.Compile; } });
+const parser_1 = require("./parser");
+Object.defineProperty(exports, "Parser", { enumerable: true, get: function () { return parser_1.Parser; } });
+const preload_1 = require("./preload");
+const BNF = new parser_1.Parser(preload_1.bnf_json);
+exports.BNF = BNF;
+const promise_queue_1 = require("./lib/promise-queue");
+const cache_1 = require("./lib/cache");
+const experimental = {
+    StreamCache: cache_1.StreamCache,
+    PromiseQueue: promise_queue_1.PromiseQueue
+};
+exports.experimental = experimental;

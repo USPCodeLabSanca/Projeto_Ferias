@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-plain-object.ts"],
+  "sourcesContent": ["import type {\n  AssertionFunction,\n  NegatedAssertionFunction,\n} from '../_internal/build-predicate-function.js';\nimport { buildAssertionFunction, toBe } from '../_internal/build-predicate-function.js';\nimport type { AnyRecord } from '../types.js';\n\nconst tuple = buildAssertionFunction((value: unknown): value is AnyRecord => {\n  if (value === null || typeof value !== 'object') {\n    return false;\n  }\n\n  const prototype = Object.getPrototypeOf(value);\n\n  return prototype === null || prototype === Object.prototype;\n}, toBe('a plain object (an object built using the literal syntax, or pojo())'));\n\n/**\n * Returns whether something is a plain object\n * A plain object is an object that either has no prototype at all (no inherited methods) or only inherits from Object.prototype\n *\n * @example\n * isPlainObject({ a: 1 }); // true\n * isPlainObject(pojo()); // true\n * isPlainObject(new Date()); // false\n *\n * @param value The value to compare.\n */\nexport const isPlainObject: AssertionFunction<AnyRecord> = tuple[0];\nexport const isNotPlainObject: NegatedAssertionFunction<AnyRecord> = tuple[1];\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,sCAA6C;AAG7C,MAAM,YAAQ,wDAAuB,CAAC,UAAuC;AAC3E,MAAI,UAAU,QAAQ,OAAO,UAAU,UAAU;AAC/C,WAAO;AAAA,EACT;AAEA,QAAM,YAAY,OAAO,eAAe,KAAK;AAE7C,SAAO,cAAc,QAAQ,cAAc,OAAO;AACpD,OAAG,sCAAK,sEAAsE,CAAC;AAaxE,MAAM,gBAA8C,MAAM,CAAC;AAC3D,MAAM,mBAAwD,MAAM,CAAC;",
+  "names": []
+}

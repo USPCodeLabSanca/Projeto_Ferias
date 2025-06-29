@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/freeze-deep.ts"],
+  "sourcesContent": ["import { isPlainObject } from './predicates/is-plain-object.js';\n\nexport function freezeDeep<T extends object>(obj: T): T {\n  Object.freeze(obj);\n\n  freezeDescendants(obj);\n\n  return obj;\n}\n\n/**\n * Only freezes the descendants of an object, not the object itself.\n *\n * @param obj\n */\nexport function freezeDescendants<T extends object>(obj: T): T {\n  for (const descendant of Object.values(obj)) {\n    if (isPlainObject(descendant) || Array.isArray(descendant)) {\n      freezeDeep(descendant);\n    }\n  }\n\n  return obj;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,6BAA8B;AAEvB,SAAS,WAA6B,KAAW;AACtD,SAAO,OAAO,GAAG;AAEjB,oBAAkB,GAAG;AAErB,SAAO;AACT;AAOO,SAAS,kBAAoC,KAAW;AAC7D,aAAW,cAAc,OAAO,OAAO,GAAG,GAAG;AAC3C,YAAI,sCAAc,UAAU,KAAK,MAAM,QAAQ,UAAU,GAAG;AAC1D,iBAAW,UAAU;AAAA,IACvB;AAAA,EACF;AAEA,SAAO;AACT;",
+  "names": []
+}

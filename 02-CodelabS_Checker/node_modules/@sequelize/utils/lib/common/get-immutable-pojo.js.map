@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/get-immutable-pojo.ts"],
+  "sourcesContent": ["import { shallowClonePojo } from './shallow-clone-pojo.js';\n\n/**\n * Returns a prototype-free, shallow-immutable, version of the provided object,\n * without modifying the original object.\n *\n * If the object already matches the criteria, it is returned as-is.\n *\n * @param obj - The object.\n * @returns The immutable version of the object.\n */\nexport function getImmutablePojo<T extends object>(obj: T): T {\n  if (Object.isFrozen(obj) && Object.getPrototypeOf(obj) === null) {\n    return obj;\n  }\n\n  return Object.freeze(shallowClonePojo(obj));\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,gCAAiC;AAW1B,SAAS,iBAAmC,KAAW;AAC5D,MAAI,OAAO,SAAS,GAAG,KAAK,OAAO,eAAe,GAAG,MAAM,MAAM;AAC/D,WAAO;AAAA,EACT;AAEA,SAAO,OAAO,WAAO,4CAAiB,GAAG,CAAC;AAC5C;",
+  "names": []
+}

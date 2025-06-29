@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/query-generator.internal.ts"],
+  "sourcesContent": ["import { AbstractQueryGeneratorInternal } from '@sequelize/core/_non-semver-use-at-your-own-risk_/abstract-dialect/query-generator-internal.js';\nimport type { AddLimitOffsetOptions } from '@sequelize/core/_non-semver-use-at-your-own-risk_/abstract-dialect/query-generator.internal-types.js';\nimport { formatMySqlStyleLimitOffset } from '@sequelize/core/_non-semver-use-at-your-own-risk_/utils/sql.js';\nimport type { MySqlDialect } from './dialect.js';\n\nconst TECHNICAL_SCHEMAS = Object.freeze([\n  'MYSQL',\n  'INFORMATION_SCHEMA',\n  'PERFORMANCE_SCHEMA',\n  'SYS',\n  'mysql',\n  'information_schema',\n  'performance_schema',\n  'sys',\n]);\n\nexport class MySqlQueryGeneratorInternal<\n  Dialect extends MySqlDialect = MySqlDialect,\n> extends AbstractQueryGeneratorInternal<Dialect> {\n  getTechnicalSchemaNames(): readonly string[] {\n    return TECHNICAL_SCHEMAS;\n  }\n\n  addLimitAndOffset(options: AddLimitOffsetOptions) {\n    return formatMySqlStyleLimitOffset(options, this.queryGenerator);\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sCAA+C;AAE/C,iBAA4C;AAG5C,MAAM,oBAAoB,OAAO,OAAO;AAAA,EACtC;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AACF,CAAC;AAEM,MAAM,oCAEH,+DAAwC;AAAA,EAChD,0BAA6C;AAC3C,WAAO;AAAA,EACT;AAAA,EAEA,kBAAkB,SAAgC;AAChD,eAAO,wCAA4B,SAAS,KAAK,cAAc;AAAA,EACjE;AACF;",
+  "names": []
+}

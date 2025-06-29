@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/common/intersperse.ts"],
+  "sourcesContent": ["import { isFunction } from './predicates/is-function.js';\n\n/**\n * Inserts a value between each element of a list.\n * `separator` can be a function, which is useful to generate JSX elements with different keys.\n *\n * @param list The list\n * @param separator The value to insert between each element of the list, or a function that will produce each element to insert.\n */\nexport function intersperse<Value, Separator>(\n  list: Value[],\n  separator: Separator | ((index: number) => Separator),\n): Array<Value | Separator> {\n  const res: Array<Value | Separator> = [];\n\n  if (list.length === 0) {\n    return res;\n  }\n\n  const separatorIsFunction = isFunction(separator);\n\n  let i = 0;\n\n  res.push(list[i++]);\n  while (i < list.length) {\n    res.push(separatorIsFunction ? separator(i) : separator, list[i++]);\n  }\n\n  return res;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,yBAA2B;AASpB,SAAS,YACd,MACA,WAC0B;AAC1B,QAAM,MAAgC,CAAC;AAEvC,MAAI,KAAK,WAAW,GAAG;AACrB,WAAO;AAAA,EACT;AAEA,QAAM,0BAAsB,+BAAW,SAAS;AAEhD,MAAI,IAAI;AAER,MAAI,KAAK,KAAK,GAAG,CAAC;AAClB,SAAO,IAAI,KAAK,QAAQ;AACtB,QAAI,KAAK,sBAAsB,UAAU,CAAC,IAAI,WAAW,KAAK,GAAG,CAAC;AAAA,EACpE;AAEA,SAAO;AACT;",
+  "names": []
+}

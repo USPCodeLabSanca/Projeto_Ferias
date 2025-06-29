@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/common/predicates/__tests__/is-iterable.test.ts"],
+  "sourcesContent": ["import { isIterable, upcast } from '@sequelize/utils';\nimport { expect } from 'chai';\nimport { expectTypeOf } from 'expect-type';\n\ndescribe('isIterable', () => {\n  it('returns true for iterables', () => {\n    expect(isIterable([])).to.be.true;\n    expect(isIterable('string')).to.be.true;\n    expect(isIterable(new Map())).to.be.true;\n    expect(isIterable(new Set())).to.be.true;\n  });\n\n  it('returns false for non-iterables', () => {\n    expect(isIterable(42)).to.be.false;\n  });\n\n  it('narrows the TypeScript type', () => {\n    const value = upcast<Iterable<string> | null>(null);\n    if (isIterable(value)) {\n      expectTypeOf(value).toEqualTypeOf<Iterable<string>>();\n    } else {\n      expectTypeOf(value).toEqualTypeOf<null>();\n    }\n  });\n});\n"],
+  "mappings": ";AAAA,mBAAmC;AACnC,kBAAuB;AACvB,yBAA6B;AAE7B,SAAS,cAAc,MAAM;AAC3B,KAAG,8BAA8B,MAAM;AACrC,gCAAO,yBAAW,CAAC,CAAC,CAAC,EAAE,GAAG,GAAG;AAC7B,gCAAO,yBAAW,QAAQ,CAAC,EAAE,GAAG,GAAG;AACnC,gCAAO,yBAAW,oBAAI,IAAI,CAAC,CAAC,EAAE,GAAG,GAAG;AACpC,gCAAO,yBAAW,oBAAI,IAAI,CAAC,CAAC,EAAE,GAAG,GAAG;AAAA,EACtC,CAAC;AAED,KAAG,mCAAmC,MAAM;AAC1C,gCAAO,yBAAW,EAAE,CAAC,EAAE,GAAG,GAAG;AAAA,EAC/B,CAAC;AAED,KAAG,+BAA+B,MAAM;AACtC,UAAM,YAAQ,qBAAgC,IAAI;AAClD,YAAI,yBAAW,KAAK,GAAG;AACrB,2CAAa,KAAK,EAAE,cAAgC;AAAA,IACtD,OAAO;AACL,2CAAa,KAAK,EAAE,cAAoB;AAAA,IAC1C;AAAA,EACF,CAAC;AACH,CAAC;",
+  "names": []
+}

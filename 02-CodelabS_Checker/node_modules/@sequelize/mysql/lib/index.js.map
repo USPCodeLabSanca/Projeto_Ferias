@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.ts"],
+  "sourcesContent": ["/** Generated File, do not modify directly. Run \"yarn sync-exports\" in the folder of the package instead */\n\nexport * from './connection-manager.js';\nexport * from './dialect.js';\nexport * from './query-generator.js';\nexport * from './query-interface.js';\nexport * from './query.js';\n"],
+  "mappings": ";;;;;;;;;;;;;;;AAAA;AAAA;AAEA,0BAAc,oCAFd;AAGA,0BAAc,yBAHd;AAIA,0BAAc,iCAJd;AAKA,0BAAc,iCALd;AAMA,0BAAc,uBANd;",
+  "names": []
+}

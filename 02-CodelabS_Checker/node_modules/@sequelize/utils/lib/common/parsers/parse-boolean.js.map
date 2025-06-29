@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/parsers/parse-boolean.ts"],
+  "sourcesContent": ["import { buildNullBasedParser } from '../_internal/build-parser.js';\nimport { inspect } from '../inspect.js';\n\nexport const parseBoolean = buildNullBasedParser(\n  (value: string): boolean | null => {\n    value = value.toLowerCase();\n\n    switch (value) {\n      case 'true':\n        return true;\n      case 'false':\n        return false;\n      default:\n        return null;\n    }\n  },\n  value => `Cannot convert ${inspect(value)} to a boolean. It must be either \"true\" or \"false\".`,\n);\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,0BAAqC;AACrC,qBAAwB;AAEjB,MAAM,mBAAe;AAAA,EAC1B,CAAC,UAAkC;AACjC,YAAQ,MAAM,YAAY;AAE1B,YAAQ,OAAO;AAAA,MACb,KAAK;AACH,eAAO;AAAA,MACT,KAAK;AACH,eAAO;AAAA,MACT;AACE,eAAO;AAAA,IACX;AAAA,EACF;AAAA,EACA,WAAS,sBAAkB,wBAAQ,KAAK,CAAC;AAC3C;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/node/read-file-if-exists.ts"],
+  "sourcesContent": ["import type { Abortable } from 'node:events';\nimport type { ObjectEncodingOptions, OpenMode, PathLike } from 'node:fs';\nimport fs from 'node:fs/promises';\nimport { isNodeError } from './is-node-error.js';\n\nexport interface ReadFileOptions extends Abortable, ObjectEncodingOptions {\n  flag?: OpenMode | undefined;\n}\n\nexport async function readFileIfExists(\n  filePath: PathLike,\n  options?: ReadFileOptions,\n): Promise<string | Buffer | null> {\n  try {\n    return await fs.readFile(filePath, options);\n  } catch (error) {\n    if (isNodeError(error) && error.code === 'ENOENT') {\n      // file not found\n      return null;\n    }\n\n    throw error;\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAEA,sBAAe;AACf,2BAA4B;AAM5B,eAAsB,iBACpB,UACA,SACiC;AACjC,MAAI;AACF,WAAO,MAAM,gBAAAA,QAAG,SAAS,UAAU,OAAO;AAAA,EAC5C,SAAS,OAAO;AACd,YAAI,kCAAY,KAAK,KAAK,MAAM,SAAS,UAAU;AAEjD,aAAO;AAAA,IACT;AAEA,UAAM;AAAA,EACR;AACF;",
+  "names": ["fs"]
+}

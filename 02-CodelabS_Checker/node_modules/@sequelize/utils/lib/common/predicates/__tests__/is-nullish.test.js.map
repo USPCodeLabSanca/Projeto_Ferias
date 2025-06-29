@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/common/predicates/__tests__/is-nullish.test.ts"],
+  "sourcesContent": ["import { isNullish, upcast } from '@sequelize/utils';\nimport { expect } from 'chai';\nimport { expectTypeOf } from 'expect-type';\n\ndescribe('isNullish', () => {\n  it('returns true for null and undefined', () => {\n    expect(isNullish(null)).to.be.true;\n    expect(isNullish(undefined)).to.be.true;\n  });\n\n  it('returns false for non-nullish', () => {\n    expect(isNullish(0)).to.be.false;\n    expect(isNullish('')).to.be.false;\n    expect(isNullish(false)).to.be.false;\n    expect(isNullish(NaN)).to.be.false;\n  });\n\n  it('narrows the TypeScript type', () => {\n    const value = upcast<null | undefined | number>(42);\n    if (isNullish(value)) {\n      expectTypeOf(value).toEqualTypeOf<null | undefined>();\n    } else {\n      expectTypeOf(value).toEqualTypeOf<number>();\n    }\n  });\n});\n"],
+  "mappings": ";AAAA,mBAAkC;AAClC,kBAAuB;AACvB,yBAA6B;AAE7B,SAAS,aAAa,MAAM;AAC1B,KAAG,uCAAuC,MAAM;AAC9C,gCAAO,wBAAU,IAAI,CAAC,EAAE,GAAG,GAAG;AAC9B,gCAAO,wBAAU,MAAS,CAAC,EAAE,GAAG,GAAG;AAAA,EACrC,CAAC;AAED,KAAG,iCAAiC,MAAM;AACxC,gCAAO,wBAAU,CAAC,CAAC,EAAE,GAAG,GAAG;AAC3B,gCAAO,wBAAU,EAAE,CAAC,EAAE,GAAG,GAAG;AAC5B,gCAAO,wBAAU,KAAK,CAAC,EAAE,GAAG,GAAG;AAC/B,gCAAO,wBAAU,GAAG,CAAC,EAAE,GAAG,GAAG;AAAA,EAC/B,CAAC;AAED,KAAG,+BAA+B,MAAM;AACtC,UAAM,YAAQ,qBAAkC,EAAE;AAClD,YAAI,wBAAU,KAAK,GAAG;AACpB,2CAAa,KAAK,EAAE,cAAgC;AAAA,IACtD,OAAO;AACL,2CAAa,KAAK,EAAE,cAAsB;AAAA,IAC5C;AAAA,EACF,CAAC;AACH,CAAC;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-valid-integer-syntax.ts"],
+  "sourcesContent": ["import { getIsIntegerRegExp } from '../_internal/integer-regexp.js';\n\n/**\n * Determines if the string follows the \"integer\" syntax.\n *\n * Does not determine whether the value could be represented using the Number or BigInt type.\n * Use {@link parseSafeInteger}, {@link parseBigInt} for that.\n *\n * @param value\n * @param radix\n */\nexport function isValidIntegerSyntax(value: string, radix: number = 10): boolean {\n  const regex = getIsIntegerRegExp(radix);\n\n  return regex.test(value);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,4BAAmC;AAW5B,SAAS,qBAAqB,OAAe,QAAgB,IAAa;AAC/E,QAAM,YAAQ,0CAAmB,KAAK;AAEtC,SAAO,MAAM,KAAK,KAAK;AACzB;",
+  "names": []
+}

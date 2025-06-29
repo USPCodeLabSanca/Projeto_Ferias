@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/expression-builders/cast.ts"],
+  "sourcesContent": ["import { isPlainObject } from '@sequelize/utils';\nimport type { DataType } from '../abstract-dialect/data-types.js';\nimport { Op } from '../operators.js';\nimport type { Expression } from '../sequelize.js';\nimport { BaseSqlExpression, SQL_IDENTIFIER } from './base-sql-expression.js';\nimport { where } from './where.js';\n\n/**\n * Do not use me directly. Use {@link sql.cast}\n */\nexport class Cast extends BaseSqlExpression {\n  declare protected readonly [SQL_IDENTIFIER]: 'cast';\n\n  constructor(\n    readonly expression: Expression,\n    readonly type: DataType,\n  ) {\n    super();\n  }\n}\n\n/**\n * Creates an object representing a call to the cast function.\n *\n * @param val The value to cast\n * @param type The type to cast it to\n */\nexport function cast(val: unknown, type: DataType): Cast {\n  if (isPlainObject(val) && !(Op.col in val)) {\n    // Users should wrap this parameter with `where` themselves, but we do it to ensure backwards compatibility\n    // with https://github.com/sequelize/sequelize/issues/6666\n    val = where(val);\n  }\n\n  return new Cast(val, type);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,mBAA8B;AAE9B,uBAAmB;AAEnB,iCAAkD;AAClD,mBAAsB;AAKf,MAAM,aAAa,6CAAkB;AAAA,EAG1C,YACW,YACA,MACT;AACA,UAAM;AAHG;AACA;AAAA,EAGX;AACF;AAQO,SAAS,KAAK,KAAc,MAAsB;AACvD,UAAI,4BAAc,GAAG,KAAK,EAAE,oBAAG,OAAO,MAAM;AAG1C,cAAM,oBAAM,GAAG;AAAA,EACjB;AAEA,SAAO,IAAI,KAAK,KAAK,IAAI;AAC3B;",
+  "names": []
+}

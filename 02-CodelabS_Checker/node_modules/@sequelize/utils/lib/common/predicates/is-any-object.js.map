@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-any-object.ts"],
+  "sourcesContent": ["import type {\n  AssertionFunction,\n  NegatedAssertionFunction,\n} from '../_internal/build-predicate-function.js';\nimport { buildAssertionFunction, toBe } from '../_internal/build-predicate-function.js';\n\nconst tuple = buildAssertionFunction((value: unknown): value is object => {\n  if (value === null) {\n    return false;\n  }\n\n  const type = typeof value;\n\n  return type === 'object' || type === 'function';\n}, toBe('any object'));\n\n/**\n * Returns whether the provided value is a JavaScript Object (i.e. anything but a primitive).\n *\n * You will typically want to use more specific functions such as {@link isPlainObject} instead\n */\nexport const isAnyObject: AssertionFunction<object> = tuple[0];\nexport const isNotAnyObject: NegatedAssertionFunction<object> = tuple[1];\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,sCAA6C;AAE7C,MAAM,YAAQ,wDAAuB,CAAC,UAAoC;AACxE,MAAI,UAAU,MAAM;AAClB,WAAO;AAAA,EACT;AAEA,QAAM,OAAO,OAAO;AAEpB,SAAO,SAAS,YAAY,SAAS;AACvC,OAAG,sCAAK,YAAY,CAAC;AAOd,MAAM,cAAyC,MAAM,CAAC;AACtD,MAAM,iBAAmD,MAAM,CAAC;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/iterator-utils/every.ts"],
+  "sourcesContent": ["export function every<In>(iterable: Iterable<In>, cb: (item: In) => boolean): boolean {\n  for (const item of iterable) {\n    if (!cb(item)) {\n      return false;\n    }\n  }\n\n  return true;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,SAAS,MAAU,UAAwB,IAAoC;AACpF,aAAW,QAAQ,UAAU;AAC3B,QAAI,CAAC,GAAG,IAAI,GAAG;AACb,aAAO;AAAA,IACT;AAAA,EACF;AAEA,SAAO;AACT;",
+  "names": []
+}

@@ -1,0 +1,11 @@
+import { SyntaxNode, ParseError, Reference, ReferenceRange } from "./syntax";
+import { Compile } from "./compiler";
+import { Parser } from "./parser";
+declare const BNF: Parser;
+import { PromiseQueue } from "./lib/promise-queue";
+import { StreamCache } from "./lib/cache";
+declare const experimental: {
+    StreamCache: typeof StreamCache;
+    PromiseQueue: typeof PromiseQueue;
+};
+export { BNF, Parser, Compile, SyntaxNode, ParseError, Reference, ReferenceRange, experimental };

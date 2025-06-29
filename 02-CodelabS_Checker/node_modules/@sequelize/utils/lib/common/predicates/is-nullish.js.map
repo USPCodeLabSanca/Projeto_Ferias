@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-nullish.ts"],
+  "sourcesContent": ["import type {\n  AssertionFunction,\n  NegatedAssertionFunction,\n} from '../_internal/build-predicate-function.js';\nimport { buildAssertionFunction, toBe } from '../_internal/build-predicate-function.js';\nimport type { Nullish } from '../types.js';\n\nconst tuple = buildAssertionFunction((value: unknown): value is null | undefined => {\n  return value === null || value === undefined;\n}, toBe('null or undefined'));\n\n/**\n * Returns true if the value is null or undefined.\n *\n * @param value The value to compare.\n */\nexport const isNullish: AssertionFunction<Nullish> = tuple[0];\nexport const isNotNullish: NegatedAssertionFunction<Nullish> = tuple[1];\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,sCAA6C;AAG7C,MAAM,YAAQ,wDAAuB,CAAC,UAA8C;AAClF,SAAO,UAAU,QAAQ,UAAU;AACrC,OAAG,sCAAK,mBAAmB,CAAC;AAOrB,MAAM,YAAwC,MAAM,CAAC;AACrD,MAAM,eAAkD,MAAM,CAAC;",
+  "names": []
+}

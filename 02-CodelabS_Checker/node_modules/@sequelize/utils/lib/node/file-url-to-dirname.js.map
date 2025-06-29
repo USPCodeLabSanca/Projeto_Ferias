@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/node/file-url-to-dirname.ts"],
+  "sourcesContent": ["import { dirname } from 'node:path';\nimport { fileURLToPath } from 'node:url';\n\nexport function fileUrlToDirname(url: string | URL): string {\n  return dirname(fileURLToPath(url));\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,uBAAwB;AACxB,sBAA8B;AAEvB,SAAS,iBAAiB,KAA2B;AAC1D,aAAO,8BAAQ,+BAAc,GAAG,CAAC;AACnC;",
+  "names": []
+}

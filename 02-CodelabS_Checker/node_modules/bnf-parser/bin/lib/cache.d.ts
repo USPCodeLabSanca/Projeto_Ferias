@@ -1,0 +1,84 @@
+/// <reference types="node" />
+import type * as Stream from 'stream';
+declare class Cursor {
+    private _owner;
+    _offset: number;
+    constructor(owner: StreamCache, offset: number);
+    /**
+     * Will read n characters or the remaining amount before the end
+     */
+    next(highWaterMark?: number): Promise<string>;
+    _skip_read(highWaterMark?: number): string;
+    isDone(): boolean;
+    /**
+     * Create another cursor at the same position
+     */
+    clone(): Cursor;
+    /**
+     * Remove this cursor from the stream
+     */
+    drop(): void;
+}
+/**
+ * Takes a readable stream and allows cursors to move (forward only) over it
+ * Reading data as it is read, but allowing cursor cloning to allow going back
+ * and re-reading information as necessary, and also automatically dropping unreachable information
+ */
+export declare class StreamCache {
+    private _signal;
+    private _cursors;
+    private _cache;
+    private _total_cache;
+    private _ended;
+    shrinks: number;
+    constructor();
+    getCacheSize(): number;
+    getCachePools(): number;
+    isDone(): boolean;
+    /**
+     * Pipe a NodeJS readable stream to the stream cache
+     * @param stream
+     */
+    pipe_node(stream: Stream.Readable): void;
+    /**
+     * Pipe Web JS readable stream to the stream cache
+     * @param stream
+     */
+    pipe_classic(stream: ReadableStream<string>): void;
+    /**
+     * Pipe single string to the stream cache
+     * @param stream
+     */
+    write(str: string): void;
+    end(str: string): void;
+    /**
+     * Removes unreachable cached information
+     * @returns {void}
+     */
+    shrink(): void;
+    /**
+     * Creates a new cursor at the earliest available cache data
+     * @returns {Cursor}
+     */
+    cursor(): Cursor;
+    /**
+     * Removes a cursor from the stream process
+     * @param cursor
+     */
+    drop(cursor: Cursor): void;
+    /**
+     * FOR INTERNAL USE ONLY
+     * @param cursor
+     */
+    _subscribe(cursor: Cursor): void;
+    /**
+     * INTERNAL USE ONLY
+     * This should not be called directly, instead call the read function on the cursor
+     * @param cursor must be created by this object
+     * @returns {Promise[string | null]}
+     */
+    _read(cursor: Cursor, size?: number): Promise<string>;
+    _skip_read(cursor: Cursor, size?: number): string;
+    private _offset_to_cacheLoc;
+}
+export {};

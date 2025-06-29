@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/predicates/is-big-int.ts"],
+  "sourcesContent": ["import type {\n  AssertionFunction,\n  NegatedAssertionFunction,\n} from '../_internal/build-predicate-function.js';\nimport { buildAssertionFunction, toBe } from '../_internal/build-predicate-function.js';\n\nconst tuple = buildAssertionFunction((value: unknown): value is bigint => {\n  return typeof value === 'bigint';\n}, toBe('a bigint'));\n\n/**\n * Returns true if the value is a JS bigint.\n *\n * @param value The value to compare.\n */\nexport const isBigInt: AssertionFunction<bigint> = tuple[0];\nexport const isNotBigInt: NegatedAssertionFunction<bigint> = tuple[1];\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,sCAA6C;AAE7C,MAAM,YAAQ,wDAAuB,CAAC,UAAoC;AACxE,SAAO,OAAO,UAAU;AAC1B,OAAG,sCAAK,UAAU,CAAC;AAOZ,MAAM,WAAsC,MAAM,CAAC;AACnD,MAAM,cAAgD,MAAM,CAAC;",
+  "names": []
+}

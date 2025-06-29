@@ -1,0 +1,448 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Parser = exports.Rule = exports.Sequence = exports.Select = exports.Term = exports.Not = exports.Omit = exports.Gather = exports.CharRange = exports.Literal = exports.ParseCount = exports.Count = void 0;
+const syntax_1 = require("./syntax");
+function ParseExpression(json) {
+    switch (json['type']) {
+        case "literal": return new Literal(json);
+        case "range": return new CharRange(json);
+        case "term": return new Term(json);
+        case "not": return new Not(json);
+        case "omit": return new Omit(json);
+        case "gather": return new Gather(json);
+        case "select": return new Select(json);
+        case "sequence": return new Sequence(json);
+        default:
+            throw new TypeError(`Unknown expression type "${json['type']}"`);
+    }
+}
+var Count;
+(function (Count) {
+    Count["One"] = "1";
+    Count["ZeroToOne"] = "?";
+    Count["ZeroToMany"] = "*";
+    Count["OneToMany"] = "+";
+})(Count = exports.Count || (exports.Count = {}));
+;
+function ParseCount(count) {
+    switch (count) {
+        case "1": return Count.One;
+        case "?": return Count.ZeroToOne;
+        case "*": return Count.ZeroToMany;
+        case "+": return Count.OneToMany;
+        default: throw new Error(`Unknown count "${count}"`);
+    }
+}
+exports.ParseCount = ParseCount;
+function CountCheck(count, mode) {
+    if (count < 1 && (mode == Count.One ||
+        mode == Count.OneToMany)) {
+        return false;
+    }
+    else if (count > 1 && (mode == Count.ZeroToOne ||
+        mode == Count.One)) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+class Literal {
+    constructor(json) {
+        this.value = json['value'];
+        this.count = ParseCount(json['count']);
+    }
+    parse(input, ctx, cursor) {
+        let start = cursor.clone();
+        let consumption = 0;
+        while (true) {
+            if (consumption >= 1 && (this.count == Count.One || this.count == Count.ZeroToOne)) {
+                break;
+            }
+            if (this.match(input, cursor)) {
+                consumption++;
+            }
+            else {
+                break;
+            }
+        }
+        let range = new syntax_1.ReferenceRange(start, cursor);
+        if (!CountCheck(consumption, this.count)) {
+            return new syntax_1.ParseError(`Didn't consume the correct amount. ${consumption} ¬ ${this.count}`, range);
+        }
+        return new syntax_1.SyntaxNode("literal", input.slice(start.index, cursor.index), range);
+    }
+    match(input, cursor) {
+        if (this.value.length == 0) {
+            return false;
+        }
+        for (let i = 0; i < this.value.length; i++) {
+            if (cursor.index >= input.length) {
+                return false;
+            }
+            if (this.value[i] == input[cursor.index]) {
+                cursor.advance(input[cursor.index] == "\n");
+            }
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
+    serialize() {
+        return {
+            type: "literal",
+            value: this.value,
+            count: this.count
+        };
+    }
+}
+exports.Literal = Literal;
+class CharRange extends Literal {
+    constructor(json) {
+        super(json);
+        this.to = json['to'];
+    }
+    match(input, cursor) {
+        if (cursor.index >= input.length) {
+            return false;
+        }
+        if (this.value <= input[cursor.index] && input[cursor.index] <= this.to) {
+            cursor.advance(input[cursor.index] == "\n");
+            return true;
+        }
+        return false;
+    }
+    matchChar(char, offset) {
+        return this.value <= char && char <= this.to;
+    }
+    serialize() {
+        let out = super.serialize();
+        out.type = "range";
+        out.to = this.to;
+        return out;
+    }
+}
+exports.CharRange = CharRange;
+class Gather {
+    constructor(json) {
+        this.expr = ParseExpression(json['expr']);
+    }
+    parse(input, ctx, cursor) {
+        let res = this.expr.parse(input, ctx, cursor);
+        if (res instanceof syntax_1.ParseError) {
+            return res;
+        }
+        res.value = res.flat();
+        return res;
+    }
+    serialize() {
+        return {
+            type: "gather",
+            expr: this.expr.serialize()
+        };
+    }
+}
+exports.Gather = Gather;
+class Omit extends Gather {
+    parse(input, ctx, cursor) {
+        let res = this.expr.parse(input, ctx, cursor);
+        if (res instanceof syntax_1.ParseError) {
+            return res;
+        }
+        return new syntax_1.SyntaxNode("omit", "", res.ref);
+    }
+    serialize() {
+        let out = super.serialize();
+        out.type = "omit";
+        return out;
+    }
+}
+exports.Omit = Omit;
+class Not {
+    constructor(json) {
+        this.expr = ParseExpression(json['expr']);
+        this.count = ParseCount(json['count']);
+    }
+    parse(input, ctx, cursor) {
+        let start = cursor.clone();
+        let consumption = 0;
+        while (true) {
+            if (consumption >= 1 && (this.count == Count.One || this.count == Count.ZeroToOne)) {
+                break;
+            }
+            if (cursor.index >= input.length) {
+                break;
+            }
+            let check = this.expr.parse(input, ctx, cursor.clone());
+            if (check instanceof syntax_1.ParseError) {
+                cursor.advance(input[cursor.index] == "\n");
+                consumption++;
+            }
+            else {
+                break;
+            }
+        }
+        let range = new syntax_1.ReferenceRange(start, cursor);
+        if (!CountCheck(consumption, this.count)) {
+            return new syntax_1.ParseError(`Didn't consume the correct amount. ${consumption} ${this.count}`, range);
+        }
+        return new syntax_1.SyntaxNode("literal", input.slice(start.index, cursor.index), range);
+    }
+    serialize() {
+        return {
+            type: "not",
+            count: this.count,
+            expr: this.expr.serialize()
+        };
+    }
+}
+exports.Not = Not;
+class Term {
+    constructor(json) {
+        this.value = json['value'];
+        this.count = ParseCount(json['count']);
+    }
+    parse(input, ctx, cursor) {
+        let expr = ctx.getRule(this.value);
+        let start = cursor.clone();
+        let consumption = 0;
+        let err = null;
+        let nodes = [];
+        while (true) {
+            if (consumption >= 1 && (this.count == Count.One || this.count == Count.ZeroToOne)) {
+                break;
+            }
+            if (cursor.index >= input.length) {
+                break;
+            }
+            let res = expr.parse(input, ctx, cursor.clone());
+            if (res instanceof syntax_1.ParseError) {
+                err = res;
+                break;
+            }
+            else {
+                if (this.count == Count.One) {
+                    return res;
+                }
+                cursor = res.ref.end;
+                nodes.push(res);
+                consumption++;
+            }
+        }
+        let range = new syntax_1.ReferenceRange(start, cursor);
+        if (!CountCheck(consumption, this.count)) {
+            if (!err) {
+                err = new syntax_1.ParseError(`Didn't consume the correct amount. ${consumption} ${this.count}`, range);
+            }
+            err.add_stack(this.value);
+            return err;
+        }
+        let out = new syntax_1.SyntaxNode(this.value + this.count, nodes, range);
+        out.reach = (err === null || err === void 0 ? void 0 : err.ref) || null;
+        return out;
+    }
+    serialize() {
+        return {
+            type: "term",
+            value: this.value,
+            count: this.count
+        };
+    }
+}
+exports.Term = Term;
+class Select {
+    constructor(json) {
+        this.exprs = [];
+        this.count = ParseCount(json['count']);
+        for (let value of json['exprs']) {
+            this.exprs.push(ParseExpression(value));
+        }
+    }
+    parse(input, ctx, cursor) {
+        let count = 0;
+        let start = cursor.clone();
+        let err = null;
+        let nodes = [];
+        while (true) {
+            if (count >= 1 && (this.count == Count.One || this.count == Count.ZeroToOne)) {
+                break;
+            }
+            let res = this.parseSingle(input, ctx, cursor.clone());
+            if (res instanceof syntax_1.ParseError) {
+                err = res;
+                break;
+            }
+            cursor = res.ref.end.clone();
+            nodes.push(res);
+            count++;
+        }
+        if (!CountCheck(count, this.count)) {
+            if (!err) {
+                err = new syntax_1.ParseError("Invalid count of sequence", new syntax_1.ReferenceRange(start, cursor));
+            }
+            return err;
+        }
+        let out = new syntax_1.SyntaxNode(`(...)${this.count == "1" ? "" : this.count}`, nodes, new syntax_1.ReferenceRange(start, cursor));
+        if (err) {
+            out.reach = err.ref;
+        }
+        return out;
+    }
+    parseSingle(input, ctx, cursor) {
+        let err = null;
+        for (let opt of this.exprs) {
+            let res = opt.parse(input, ctx, cursor.clone());
+            if (res instanceof syntax_1.ParseError) {
+                if (!err || err.ref.end.index <= res.ref.end.index) {
+                    err = res;
+                }
+                continue;
+            }
+            else {
+                return res;
+            }
+        }
+        return err ||
+            new syntax_1.ParseError("No valid option found", new syntax_1.ReferenceRange(cursor, cursor));
+    }
+    serialize() {
+        return {
+            type: "select",
+            count: this.count,
+            exprs: this.exprs.map(x => x.serialize())
+        };
+    }
+}
+exports.Select = Select;
+class Sequence extends Select {
+    constructor(json) {
+        super(json);
+    }
+    parse(input, ctx, cursor) {
+        let out = super.parse(input, ctx, cursor);
+        if (out instanceof syntax_1.ParseError) {
+            return out;
+        }
+        if (this.count == Count.One) {
+            return out.value[0];
+        }
+        return out;
+    }
+    parseSingle(input, ctx, cursor) {
+        let start = cursor.clone();
+        let nodes = [];
+        let reach = null;
+        let onlyTerm = true;
+        for (let rule of this.exprs) {
+            let res = rule.parse(input, ctx, cursor.clone());
+            if (res instanceof syntax_1.ParseError) {
+                if (reach && reach.end.index > res.ref.end.index) {
+                    res.ref = reach;
+                    res.msg += "Unexpected syntax error (code POL)";
+                }
+                return res;
+            }
+            cursor = res.ref.end;
+            let nx_reach = res.getReach();
+            if (nx_reach) {
+                if (!reach || reach.valueOf() < nx_reach.valueOf()) {
+                    reach = nx_reach;
+                }
+            }
+            if (rule instanceof Omit) {
+                continue; // skip omitted operands
+            }
+            else {
+                if (!(rule instanceof Term)) {
+                    onlyTerm = false;
+                }
+                // Merge selection of a single item inline
+                if (rule instanceof Select && rule.count == Count.One) {
+                    nodes.push(res.value[0]);
+                    continue;
+                }
+                nodes.push(res);
+            }
+        }
+        let out = new syntax_1.SyntaxNode('seq[]', nodes, new syntax_1.ReferenceRange(start, cursor));
+        out.reach = reach;
+        return out;
+    }
+    serialize() {
+        let out = super.serialize();
+        out.type = "sequence";
+        return out;
+    }
+}
+exports.Sequence = Sequence;
+class Rule {
+    constructor(name, json) {
+        this.name = name;
+        this.seq = ParseExpression(json);
+        this.verbose = false;
+    }
+    parse(input, ctx, cursor) {
+        if (this.verbose) {
+            console.log(`Parsing rule "${this.name}" at ${cursor.toString()}`);
+        }
+        let res = this.seq.parse(input, ctx, cursor);
+        if (res instanceof syntax_1.SyntaxNode) {
+            res.type = this.name;
+        }
+        return res;
+    }
+    setVerbose(mode) {
+        this.verbose = mode;
+    }
+    serialize() {
+        return this.seq.serialize();
+    }
+}
+exports.Rule = Rule;
+class Parser {
+    constructor(json) {
+        this.terms = new Map();
+        for (let key in json) {
+            this.addRule(key, new Rule(key, json[key]));
+        }
+    }
+    getRule(name) {
+        let rule = this.terms.get(name);
+        if (rule == null) {
+            throw new ReferenceError(`Unknown Rule ${name}`);
+        }
+        return rule;
+    }
+    addRule(name, rule) {
+        if (this.terms.has(name)) {
+            throw new Error(`Attempting to add rule "${name}" to a parser which already has a rule of that name`);
+        }
+        this.terms.set(name, rule);
+    }
+    parse(input, partial = false, entry = "program") {
+        let entryTerm = this.getRule(entry);
+        let res = entryTerm.parse(input, this, new syntax_1.Reference(1, 1, 0));
+        if (res instanceof syntax_1.ParseError) {
+            return res;
+        }
+        if (!partial && res.ref.end.index != input.length) {
+            return new syntax_1.ParseError("Unexpected syntax at ", res.getReach() || new syntax_1.ReferenceRange(res.ref.end.clone(), res.ref.end));
+        }
+        return res;
+    }
+    setVerbose(mode) {
+        var _a;
+        for (let key of this.terms.keys()) {
+            (_a = this.terms.get(key)) === null || _a === void 0 ? void 0 : _a.setVerbose(mode);
+        }
+    }
+    serialize() {
+        let blob = {};
+        for (let [key, rule] of this.terms) {
+            blob[key] = rule.serialize();
+        }
+        return blob;
+    }
+}
+exports.Parser = Parser;

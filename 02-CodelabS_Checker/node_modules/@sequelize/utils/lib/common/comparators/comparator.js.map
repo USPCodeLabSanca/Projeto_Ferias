@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/common/comparators/comparator.ts"],
+  "sourcesContent": ["export type Comparator<T> = (a: T, b: T) => number;\n\n/**\n * Used by comparator functions\n *\n * @example\n * [].sort(localizedStringComparator('en', SortDirection.DESC));\n */\nexport enum SortDirection {\n  ASC = 1,\n  DESC = -1,\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAQO,IAAK,gBAAL,kBAAKA,mBAAL;AACL,EAAAA,8BAAA,SAAM,KAAN;AACA,EAAAA,8BAAA,UAAO,MAAP;AAFU,SAAAA;AAAA,GAAA;",
+  "names": ["SortDirection"]
+}
