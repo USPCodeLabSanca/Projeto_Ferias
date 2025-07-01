@@ -1,9 +1,9 @@
-import { Sequelize } from "sequelize"
+import { Sequelize, Op, Model, DataTypes } from "sequelize"
 
 import 'dotenv/config'
 
 const sequelize = new Sequelize(
-    process.env.DB_DATABASE,
+    process.env.DB_DATABASE, //projeto_ferias
     process.env.DB_USER,
     process.env.DB_PASSWORD,
     {
@@ -13,7 +13,5 @@ const sequelize = new Sequelize(
     }
 )
 
-sequelize.authenticate().then(() => {
-    console.log("conectou");
-    
-})
+export default sequelize
+
