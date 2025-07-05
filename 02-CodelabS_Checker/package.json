@@ -1,0 +1,13 @@
+{
+  "name": "codelabs-checker",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "author": "Luís Henrique",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
