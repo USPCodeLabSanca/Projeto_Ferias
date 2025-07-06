@@ -1,9 +1,9 @@
 const { Router } = require('express');
 
+const { getRandomName } = require('./routes/getRandomName');
+
 const router = Router();
 
-router.get('/', (_, res) => {
-    res.send({ message: 'Welcome to the API!' });
-});
+router.get('/nomes/aleatorio', getRandomName);
 
 module.exports = { router };
