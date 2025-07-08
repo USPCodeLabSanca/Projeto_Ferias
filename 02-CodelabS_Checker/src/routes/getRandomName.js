@@ -9,7 +9,7 @@ function getRandomName(_, res) {
         });
     }
 
-    return res.status(200).send({
+    return res.status(200).json({
         name: names[Math.floor(Math.random() * names.length)],
     });
 }

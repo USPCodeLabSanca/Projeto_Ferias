@@ -1,4 +1,4 @@
-const { loadData  } = require('../data/loadData');
+const { loadData } = require('../data/loadData');
 const { writeData } = require('../data/writeData');
 
 function newValidName(req, res) {
@@ -18,23 +18,14 @@ function newValidName(req, res) {
 
     data.correct_names.push(validName);
 
-    for (let i = 0; i < data.incorrect_names.length; i++) {
-        if (data.incorrect_names[i] == validName) {
-            data.incorrect_names.splice(i, 1);
-            break;
-        }
-    }
-
-    for (let i = 0; i < data.names.length; i++) {
-        if (data.names[i].try == validName) {
-            data.names.splice(i, 1);
-            break;
-        }
-    }
+    data.incorrect_names = data.incorrect_names.filter(n => n !== validName);
+    data.names = data.names.filter(n => n.try !== validName);
 
     writeData(data);
 
-    return res.status(200).json({ message: 'Nome adicionado com sucesso' });
+    return res.status(201).json({
+        message: 'Nome adicionado com sucesso',
+    });
 }
 
 module.exports = { newValidName };

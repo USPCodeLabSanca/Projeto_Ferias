@@ -4,36 +4,32 @@ const { writeData } = require('../data/writeData');
 function verifyName(req, res) {
     const { name } = req.body;
 
+    if (!name || typeof name !== 'string' || !name.trim()) {
+        return res.status(400).json({ error: 'Name is required and must be a non-empty string.' });
+    }
+
     let data = loadData();
 
-    for (let i = 0; i < data.correct_names.length; i++) {
-        if(name.trim() == data.correct_names[i]) {
-            return res.status(200).send({
-                valid: true,
-            });
-        }
+    if(data.correct_names.includes(name.trim())) {
+        return res.status(200).json({
+            valid: true,
+        });
     }
 
-    for (let i = 0; i < data.names.length; i++) {
-        if (data.names[i].try == name.trim()) {
-            data.names[i].count += 1;
-
-            writeData(data);
-
-            return res.status(200).send({
-                valid: false,
-            });
-        }
+    const existing = data.names.find(n => n.try === name.trim());
+    
+    if (existing) {
+        existing.count += 1;
+    } else {
+        data.names.push({
+            try: name.trim(),
+            count: 1,
+        });
     }
-
-    data.names.push({
-        try: name.trim(),
-        count: 1,
-    });
 
     writeData(data);
 
-    return res.status(200).send({
+    return res.status(200).json({
         valid: false,
     });
 }
