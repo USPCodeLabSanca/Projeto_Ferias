@@ -14,13 +14,28 @@
         res.send(codzlebs);
 });
 
-//Cria uma rota POST para verificar se a grafia de codelabs do usuário está correta
+//Cria uma rota POST para verificar se a grafia de codelab do usuário está correta
     const { verificaCorretos } = require('./verificaErros.js');
     app.get(`/verificar/:bob`, async (req, res)=>{
         const { bob } = req.params;
         const estaCorreto= await verificaCorretos(bob);
         res.send(estaCorreto);
-    })
+    });
+
+//Cria uma rota POST para adicionar uma nova grafia de codelab
+    const { addCorreto } = require('./adicionarGrafiaCerta.js');
+    app.get(`/nomes/validos/:bob`, async (req, res)=>{
+        const { bob } = req.params;
+        await addCorreto(bob);
+        res.send("funcionou que é uma maravilha!");
+    });
+
+//Cria uma rota GET para ver estatisticas de erro
+    const { leitorDeJSON } = require('./verificaErros.js');
+    app.get(`/estatisticas/erros`, async (req, res)=>{
+        const lista= await leitorDeJSON("erros.json");
+        res.send(lista);
+    });
 
 // Inicia o servidor e o faz "ouvir" na porta definida
     app.listen(PORT, () => {

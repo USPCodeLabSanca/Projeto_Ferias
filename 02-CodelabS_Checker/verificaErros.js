@@ -12,9 +12,6 @@
             return [];
         }
     };
-
-    module.exports = { leitorDeJSON }; 
-
     async function editorJSON(nomeArq, vaiEscreverOque){
         try{
             await fs.writeFile(nomeArq, JSON.stringify(vaiEscreverOque, null, 2));
@@ -24,8 +21,6 @@
             console.error('Deu ruim pra editar:', error);
         }
     }
-
-    module.exports = { editorJSON }; 
 
     function estatisticas(aray){
         //isso aqui atualiza a estatistica de erro de cada objeto no aray
@@ -38,10 +33,10 @@
                 });
 
         //isso aq põe em ordem de mais frequente até menos frequente
-            aray.sort( (a,b)= b.numVezes - a.numVezes);
+            aray.sort( (a,b)=> b.numVezes - a.numVezes);
             
             for(let j=0; j<aray.length; j++)
-                aray[j].id=j+1;
+                aray[j].ranking=j+1;
     }
     
     async function verificaCorretos(palavra){
@@ -75,9 +70,9 @@
         }
     }
                 if(!alguemJaErrou){                  //se ninguém nunca cometeu esse erro, ele é guardado como um novo objeto
-                    const idNovo= errados.length;
+                    const rankingNovo= errados.length;
                     const novoErro= {
-                        "id": idNovo+1, 
+                        "ranking": rankingNovo+1, 
                         "palavra": palavra, 
                         "numVezes": 1, 
                         "estatistica":0}
@@ -92,4 +87,4 @@
 
     }
 
-    module.exports = { verificaCorretos }; 
+    module.exports = { leitorDeJSON, verificaCorretos, editorJSON }; 
