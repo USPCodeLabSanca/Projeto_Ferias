@@ -1,0 +1,2 @@
+põe isso no html, por favor
+    <script src="https://cdn.tailwindcss.com"></script>
