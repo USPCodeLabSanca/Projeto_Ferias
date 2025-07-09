@@ -3,11 +3,11 @@ async function addCorreto(palavra){
 const { leitorDeJSON } = require('./verificaErros.js');
 const { editorJSON } = require('./verificaErros.js');
 
-const corretos = await leitorDeJson("validos.json");
+const corretos = await leitorDeJSON("validos.json");
 
-if (!corretos)
+if (!corretos){
     console.error('o "validos.json" não abriu de jeito nenhum');
-    return;
+    return;}
 
 else {
     const jaTaNoArq = corretos.some(coisa => palavra === coisa);
@@ -18,6 +18,7 @@ else {
 
     return;
 }
-
 }
+
+module.exports= { addCorreto };
 
