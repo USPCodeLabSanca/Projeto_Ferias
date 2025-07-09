@@ -62,6 +62,27 @@ app.post("/nomes/validos", async (req, res) => {
 app.post("/verificar", async (req, res) => {
     const nome = req.body.nome
 
+    NomeValido.findAndCountAll({
+        where: {
+            nome: nome
+        }
+    }).then(r => {
+        if (r.count > 0) {
+            res.status(200)
+            res.send({
+                valido: true
+            })
+            return
+        }
+
+        res.status(200)
+        res.send({
+            valido: false
+        })
+
+        NomeInvalido.create({nome: nome}).then(o => console.log("nome inválido registrado")
+        )
+    })
 })
 
 
