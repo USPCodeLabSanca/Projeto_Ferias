@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "> **Área: Backend (Desenvolvimento de API) | Tecnologias: NodeJs + ExpressJs**",
   "main": "index.js",
+
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
+  "start": "nodemon index.js",
+  "dev": "nodemon --delay 0.5s --ignore 'erros.json' --ignore 'validos.json' index.js"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",

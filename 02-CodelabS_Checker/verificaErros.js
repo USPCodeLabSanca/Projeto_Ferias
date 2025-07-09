@@ -41,6 +41,8 @@
     
     async function verificaCorretos(palavra){
 
+        await new Promise(resolve => setTimeout(resolve, 50));
+
         const errados= await leitorDeJSON("erros.json");
         const corretos=  await leitorDeJSON("validos.json");
 

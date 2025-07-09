@@ -1,0 +1,23 @@
+aprendizados para guardar no coração:
+    -verifique se a permissão para editar arquivos é suficiente pro código q você está executando
+        -caso não, usa o chmod
+
+    -para problemas com o nodemon, pq VAI ter vários:
+        -para testar sem ele, é só dar "node index.js" no terminal
+        -se o servidor estiver dando "nodemon clean exit", tenta mudar a porta de entrada
+        -para deletar a pasta node_modules, usa "sudo rm -rf node_modules" no terminal
+        -no package.json, o seu script tem que ser assim:
+        
+            "scripts": {
+                "start": "nodemon index.js",
+                "dev": "nodemon --delay 0.5s --ignore 'erros.json' --ignore 'validos.json' index.js"
+            },
+
+    -o insomnia é bem bonitinho pra testar, mas os comandos curl tbm dão certo
+        -VERIFICA A PORTA ANTES DE COLAR ISSO AQ
+        - curl -X POST http://localhost:5000/verificar -H "Content-Type: application/json" -d '{ "grafia": "codelabs" }'
+
+
+    
+
+    
