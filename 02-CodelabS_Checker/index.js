@@ -22,18 +22,6 @@ app.listen(3000, () => {
 
 app.post("/nomes/validos", async (req, res) => {
 
-    // NomeValido.findAll({
-    //     attributes: [
-    //         "nome",
-    //         [sequelize.fn("COUNT", sequelize.col("nome")), "count_nome"]
-    //     ],
-    //     group: ["nome"]
-    // }).then(r => {
-    //     console.log(r);
-    //     res.send(r)
-    // }
-    // )
-
     const nome = req.body.nome
 
     NomeValido.findAll({
@@ -83,6 +71,21 @@ app.post("/verificar", async (req, res) => {
         NomeInvalido.create({nome: nome}).then(o => console.log("nome inválido registrado")
         )
     })
+})
+
+app.get("/estatisticas/erros", async (req,res) => {
+    NomeInvalido.findAll({
+        attributes: [
+            "nome",
+            [sequelize.fn("COUNT", sequelize.col("nome")), "count_nome"]
+        ],
+        group: ["nome"],
+        order: [[sequelize.literal("count_nome"), "DESC"]]
+    }).then(r => {
+        console.log(r);
+        res.send(r)
+    }
+    )
 })
 
 
