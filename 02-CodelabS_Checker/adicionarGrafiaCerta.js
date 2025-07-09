@@ -7,16 +7,16 @@ const corretos = await leitorDeJSON("validos.json");
 
 if (!corretos){
     console.error('o "validos.json" não abriu de jeito nenhum');
-    return;}
+    return false;}
 
 else {
     const jaTaNoArq = corretos.some(coisa => palavra === coisa);
     
     if (!jaTaNoArq){
         corretos.push(palavra);
-        await editorJSON(corretos);}
+        await editorJSON("validos.json", corretos);}
 
-    return;
+    return true;
 }
 }
 

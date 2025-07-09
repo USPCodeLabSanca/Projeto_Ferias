@@ -7,17 +7,18 @@ aprendizados para guardar no coração:
         -se o servidor estiver dando "nodemon clean exit", tenta mudar a porta de entrada
         -para deletar a pasta node_modules, usa "sudo rm -rf node_modules" no terminal
         -no package.json, o seu script tem que ser assim:
-        
+
             "scripts": {
                 "start": "nodemon index.js",
                 "dev": "nodemon --delay 0.5s --ignore 'erros.json' --ignore 'validos.json' index.js"
             },
 
-    -o insomnia é bem bonitinho pra testar, mas os comandos curl tbm dão certo
+    -o insomnia é bem legal, mas caso vc queira usar os comandos curl
         -VERIFICA A PORTA ANTES DE COLAR ISSO AQ
         - curl -X POST http://localhost:5000/verificar -H "Content-Type: application/json" -d '{ "grafia": "codelabs" }'
 
-
+    -a sua função editorJSON recebe *****DOIS***** parâmetros!!! 
+        async function editorJSON(NOMEARQ, VAIQESCREVEROQ)
     
-
+    -não pode ter vírgula depois do ultimo elemento de um array
     
