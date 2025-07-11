@@ -1,0 +1,29 @@
+{
+  "name": "projeto_ferias",
+  "version": "1.0.0",
+  "description": "Seja muito bem-vindo(a) ao repositório do nosso **Projeto de Férias**\\! Criamos este projeto especialmente para você, que está começando sua jornada no USP CodeLab Sanca!.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USPCodeLabSanca/Projeto_Ferias.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/USPCodeLabSanca/Projeto_Ferias/issues"
+  },
+  "homepage": "https://github.com/USPCodeLabSanca/Projeto_Ferias#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
