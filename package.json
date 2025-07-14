@@ -1,0 +1,27 @@
+{
+  "name": "projeto_ferias",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js", 
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USPCodeLabSanca/Projeto_Ferias.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/USPCodeLabSanca/Projeto_Ferias/issues"
+  },
+  "homepage": "https://github.com/USPCodeLabSanca/Projeto_Ferias#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
