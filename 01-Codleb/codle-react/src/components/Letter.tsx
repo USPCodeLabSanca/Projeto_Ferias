@@ -1,5 +1,6 @@
 interface LetterProps {
   value: string;
+  
 }
 
 function Letter({value}: LetterProps) {
