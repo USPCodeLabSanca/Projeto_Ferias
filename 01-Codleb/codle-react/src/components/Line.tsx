@@ -5,7 +5,7 @@ interface LineProps {
   length: number;
 }
 
-export default function Line({word, length}: LineProps) {
+function Line({word, length}: LineProps) {
   const letters = word.split("");
 
   return (
@@ -16,3 +16,5 @@ export default function Line({word, length}: LineProps) {
     </div>
   );
 }
+
+export default Line;
