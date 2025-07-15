@@ -1,14 +1,18 @@
+import Letter from "./Letter";
+
 interface LineProps {
   word: string;
-  len: number;
+  length: number;
 }
 
-function Line({word, len}: LineProps) {
+export default function Line({word, length}: LineProps) {
+  const letters = word.split("");
+
   return (
-    <div>
-      Linha de string: {word} e Tamanho: {len}
+    <div className="flex space-x-2 mb-2">
+      {Array.from({length}).map((_, i) => (
+        <Letter key={i} value={letters[i] || ""} />
+      ))}
     </div>
   );
 }
-
-export default Line;
