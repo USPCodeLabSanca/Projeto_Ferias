@@ -39,11 +39,12 @@ app.post("/verificar", (req, res) => {
 
       if (erroExistente) {
         erroExistente.vezes++;
+        res.status(404).send("Nome não é válido, já registrado.");
       } else {
         // Adiciona novo registro
         erros.push({ nomeInvalido: req.body, vezes: 1 }); 
+        res.status(201).send("Nome não é válido e foi registrado.");
       }
-      res.status(404).send("Nome não é válido.");
     }
   } else {
     res.status(400).send("Nome não fornecido.");
