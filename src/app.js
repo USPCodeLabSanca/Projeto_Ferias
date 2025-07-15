@@ -4,7 +4,7 @@ import express from "express";
 const app = express();
 
 // Middleware (Ajuda a aceitar o formato JSON)
-app.use(express.text());
+app.use(express.json());
 
 const validos = [
   {
@@ -28,21 +28,27 @@ app.get("/nomes/aleatorio", (req, res) => {
 
 // Recebe um nome e diz se ele é valido.
 app.post("/verificar", (req, res) => {
-  if(req.body){
-    const ehValido = verificarNome(req.body);
+  if (!req.body) {
+    return res.status(400)
+              .send("Corpo da requisição ausente ou malformado.");
+  }
+  
+  const nomeFornecido = req.body.nome;
+  if(nomeFornecido){
+    const ehValido = verificarNome(nomeFornecido);
 
     if (ehValido) {
       res.status(200).send("Nome passado é valido.");
     } else {
       // Verifica se o nome já foi registrado
-      const erroExistente = erros.find(erro => erro.nomeInvalido === req.body);
+      const erroExistente = erros.find(erro => erro.nomeInvalido === nomeFornecido);
 
       if (erroExistente) {
         erroExistente.vezes++;
         res.status(404).send("Nome não é válido, já registrado.");
       } else {
         // Adiciona novo registro
-        erros.push({ nomeInvalido: req.body, vezes: 1 }); 
+        erros.push({ nomeInvalido: nomeFornecido, vezes: 1 }); 
         res.status(201).send("Nome não é válido e foi registrado.");
       }
     }
@@ -53,8 +59,14 @@ app.post("/verificar", (req, res) => {
 
 // Adiciona uma nova versão "correta" do nome do CodeLab.
 app.post("/nomes/validos", (req, res) => {
-  if(req.body){
-    validos.push({nome: req.body});
+  if (!req.body) {
+    return res.status(400)
+              .send("Corpo da requisição ausente ou malformado.");
+  }
+  
+  const nomeFornecido = req.body.nome;
+  if(nomeFornecido){
+    validos.push({nome: nomeFornecido});
     res.status(201).send("Nova versão correta adicionada.");
   } else {
     res.status(400).send("Nome não fornecido.");
