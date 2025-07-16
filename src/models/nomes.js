@@ -1,35 +1,48 @@
-import { lerDB, escreverDB } from "../database/dbMain.js";
+import { lerDB, escreverDB } from '../database/dbMain.js';
 
-export async function adicionarNome(nome) {
-  const dbValidos = await lerDB("validos.json");
-  dbValidos.push( { nome: nome } );
-  escreverDB("validos.json", dbValidos);
-}
-
-export async function pegarNome(nomeBuscado) {
-  const dbValidos = await lerDB("validos.json");
-  return dbValidos.find(({ nome }) => nome === nomeBuscado) || null;
-}
-
-// Retorna true se o nome estiver na database
-export async function buscarNome(nomeBuscado) {
-  const dbValidos = await lerDB("validos.json");
-  return dbValidos.some(({ nome }) => nome === nomeBuscado);
-}
-
-export async function atualizarNome(nomeBuscado, dadosAtualizados){
-  const dbValidos = await lerDB("validos.json");
-  const index = dbValidos.findIndex(({ nome }) => nome === nomeBuscado);
-  if (index === -1) {
-    return false; // não achou o objeto para atualizar
+class Nomes {
+  constructor(arquivo = 'validos.json') {
+    this.arquivo = arquivo;
   }
-  dbValidos[index] = dadosAtualizados;
-  escreverDB("validos.json", dbValidos);
 
-  return true;
+  async adicionarNome (nome) {
+    const dbValidos = await lerDB(this.arquivo);
+    dbValidos.push({ nome });
+    await escreverDB(this.arquivo, dbValidos);
+  }
+
+  async pegarNome(nomeBuscado) {
+    const dbValidos = await lerDB(this.arquivo);
+    return dbValidos.find(({ nome }) => nome === nomeBuscado) || null;
+  }
+
+  async buscarNome(nomeBuscado) {
+    const dbValidos = await lerDB(this.arquivo);
+    return dbValidos.some(({ nome }) => nome === nomeBuscado);
+  }
+
+  async atualizarNome(nomeBuscado, dadosAtualizados) {
+    const dbValidos = await lerDB(this.arquivo);
+    const index = dbValidos.findIndex(({ nome }) => nome === nomeBuscado);
+    if (index === -1) {
+      return false;
+    }
+    dbValidos[index] = dadosAtualizados;
+    await escreverDB(this.arquivo, dbValidos);
+    return true;
+  }
+
+  async deletarNome(nomeBuscado) {
+    const dbValidos = await lerDB(this.arquivo);
+    const novosValidos = dbValidos.filter(({ nome }) => nome !== nomeBuscado);
+    if (novosValidos.length === dbValidos.length) {
+      return false; // nada foi deletado
+    }
+    await escreverDB(this.arquivo, novosValidos);
+    return true;
+  }
 }
 
-export async function deletarNome(nome){
+const nomes = new Nomes();
 
-}
-
+export default nomes;
