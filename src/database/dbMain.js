@@ -7,7 +7,7 @@ export async function lerDB(nomeDB){
     const dados = await fs.promises.readFile(caminhoDB, 'utf-8');
     console.log("Conseguiu ler dados, retornando objeto JS.")
     // Converte a string JSON para objeto JS
-    return Object.values(JSON.parse(dados));
+    return JSON.parse(dados);
   } catch (erro) {
     // Caso arquivo não encontrado, cria-se ele.
     if (erro.code === 'ENOENT') {
