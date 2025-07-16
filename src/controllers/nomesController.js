@@ -4,7 +4,7 @@ import erros from "../models/erros.js";
 class NomesController {
 
   static async gerarNomeErrado (req, res) {
-    res.status(200).send("CodeLabS");
+    return res.status(200).send("CodeLabS");
   }
 
   static async verificarNome (req, res) {
@@ -15,14 +15,14 @@ class NomesController {
     
     const nomeFornecido = req.body.nome;
     
-    if(!nomeFornecido) res.status(400).send("Nome não fornecido.");
+    if(!nomeFornecido) return res.status(400).send("Nome não fornecido.");
   
   
     // Verifica se o nome fornecido está na lista de nomes validos.
     const ehValido = await nomes.buscarNome(nomeFornecido);
   
     // Se for válido, não faz nada
-    if (ehValido) res.status(200).send("Nome passado é valido.");
+    if (ehValido) return res.status(200).send("Nome passado é valido.");
     
     // Verifica se o nome já foi registrado.
     const erroExistente = await erros.pegarErro(nomeFornecido);
@@ -30,11 +30,11 @@ class NomesController {
     if (erroExistente) {
       erroExistente.vezes++;
       await erros.atualizarErro(erroExistente.nome, erroExistente);
-      res.status(404).send("Nome não é válido, já registrado.");
+      return res.status(404).send("Nome não é válido, já registrado.");
     } else {
       // Registra novo nome inválido.
       await erros.adicionarErro(nomeFornecido);
-      res.status(201).send("Nome não é válido e foi registrado.");
+      return res.status(201).send("Nome não é válido e foi registrado.");
     }
   }
 
@@ -45,14 +45,14 @@ class NomesController {
     }
 
     const nomeFornecido = req.body.nome;
-    if(!nomeFornecido) res.status(400).send("Nome não fornecido.");
+    if(!nomeFornecido) return res.status(400).send("Nome não fornecido.");
     
     const jaExiste = await nomes.buscarNome(nomeFornecido);
     if(jaExiste) {
-      res.status(409).send("Versão correta já existe.");
+      return res.status(409).send("Versão correta já existe.");
     } else {
       await nomes.adicionarNome(nomeFornecido);
-      res.status(201).send("Nova versão correta adicionada.");
+      return res.status(201).send("Nova versão correta adicionada.");
     }
   }
 }
