@@ -81,3 +81,8 @@ Estamos muito empolgados para ver suas soluções e te ajudar a crescer como des
 **Bom desenvolvimento\!**
 
 **🚀 É ritmo de Codelab**
+
+## Referências
+
+(Reading files in Node.js)[https://www.memberstack.com/blog/reading-files-in-node-js#:~:text=readFile()%20and%20the%20fs,until%20this%20process%20is%20completed.]
+(JSON as database)[https://dev.to/ezhillragesh/building-your-own-simple-json-database-1n0a]
