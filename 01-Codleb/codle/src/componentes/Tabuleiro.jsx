@@ -1,4 +1,3 @@
-// Tabuleiro.jsx
 import Linha from './Linha';
 
 export default function Tabuleiro({ atualTentativa, tentativas, turno }) {
@@ -13,6 +12,7 @@ export default function Tabuleiro({ atualTentativa, tentativas, turno }) {
         // para as outras linhas, mostre as tentativas anteriores
         return <Linha key={i} tentativa={tentativa} />;
       })}
+      
     </div>
   );
 }

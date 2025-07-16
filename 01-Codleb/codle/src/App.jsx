@@ -1,79 +1,160 @@
-// App.jsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import palavrasDoJogo from './assets/words.json';
 import './App.css'
+import Tabuleiro from './componentes/Tabuleiro';
+import Teclado from './componentes/Teclado';
+import Modal from './componentes/Modal';
 
 function App() {
-  // a palavra a ser adivinhada (ainda testando com uma palavra só, posteriomente associo o json de palavras)
-  const [solucao, setSolucao] = useState("REACT");
 
-  // vetor de tentativas do jogador 
-  const [tentativas, setTentativas] = useState(Array(6).fill(null));
+  const [solucao, setSolucao] = useState(''); // a palavra a ser adivinhada
+  const palavrasValidas = useRef(new Set(palavrasDoJogo.words)); // Set com palavras válidas do jogo
+  const [tentativas, setTentativas] = useState(Array(6).fill(null)); // vetor de tentativas do jogador 
+  const [atualTentativa, setAtualTentativa] = useState(""); // jogada atual
+  const [turno, setTurno] = useState(0); // turno atual
+  const [letrasUsadas, setLetrasUsadas] = useState({}); // objeto para armazenar as letras usadas e suas cores
+  const [fimDeJogo, setFimDeJogo] = useState(false); // flag para indicar se o jogo acabou
+  const [ganhou, setGanhou] = useState(false); // flag para indicar se o jogador ganhou
 
-  // jogada atual 
-  const [atualTentativa, setAtualTentativa] = useState("");
-
-  // turno atual do jogo
-  const [turno, setTurno] = useState(0)
-
+  // função para pegar uma nova palavra aleatória do dicionário. usada no início e possível reinício do jogo
+  const pegarNovaPalavra = useCallback(() => {
+    const indiceAleatorio = Math.floor(Math.random() * palavrasDoJogo.words.length);
+    const palavraAleatoria = palavrasDoJogo.words[indiceAleatorio].toUpperCase();
+    setSolucao(palavraAleatoria);
+    console.log("Nova palavra secreta:", palavraAleatoria);
+  }, []);
 
   useEffect(() => {
-    // função que será chamada quando uma tecla for pressionada
-    const pressionaTecla = (event) => {
+    pegarNovaPalavra(); // pega uma nova palavra ao iniciar o jogo
+  }, [pegarNovaPalavra]);
 
-      if (event.key === 'Enter') {
-        // lógica de submeter a tentativa (Passo 5)
-        console.log('submeteu a tentativa');
+  // função para reiniciar o jogo
+  const resetaJogo = useCallback(() => {
+    console.log("Reiniciando o jogo...");
+    pegarNovaPalavra(); // pega uma nova palavra
+    setTentativas(Array(6).fill(null));
+    setTurno(0);
+    setAtualTentativa("");
+    setLetrasUsadas({});
+    setFimDeJogo(false);
+    setGanhou(false);
+  }, [pegarNovaPalavra]);
 
-      } else if (event.key === 'Backspace') {
-        // lógica de apagar a última letra
-        setAtualTentativa(prev => prev.slice(0, -1));
-
-      } else if (atualTentativa.length < 5 && /^[a-zA-Z]$/.test(event.key)) {
-        // lógica de adicionar uma letra, se não for muito longa e for uma letra válida
-        setAtualTentativa(prev => prev + event.key.toUpperCase());
-      }
-    };
-
-    window.addEventListener('keydown', pressionaTecla);
-
-    // limpeza do evento para evitar bugs
-    return () => {
-      window.removeEventListener('keydown', pressionaTecla);
-    };
-  }, [atualTentativa]); // a dependência faz o efeito rodar de novo se currentGuess mudar
-
-
-  const formataTentativa = () => {
+  // formata a tentativa atual, retornando um vetor de objetos com a letra e a cor
+  const formataTentativa = useCallback(() => {
     const vetorSolucao = [...solucao];
-    const tentativaFormatada = [...atualTentativa].map((l, i) => {
-      return { key: l, color: 'grey' }; // começa tudo cinza
-    });
+    const tentativaFormatada = [...atualTentativa].map((l) => ({ key: l, color: 'cinza' }));
   
     // acha as letras verdes (posição correta)
     tentativaFormatada.forEach((l, i) => {
       if (vetorSolucao[i] === l.key) {
-        tentativaFormatada[i].color = 'green';
+        tentativaFormatada[i].color = 'verde';
         vetorSolucao[i] = null; // para não checar de novo
+        console.log(`Letra ${l.key} na posição ${i} está correta!`);
       }
     });
   
     // acha as letras amarelas (posição errada)
     tentativaFormatada.forEach((l, i) => {
-      if (vetorSolucao.includes(l.key) && l.color !== 'green') {
-        tentativaFormatada[i].color = 'yellow';
+      if (vetorSolucao.includes(l.key) && l.color !== 'verde') {
+        tentativaFormatada[i].color = 'amarelo';
         vetorSolucao[vetorSolucao.indexOf(l.key)] = null;
       }
     });
-  
     return tentativaFormatada;
-  };
+  }, [solucao, atualTentativa]);
 
+  // função que lida com a digitação
+  const handleKeyClick = useCallback((key) => {
+    if (fimDeJogo) return; // não faz nada se o jogo já acabou
+
+    if (key === 'ENTER' || key === 'Enter') { // submeter tentativa
+      if (atualTentativa.length !== 5) { 
+        console.log('Tentativa inválida: deve ter 5 letras');
+        return;
+      }
+      if (!palavrasValidas.current.has(atualTentativa.toLowerCase())) { 
+        console.log('Tentativa inválida: palavra não está no dicionário do jogo');
+        return; 
+      }
+
+      const tentativaFormatada = formataTentativa();
+      
+      const novasLetrasUsadas = { ...letrasUsadas };
+      tentativaFormatada.forEach(l => { // verificação/atualização das cores das letras usadas
+        const corAtual = novasLetrasUsadas[l.key];
+        if (corAtual === 'verde') return; // caso já seja verde
+        if (l.color === 'verde' || (l.color === 'amarelo' && corAtual !== 'verde')) { // caso seja verde ou amarelo (e, antes do amarelo, não era verde)
+          novasLetrasUsadas[l.key] = l.color;
+        }
+        if (!corAtual) { // caso não tenha cor definida
+          novasLetrasUsadas[l.key] = l.color;
+        }
+      });
+      setLetrasUsadas(novasLetrasUsadas);
+
+      const novasTentativas = [...tentativas];
+      novasTentativas[turno] = tentativaFormatada;
+      setTentativas(novasTentativas);
+      setTurno(turno + 1);
+      setAtualTentativa("");
+
+      if (atualTentativa === solucao) { // se acertou a palavra
+        setGanhou(true);
+        setFimDeJogo(true);
+        console.log("Vitória!");
+        return;
+      }
+      if (turno === 5) { // se for a última tentativa
+        setGanhou(false);
+        setFimDeJogo(true);
+        console.log("Derrota...");
+        return;
+      }
+
+    } else if (key === 'BACKSPACE' || key === 'Backspace') { // apagar a última letra
+      setAtualTentativa(prev => prev.slice(0, -1));
+    } else if (atualTentativa.length < 5 && /^[a-zA-Z]$/.test(key)) { // digitação de letra
+      setAtualTentativa(prev => prev + key.toUpperCase());
+    }
+  }, [fimDeJogo, 
+      atualTentativa, 
+      turno, 
+      letrasUsadas, 
+      tentativas, 
+      solucao, 
+      formataTentativa]); 
+
+  // useEffect para "pegar o que vem" do teclado
+  useEffect(() => {
+    // função interna acionada pelo teclado físico
+    const pressionaTecla = (event) => {
+      handleKeyClick(event.key); 
+    };
+  
+    window.addEventListener('keydown', pressionaTecla);
+  
+    return () => window.removeEventListener('keydown', pressionaTecla);
+  }, [handleKeyClick]); 
 
   return (
-    <div className="bg-gray-900 text-white h-screen flex flex-col items-center p-4">
-      <h1>CODLE</h1>
+    <div className="bg-gray-900 text-white h-screen flex flex-col items-center justify-center p-4">
+      <h1 className="text-5xl font-bold tracking-widest">CODLE</h1>
+      
+      <Tabuleiro atualTentativa={atualTentativa} tentativas={tentativas} turno={turno} />
+
+      <Teclado letrasUsadas={letrasUsadas} onKeyClick={handleKeyClick} />
+
+      {fimDeJogo && (
+        <Modal
+          ganhou={ganhou}
+          solucao={solucao}
+          resetaJogo={resetaJogo}
+        />
+      )}
+
     </div>
-  )
+  );
 }
 
 export default App;
