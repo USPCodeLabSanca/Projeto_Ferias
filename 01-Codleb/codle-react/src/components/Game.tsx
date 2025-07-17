@@ -1,19 +1,31 @@
 import { useState, useEffect } from "react";
-import Modal from "./Modal";
 import Line from "./Line";
 import { AnswerProvider } from "../context/AnswerContext";
 import confetti from "canvas-confetti";
 
 interface BoardProps {
 	maxAttempts: number;
+	resetGame: boolean;
+	setResetGame: (resetGame: boolean) => void;
+	currentGuess: string;
+	setCurrentGuess: (currentGuess: string) => void;
+	totalWins: number;
+	setTotalWins: (totalWins: number) => void;
+	setGameStatus: (status: "PLAYING" | "WON" | "LOST") => void;
 }
 
-function Game({ maxAttempts }: BoardProps) {
+function Game({
+	maxAttempts,
+	resetGame,
+	setResetGame,
+	currentGuess,
+	setCurrentGuess,
+	totalWins,
+	setTotalWins,
+	setGameStatus,
+}: BoardProps) {
 	const [answer, setAnswer] = useState("");
-	const [currentGuess, setCurrentGuess] = useState("");
 	const [guesses, setGuesses] = useState<string[]>([]);
-	const [showModal, setShowModal] = useState(false);
-	const [isWinner, setIsWinner] = useState(false);
 	const [gameOver, setGameOver] = useState(false);
 
 	const chooseWord = async () => {
@@ -24,10 +36,23 @@ function Game({ maxAttempts }: BoardProps) {
 		setAnswer(randomWord.toUpperCase());
 	};
 
+	// The first choosen word
 	useEffect(() => {
 		chooseWord();
 	}, []);
 
+	// Reset the game if necessary
+	useEffect(() => {
+		if (resetGame) {
+			setGuesses([]);
+			setCurrentGuess("");
+			setGameOver(false);
+			chooseWord();
+			setResetGame(false);
+		}
+	}, [resetGame]);
+
+	// Everytime the answer changes, print it in Console (For now, it's just a debug)
 	useEffect(() => {
 		console.log(`Answer: ${answer}`);
 	}, [answer]);
@@ -43,7 +68,8 @@ function Game({ maxAttempts }: BoardProps) {
 
 			// Modify the word, removindo the last letter
 			if (keyPressed === "Backspace") {
-				setCurrentGuess((currentGuess) => currentGuess.slice(0, -1)); // Remove the last letter from the word being guessed
+				const newGuess = currentGuess.slice(0, -1);
+				setCurrentGuess(newGuess); // Remove the last letter from the word being guessed
 			}
 
 			// Submission of a word
@@ -52,24 +78,24 @@ function Game({ maxAttempts }: BoardProps) {
 				if (currentGuess.length !== answer.length) {
 					return;
 				}
-				setGuesses((prev) => [...prev, currentGuess]);
-				setCurrentGuess("");
 
-				// If it is the answer, the game ends showing a Modal and a visual effect of confetti
+				// If it is the answer, the game ends showing a visual effect of confetti
 				if (currentGuess === answer) {
 					confetti();
-					setIsWinner(true);
-					setShowModal(true);
+					setTotalWins(totalWins + 1);
 					setGameOver(true);
+					setGameStatus("WON");
 
 					// If it's not the answer, we must check if it was the last try. If the person lost it, show the result Modal
 				} else if (guesses.length + 1 >= maxAttempts) {
-					setIsWinner(false);
-					setShowModal(true);
+					setTotalWins(-1);
 					setGameOver(true);
+					setGameStatus("LOST");
 				}
-			}
 
+				setGuesses((prev) => [...prev, currentGuess]); // It gets all the previous and add the new one
+				setCurrentGuess("");
+			}
 			keyPressed = keyPressed.toUpperCase(); // Making sure the consistency, everything is upperCase
 
 			// Regex, /^[A-Z]$/.test() it means filtering by alphabethic uppercase letters
@@ -77,7 +103,8 @@ function Game({ maxAttempts }: BoardProps) {
 				if (currentGuess.length >= answer.length) {
 					return;
 				}
-				setCurrentGuess((currentGuess) => currentGuess + keyPressed); // useState requires you to use the previous state
+				const newGuess = currentGuess + keyPressed;
+				setCurrentGuess(newGuess);
 			}
 		};
 
@@ -85,17 +112,6 @@ function Game({ maxAttempts }: BoardProps) {
 		window.addEventListener("keydown", handleKeyboard);
 		return () => window.removeEventListener("keydown", handleKeyboard);
 	}, [currentGuess, answer, gameOver, guesses]);
-
-	// Arrow function to reset the game
-	const resetGame = () => {
-		setGuesses([]);
-		setCurrentGuess("");
-		setShowModal(false);
-		setGameOver(false);
-		setIsWinner(false);
-		chooseWord();
-	};
-
 	return (
 		<AnswerProvider answer={answer}>
 			<div className="p-8 justify-items-center">
@@ -112,13 +128,6 @@ function Game({ maxAttempts }: BoardProps) {
 					/>
 				))}
 			</div>
-			{showModal && ( // If showModal is true, automatically the result of 'showModal && B' is B. Otherwise, it's false (showModal) and nothing is shown.
-				<Modal
-					isWinner={isWinner}
-					answer={answer}
-					onRestart={resetGame}
-				/>
-			)}
 		</AnswerProvider>
 	);
 }
