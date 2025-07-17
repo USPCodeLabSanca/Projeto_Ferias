@@ -1,22 +1,27 @@
 import nomes from "../models/nomes.js";
 import erros from "../models/erros.js";
+import ErroBase from "../errors/ErroBase.js";
+import ErroMaRequisicao from "../errors/ErroMaRequisicao.js";
+import ErroNaoEncontrado from "../errors/ErroNaoEncontrado.js";
+import ErroConflito from "../errors/ErroConflito.js";
 
 class NomesController {
 
-  static async gerarNomeErrado (req, res) {
+  static async gerarNomeErrado (req, res, next) {
     return res.status(200).send("CodeLabS");
   }
 
-  static async verificarNome (req, res) {
+  static async verificarNome (req, res, next) {
     try{
       if (!req.body) {
-        return res.status(400)
-                  .send("Corpo da requisição ausente ou malformado.");
+        return next(new ErroMaRequisicao("Corpo da requisição ausente ou malformado."));
       }
       
       const nomeFornecido = req.body.nome;
       
-      if(!nomeFornecido) return res.status(400).send("Nome não fornecido.");
+      if(!nomeFornecido) {
+        return next(new ErroMaRequisicao("Nome não fornecido."));
+      }
     
     
       // Verifica se o nome fornecido está na lista de nomes validos.
@@ -31,41 +36,38 @@ class NomesController {
       if (erroExistente) {
         erroExistente.vezes++;
         await erros.atualizarErro(erroExistente.nome, erroExistente);
-        return res.status(404).send("Nome não é válido, já registrado.");
+        return next(new ErroNaoEncontrado("Nome não é válido, já registrado."));
       } else {
         // Registra novo nome inválido.
         await erros.adicionarErro(nomeFornecido);
         return res.status(201).send("Nome não é válido e foi registrado.");
       }
     } catch(erro) {
-      return res
-                .status(500)
-                .json({ messagem: `${erro.message} - Erro ao acessar arquivo.`});
+      return next(new ErroBase("Erro ao acessar arquivo"));
     }
   }
   
 
-  static async adicionarNomeValido (req, res){
+  static async adicionarNomeValido (req, res, next){
     try {
       if (!req.body) {
-        return res.status(400)
-                  .send("Corpo da requisição ausente ou malformado.");
+        return next(new ErroMaRequisicao("Corpo da requisição ausente ou malformado."));
       }
 
       const nomeFornecido = req.body.nome;
-      if(!nomeFornecido) return res.status(400).send("Nome não fornecido.");
-      
+      if(!nomeFornecido) {
+        return next(new ErroMaRequisicao("Nome não fornecido."));
+      }
+
       const jaExiste = await nomes.buscarNome(nomeFornecido);
       if(jaExiste) {
-        return res.status(409).send("Versão correta já existe.");
+        return next(new ErroConflito("Versão correta já existe."));
       } else {
         await nomes.adicionarNome(nomeFornecido);
         return res.status(201).send("Nova versão correta adicionada.");
       }
     } catch(erro) {
-      return res
-                .status(500)
-                .json({ messagem: `${erro.message} - Erro ao acessar arquivo.`});
+      return next(new ErroBase("Erro ao acessar arquivo"));
     }
   }
 }
