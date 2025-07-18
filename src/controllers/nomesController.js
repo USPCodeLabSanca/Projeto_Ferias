@@ -10,12 +10,24 @@ class NomesController {
 
   static async gerarNomeErrado (req, res, next) {
     const dbValidos = await nomes.buscarTodosNomes();
-    const prompt = `Com base nestes valores: ${dbValidos
-    .flatMap(obj => Object.values(obj))
-    .join(", ")}
-    Gere uma palavra semanticamente relacionada. 
-    Retorne apenas a palavra, sem explicações.`;
-    return res.status(200).send(await requisicaoIA(prompt));
+    if(!dbValidos) {
+      return next(new ErroBase("Erro ao acessar arquivo"));
+    }
+
+    const prompt = `Generate a variation of "CodeLab" that:
+    1. Must contain the substrings "cod" and "lab" (case-insensitive).
+    2. Must not be identical to the following words, but use them as reference: 
+      ${dbValidos
+        .flatMap(obj => Object.values(obj))
+        .join(", ")}, CodeLabS, Cod Lab.
+    3. Do not concatenate other words to form the variation.
+    4. Return ONLY THE WORD, with no punctuation or explanations.`;
+
+    try{
+      return res.status(200).send(await requisicaoIA(prompt));
+    } catch (erro) {
+      return next(new ErroBase("Erro ao consultar API."));
+    }
   }
 
   static async verificarNome (req, res, next) {
