@@ -1,0 +1,20 @@
+{
+  "name": "projeto_ferias",
+  "version": "1.0.0",
+  "description": "Seja muito bem-vindo(a) ao repositório do nosso **Projeto de Férias**\\! Criamos este projeto especialmente para você, que está começando sua jornada no USP CodeLab Sanca!.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js", 
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
