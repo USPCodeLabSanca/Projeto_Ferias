@@ -2,7 +2,7 @@ export default function Modal({ ganhou, solucao, resetaJogo }) {
     return (
       // fundo escurecido do modal
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-
+        
         {/* caixa de diálogo do modal */}
         <div className="bg-gray-800 rounded-lg p-8 text-center shadow-2xl">
           {ganhou ? (
@@ -24,7 +24,7 @@ export default function Modal({ ganhou, solucao, resetaJogo }) {
   
           {/* botão para jogar novamente*/}
           <button
-            onClick={resetaJogo}
+            onClick={resetaJogo} // quando o botão for clicado, chama a função de resetar jogo
             className="mt-6 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-colors"
           >
             Jogar Novamente

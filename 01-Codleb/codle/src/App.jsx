@@ -22,16 +22,18 @@ function App() {
     const palavraAleatoria = palavrasDoJogo.words[indiceAleatorio].toUpperCase();
     setSolucao(palavraAleatoria);
     console.log("Nova palavra secreta:", palavraAleatoria);
-  }, []);
+  }, []); // lista vazia garante que essa função seja criada e memorizada apenas uma vez
 
   useEffect(() => {
     pegarNovaPalavra(); // pega uma nova palavra ao iniciar o jogo
-  }, [pegarNovaPalavra]);
+  }, [pegarNovaPalavra]); // lista com a função pegarNovaPalavra indica que ela será chamada quando ela mudar de valor
+  // obs.: o combo da função pegarNovaPalavra e o useEffect acaba fazendo com que o programa escolha uma palavra e, logo em seguida, outra
+  // isso não era exatamente o desejado mas também não afeta nada na lógica do jogo, então não mexi mais nisso
 
   // função para reiniciar o jogo
   const resetaJogo = useCallback(() => {
     console.log("Reiniciando o jogo...");
-    pegarNovaPalavra(); // pega uma nova palavra
+    pegarNovaPalavra(); 
     setTentativas(Array(6).fill(null));
     setTurno(0);
     setAtualTentativa("");
