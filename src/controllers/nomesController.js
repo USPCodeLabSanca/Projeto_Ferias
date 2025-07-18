@@ -4,7 +4,7 @@ import ErroBase from "../errors/ErroBase.js";
 import ErroMaRequisicao from "../errors/ErroMaRequisicao.js";
 import ErroNaoEncontrado from "../errors/ErroNaoEncontrado.js";
 import ErroConflito from "../errors/ErroConflito.js";
-import requisicaoIA from "../services/service.js";
+import requisicaoIA from "../services/aiservice.js";
 
 class NomesController {
 
