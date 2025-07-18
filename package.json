@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/USPCodeLabSanca/Projeto_Ferias#readme",
   "dependencies": {
+    "@huggingface/inference": "^4.5.3",
+    "dotenv": "^17.2.0",
     "express": "^5.1.0"
   },
   "devDependencies": {

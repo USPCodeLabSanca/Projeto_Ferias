@@ -21,6 +21,11 @@ class Nomes {
     return dbValidos.some(({ nome }) => nome === nomeBuscado);
   }
 
+  async buscarTodosNomes() {
+    const dbValidos = await lerDB(this.arquivo);
+    return dbValidos;
+  }
+
   async atualizarNome(nomeBuscado, dadosAtualizados) {
     const dbValidos = await lerDB(this.arquivo);
     const index = dbValidos.findIndex(({ nome }) => nome === nomeBuscado);

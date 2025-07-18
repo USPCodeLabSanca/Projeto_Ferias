@@ -4,11 +4,18 @@ import ErroBase from "../errors/ErroBase.js";
 import ErroMaRequisicao from "../errors/ErroMaRequisicao.js";
 import ErroNaoEncontrado from "../errors/ErroNaoEncontrado.js";
 import ErroConflito from "../errors/ErroConflito.js";
+import requisicaoIA from "../services/service.js";
 
 class NomesController {
 
   static async gerarNomeErrado (req, res, next) {
-    return res.status(200).send("CodeLabS");
+    const dbValidos = await nomes.buscarTodosNomes();
+    const prompt = `Com base nestes valores: ${dbValidos
+    .flatMap(obj => Object.values(obj))
+    .join(", ")}
+    Gere uma palavra semanticamente relacionada. 
+    Retorne apenas a palavra, sem explicações.`;
+    return res.status(200).send(await requisicaoIA(prompt));
   }
 
   static async verificarNome (req, res, next) {
