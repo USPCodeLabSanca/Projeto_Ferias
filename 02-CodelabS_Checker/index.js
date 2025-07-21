@@ -117,20 +117,30 @@ app.get("/nomes/aleatorio", (req, res) => {
             },
 
             () => {
-                if (resultado.includes("Code")) {
+                if (resultado.includes("Code") && !resultado.includes("Codes")) {
                     resultado = resultado.replace("Code", "Codes");
-                    console.log(`Zoeira 3: "Code" virou "Codes". Agora está: "${resultado}"`);
                 }
-                if (resultado.includes("Lab")) {
+                if (resultado.includes("Lab") && !resultado.includes("Labs")) {
                     resultado = resultado.replace("Lab", "Labs");
-                    console.log(`Zoeira 3: "Lab" virou "Labs". Agora está: "${resultado}"`);
                 }
             },
 
             () => {
+                const variantesCodelab = [
+                    "CodeLab",
+                    "Code labe",
+                    "Cod lab",
+                    "Codalab",
+                    "Codeslab",
+                    "Codeleb",
+                    "CodelabS"
+                ];
+                const varianteAleatoria = variantesCodelab[Math.floor(Math.random() * variantesCodelab.length)];
+
                 if (resultado.includes("Code Lab")) {
-                    resultado = resultado.replace("Code Lab", "CodeLab");
-                    console.log(`Zoeira 4: "Code Lab" virou "CodeLab". Agora está: "${resultado}"`);
+                    resultado = resultado.replace("Code Lab", varianteAleatoria);
+                } else if (resultado.includes("CodeLab")) {
+                    resultado = resultado.replace("CodeLab", varianteAleatoria);
                 }
             },
 
@@ -139,7 +149,6 @@ app.get("/nomes/aleatorio", (req, res) => {
                 const cidadeAleatoria = cidadesProximas[Math.floor(Math.random() * cidadesProximas.length)];
                 if (resultado.includes("São Carlos")) {
                     resultado = resultado.replace("São Carlos", cidadeAleatoria);
-                    console.log(`Zoeira 5: São Carlos sumiu! Entrou "${cidadeAleatoria}". Agora está: "${resultado}"`);
                 }
             },
 
@@ -152,14 +161,14 @@ app.get("/nomes/aleatorio", (req, res) => {
             },
 
             () => {
-                const emojis = ["🙏", "🤐", "🥶", "💀", "🔥", "🤓"];
-
-                for (let i = 0; i < Math.floor(Math.random() * 6); i++) {
+                const emojis = ["🙏", "🤐", "🥶", "💀", "🔥", "🤓", "🚀", "✨", "😂", "🤯"];
+                const numEmojis = Math.floor(Math.random() * 4) + 1;
+                let emojisAdicionados = "";
+                for (let i = 0; i < numEmojis; i++) {
                     const emojiAleatorio = emojis[Math.floor(Math.random() * emojis.length)];
-
-                    resultado += emojiAleatorio;
+                    emojisAdicionados += emojiAleatorio;
                 }
-
+                resultado += emojisAdicionados;
             },
         ];
 
