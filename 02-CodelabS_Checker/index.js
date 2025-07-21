@@ -68,12 +68,12 @@ app.post("/verificar", async (req, res) => {
             valido: false
         })
 
-        NomeInvalido.create({nome: nome}).then(o => console.log("nome inválido registrado")
+        NomeInvalido.create({ nome: nome }).then(o => console.log("nome inválido registrado")
         )
     })
 })
 
-app.get("/estatisticas/erros", async (req,res) => {
+app.get("/estatisticas/erros", async (req, res) => {
     NomeInvalido.findAll({
         attributes: [
             "nome",
@@ -86,6 +86,100 @@ app.get("/estatisticas/erros", async (req,res) => {
         res.send(r)
     }
     )
+})
+
+app.get("/nomes/aleatorio", (req, res) => {
+    function nomeAleatorio(textoOriginal) {
+        let resultado = textoOriginal;
+
+        const acoes = [
+            () => {
+                let temp = '';
+                for (let i = 0; i < resultado.length; i++) {
+                    if (Math.random() < 0.3) {
+                        temp += resultado[i] === resultado[i].toUpperCase() ? resultado[i].toLowerCase() : resultado[i].toUpperCase();
+                    } else {
+                        temp += resultado[i];
+                    }
+                }
+                resultado = temp;
+            },
+
+            () => {
+                const palavras = resultado.split(' ');
+                if (palavras.length > 1) {
+                    if (Math.random() < 0.5) {
+                        const indiceRemover = Math.floor(Math.random() * palavras.length);
+                        const palavraRemovida = palavras.splice(indiceRemover, 1);
+                        resultado = palavras.join(' ');
+                    }
+                }
+            },
+
+            () => {
+                if (resultado.includes("Code")) {
+                    resultado = resultado.replace("Code", "Codes");
+                    console.log(`Zoeira 3: "Code" virou "Codes". Agora está: "${resultado}"`);
+                }
+                if (resultado.includes("Lab")) {
+                    resultado = resultado.replace("Lab", "Labs");
+                    console.log(`Zoeira 3: "Lab" virou "Labs". Agora está: "${resultado}"`);
+                }
+            },
+
+            () => {
+                if (resultado.includes("Code Lab")) {
+                    resultado = resultado.replace("Code Lab", "CodeLab");
+                    console.log(`Zoeira 4: "Code Lab" virou "CodeLab". Agora está: "${resultado}"`);
+                }
+            },
+
+            () => {
+                const cidadesProximas = ["Araraquara", "Rio Claro", "Massachusetts", "Itirapina"];
+                const cidadeAleatoria = cidadesProximas[Math.floor(Math.random() * cidadesProximas.length)];
+                if (resultado.includes("São Carlos")) {
+                    resultado = resultado.replace("São Carlos", cidadeAleatoria);
+                    console.log(`Zoeira 5: São Carlos sumiu! Entrou "${cidadeAleatoria}". Agora está: "${resultado}"`);
+                }
+            },
+
+            () => {
+                const universidades = ["UFSCar", "Unicamp", "Uninove", "Mackenzie", "Estácio", "FATEC"];
+                const universidadeAleatoria = universidades[Math.floor(Math.random() * universidades.length)];
+                if (resultado.includes("USP")) {
+                    resultado = resultado.replace("USP", universidadeAleatoria);
+                }
+            },
+
+            () => {
+                const emojis = ["🙏", "🤐", "🥶", "💀", "🔥", "🤓"];
+
+                for (let i = 0; i < Math.floor(Math.random() * 6); i++) {
+                    const emojiAleatorio = emojis[Math.floor(Math.random() * emojis.length)];
+
+                    resultado += emojiAleatorio;
+                }
+
+            },
+        ];
+
+        const numAcoesAplicar = Math.floor(Math.random() * 3) + 3;
+        let acoesJaAplicadas = new Set();
+
+        for (let i = 0; i < numAcoesAplicar; i++) {
+            let indiceAcao;
+            do {
+                indiceAcao = Math.floor(Math.random() * acoes.length);
+            } while (acoesJaAplicadas.has(indiceAcao));
+
+            acoes[indiceAcao]();
+            acoesJaAplicadas.add(indiceAcao);
+        }
+
+        return resultado;
+    }
+
+    res.send(nomeAleatorio("USP Code Lab São Carlos"))
 })
 
 
