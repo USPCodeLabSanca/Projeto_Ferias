@@ -10,16 +10,19 @@
 
 @layer components{
   .buttons {
-    @apply flex items-center justify-center h-[32px] w-[32px] border-[1px] border-[#D9D9D9] rounded-[5px] bg-[#282828];
+    @apply flex items-center justify-center h-[32px] w-[32px] border-[1px] border-[#D9D9D9] rounded-[5px] bg-[#282828] hover:bg-[#333333] hover:scale-105;
   }
   .lettersBox {
-    @apply flex items-center justify-center h-[64px] w-[64px] border-[1px] border-[#D9D9D9] rounded-[2px]
+    @apply flex items-center justify-center h-[64px] w-[64px] bg-[#1D3D35] rounded-[2px];
   }
   .letters {
-    @apply font-bold text-[40px]
+    @apply font-bold text-[40px];
   }
   .words {
-    @apply flex items-center justify-center gap-x-[20px]
+    @apply flex items-center justify-center gap-x-[20px];
+  }
+  .keyboardLetters{
+    @apply flex justify-center items-center rounded-[4px] bg-[#333333] hover:bg-[#3D4644];
   }
 }
 

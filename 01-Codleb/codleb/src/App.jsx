@@ -20,30 +20,77 @@ function App() {
       </div>
 
       <div title='Game' className='flex flex-col gap-y-[15px]'>
-        <section className='words'>
-          <div className='lettersBox'>
-            <p className='letters font-montserrat'>C</p>
-          </div>
-          <div className='lettersBox'>
-            <p className='letters font-montserrat'>O</p>
-          </div>
-          <div className='lettersBox'>
-            <p className='letters font-montserrat'>D</p>
-          </div>
-          <div className='lettersBox'>
-            <p className='letters font-montserrat'>L</p>
-          </div>
-          <div className='lettersBox'>
-            <p className='letters font-montserrat'>E</p>
-          </div>
-        </section>
+        <TryWord/>
+        <TryWord/>
+        <TryWord/>
+        <TryWord/>
+        <TryWord/>
+        <TryWord/>
       </div>
 
-      <div title='KeyBoard'>
-        
+      <div title='KeyBoard' className='flex flex-col gap-y-[10px]'>
+        <KeyboardRow row='1'/>
+        <KeyboardRow row='2'/>
+        <KeyboardRow row='3'/>
       </div>
     </div>
-  )
+  );
 }
+
+
+const KeyboardRow = ({row}) => {
+  let letters = [];
+  if (row === '1'){
+    letters = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
+  }
+  else if(row === '2'){
+    letters = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
+  }
+  else if(row === '3'){
+    letters = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
+  }
+  
+  return (
+    <div className='flex flex-row justify-center gap-x-[5px]'>
+      {letters.map((letterValue) => {
+        return (
+          <KeyboardLetterBox key={letterValue} letter={letterValue}/>
+        );
+      })}
+      {row === '2' && <button className='keyboardLetters font-bold text-[20px] w-[32px] h-[45px]'>{'<'}</button>}
+      {row === '3' && <button className='keyboardLetters font-bold text-[20px] w-[116px] h-[45px]'>ENTER</button>}
+    </div>
+  );
+}
+
+const KeyboardLetterBox = (props) => {
+  return (
+    <button className='keyboardLetters w-[36px] h-[45px]'>
+      <p className='font-bold text-[20px]'>{props.letter}</p>
+    </button>
+  );
+}
+
+const TryWord = () => {
+
+  return (
+    <section className='words'>
+      <LettersBox letter="C"/>
+      <LettersBox letter="O"/>
+      <LettersBox letter="D"/>
+      <LettersBox letter="L"/>
+      <LettersBox letter="E"/>
+    </section>
+  );
+}
+
+const LettersBox = (props) => {
+  return (
+    <div className='lettersBox'>
+      <p className='letters font-montserrat'>{props.letter}</p>
+    </div>
+  );
+}
+
 
 export default App
