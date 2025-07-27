@@ -10,19 +10,19 @@ Este repositório é uma coleção de projetos práticos, desenhados para te des
 
 O objetivo não é entregar um projeto perfeito, mas sim que você **aprenda, experimente, erre e evolua**. Queremos que este seja um ambiente seguro para você explorar áreas como Frontend, Backend e Web Scraping com tecnologias que usamos no dia a dia do grupo.
 
------
+---
 
 ## Os Desafios
 
 Temos três projetos iniciais nessa edição. Cada um foca em uma área e em tecnologias diferentes. Escolha o que mais te interessar e clique para ver os detalhes completos (você pode fazer mais de um projeto)\!
 
-| Projeto | Área | Tecnologias |
-| :--- | :--- | :--- |
-| 💻 **Codle** | Frontend | `React` + `Tailwind CSS` |
-| ⚙️ **CodelabS Checker** | Backend | `Node.js` + `Express.js` |
-| 🤖 **BandejãoQuality** | Web Scraping | `Python` ou `JavaScript` |
+| Projeto                 | Área         | Tecnologias              |
+| :---------------------- | :----------- | :----------------------- |
+| 💻 **Codle**            | Frontend     | `React` + `Tailwind CSS` |
+| ⚙️ **CodelabS Checker** | Backend      | `Node.js` + `Express.js` |
+| 🤖 **BandejãoQuality**  | Web Scraping | `Python` ou `JavaScript` |
 
------
+---
 
 ## Como Contribuir
 
@@ -68,11 +68,11 @@ git add .
 # Cria um commit com uma mensagem descritiva
 git commit -m "feature/implementa a lógica de verificação de letras no Codle"
 
-# Envia a sua branch para o repositório remoto 
+# Envia a sua branch para o repositório remoto
 git push origin seu-nome/nome-do-projeto
 ```
 
------
+---
 
 ## ✨ Ultimo Aviso:
 
