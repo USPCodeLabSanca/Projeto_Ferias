@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const nomesValidos = path.join(__dirname, '../database/nomesValidos.json');
-const estatisticas = path.join(__dirname, '../database/estatisticas.json');
+const nomesValidosPath = path.join(__dirname, '../database/nomesValidos.json');
+const estatisticasPath = path.join(__dirname, '../database/estatisticas.json');
 
 function lerJSON(arquivo) {
   const conteudo = fs.readFileSync(arquivo, 'utf-8');
@@ -26,20 +26,16 @@ function geradorNomesAleatorios(){
 }
 
 function verificarNomeValido(nome) {
-  const nomes = lerJSON(nomesValidos);
+  const nomes = lerJSON(nomesValidosPath);
 
   const verificador = nomes.find(n => n.nome.toLowerCase() === nome.toLowerCase());
 
-  if (verificador) {
-    return true;
-  } else {
-    cadastrarNomeErrado(nome);
-    return false;
-  }
+  if (verificador) return true;
+  else return false;
 }
 
 function cadastrarNomeErrado(nome) {
-  const nomes = lerJSON(estatisticas);
+  const nomes = lerJSON(estatisticasPath);
 
   const verificador = nomes.find(n => n.nome.toLowerCase() === nome.toLowerCase());
 
@@ -49,22 +45,45 @@ function cadastrarNomeErrado(nome) {
     nomes.push({ nome: nome, quantidade: 1 });
   }
 
-  escreverJSON(estatisticas, nomes);
+  escreverJSON(estatisticasPath, nomes);
+}
+
+function cadastarNomeValido(nome) {
+  const nomes = lerJSON(nomesValidosPath);
+  nomes.push({ nome: nome });
+  escreverJSON(nomesValidosPath, nomes);
+
+  //verificar se o novo nome válido já n foi cadastrado como errado. se sim, remover
 }
 
 
 
 module.exports = {
     nomesAleatorios: (req, res) => {
-        const nomeAleatorio = geradorNomesAleatorios();
-        res.send(nomeAleatorio);
+      const nomeAleatorio = geradorNomesAleatorios();
+      res.send(nomeAleatorio);
     },
 
     verificar: (req, res) => {
-        const nome = req.body.nome;
-        const valido = verificarNomeValido(nome);
+      const nome = req.body.nome;
+      const valido = verificarNomeValido(nome);
 
-        if (valido) res.send('Nome Válido!');
-        else res.send('Nome Inválido!');
+      if (valido) res.send('Nome Válido!');
+      else {
+        cadastrarNomeErrado(nome);
+        res.send('Nome Inválido!');
+      }
+    },
+
+    nomesValidos:(req, res) => {
+      const nome = req.body.nome;
+      var verificador = verificarNomeValido(nome);
+
+      if (verificador) res.send('Nome já cadastrado');
+      else {
+        cadastarNomeValido(nome);
+        res.send('Cadastro realizado com sucesso');
+      }
+
     }
 }
