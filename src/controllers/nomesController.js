@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const nomesValidosPath = path.join(__dirname, '../database/nomesValidos.json');
-const estatisticasPath = path.join(__dirname, '../database/estatisticas.json');
+const nomesValidosPath = path.join(__dirname, '../database/validos.json');
+const estatisticasPath = path.join(__dirname, '../database/erros.json');
 
 function lerJSON(arquivo) {
   const conteudo = fs.readFileSync(arquivo, 'utf-8');
