@@ -3,6 +3,6 @@ import { AppContext } from "../App";
 
 export default function Letra(props) {
     const { board } = useContext(AppContext)
-    const letra = board[props.pos][props.tentativa]
-    return <div className="letra">Letra</div>
+    const letra = board[props.tentativa][props.pos];
+    return <div className="letra">{letra}</div>;
 }

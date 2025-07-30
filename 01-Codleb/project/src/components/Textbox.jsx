@@ -1,5 +1,4 @@
 import React from 'react'
-import boardPadrao from './Palavras'
 import Letra from './Letra'
 
 export default function Textbox() {
