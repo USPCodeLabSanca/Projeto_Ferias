@@ -1,34 +1,45 @@
 import CharTermo from "./CharTermo";
-import { useEffect, useState } from "react";
 
-export default function WordRow(){
+export default function WordRow(props) {
+  const { currentGuess, previousGuesses, targetWord, currentRow, id } = props;
 
+  const handleValue = (index) => {
+    if (currentRow === id) {
+      return currentGuess[index] || "";
+    } else if (id < previousGuesses.length) {
+      return previousGuesses[id][index] || "";
+    }
+    return "";
+  };
 
-    const [currentGuess, setCurrentGuess] = useState('')
+  const handleClassName = (index) => {
+    if (currentRow === id) {
+      return "w-13 h-13 flex items-center justify-center text-3xl font-bold rounded-xs border-[3.5px] border-[#5EC8AE] bg-[#282828]";
+    } else if (id < previousGuesses.length) {
+      const guess = previousGuesses[id];
+      const char = guess[index];
+      const targetChar = targetWord[index];
 
-
-    useEffect(() => {
-    const handleKeyPress = (event) => {
-      const key = event.key.toUpperCase();
-      
-      if (key === 'ENTER') {
-        // submitGuess();
-      } else if (key === 'BACKSPACE') {
-        setCurrentGuess(prev => prev.slice(0, -1));
-      } else if (key.match(/[A-Z]/) && key.length === 1 && currentGuess.length < 5) {
-        setCurrentGuess(prev => prev + key);
+      if (char === targetChar) {
+        return "w-13 h-13 flex items-center justify-center text-3xl font-bold rounded-xs bg-[#357465]";
+      } else if (targetWord.includes(char)) {
+        return "w-13 h-13 flex items-center justify-center text-3xl font-bold rounded-xs bg-[#8B8F4D]";
+      } else {
+        return "w-13 h-13 flex items-center justify-center text-3xl font-bold rounded-xs bg-[#404040]";
       }
-    };
+    }
+    return "w-13 h-13 flex items-center justify-center text-3xl font-bold rounded-xs bg-[#1D3D35]";
+  };
 
-      window.addEventListener('keydown', handleKeyPress);
-      return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [currentGuess]);
-  
-  return(
+  return (
     <div className="flex gap-4">
       {[...Array(5)].map((__, index) => (
-        <CharTermo key={index} value={currentGuess[index]}/>
+        <CharTermo
+          key={index}
+          value={handleValue(index)}
+          classNameProp={handleClassName(index)}
+        />
       ))}
     </div>
-  )
+  );
 }

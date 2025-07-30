@@ -1,11 +1,7 @@
-import { useState } from "react";
-import logo from "../assets/images/logo.png"
+import logo from "../assets/images/logo.png";
 import Grid from "./components/Grid";
 
 function App() {
-
-  
-  
   return (
     <>
       <header className="p-3 flex justify-center items-center">
@@ -13,7 +9,7 @@ function App() {
         <h1 className="text-white font-bold text-4xl">CODLE</h1>
       </header>
       <main className="">
-        <div className="flex justify-center items-center text-white">
+        <div className="flex flex-col justify-center items-center text-white">
           <Grid />
         </div>
       </main>
