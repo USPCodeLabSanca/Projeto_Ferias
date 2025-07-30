@@ -1,9 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import telebot
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # carrega as variáveis do .env
 
 # inicializa o bot do telegram (@bandeco_ICMC_Bot)
-bot = telebot.TeleBot('#####') # coloque o token do bot aqui
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+bot = telebot.TeleBot(TOKEN)
  
 # função para verificar os alimentos no cardápio
 def verifica_alimentos():
@@ -45,9 +50,9 @@ def verifica_alimentos():
         # armazena o resultado em resultados_finais
         if dias_encontrados:
             dias_formatados = ", ".join(dias_encontrados)
-            resultados_finais.append(f" Essa semana irá ter '{palavra}' nos seguintes dias: {dias_formatados}.")
+            resultados_finais.append(f" Essa semana irá ter {palavra} nos seguintes dias: {dias_formatados}.")
         else:
-            resultados_finais.append(f" Essa semana não irá ter '{palavra}'.")
+            resultados_finais.append(f" Essa semana não irá ter {palavra}.")
     
     # junta todos os resultados em uma única mensagem
     return "\n\n".join(resultados_finais)
