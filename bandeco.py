@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import telebot
 
 # inicializa o bot do telegram (@bandeco_ICMC_Bot)
-bot = telebot.TeleBot('8192966707:AAEDNYYBAnuIkLUA451vBjr-FFohOIZ8Pbw')
+bot = telebot.TeleBot('#####') # coloque o token do bot aqui
  
 # função para verificar os alimentos no cardápio
 def verifica_alimentos():
