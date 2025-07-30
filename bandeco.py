@@ -1,9 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
+import telebot
 
-def main():
+# inicializa o bot do telegram (@bandeco_ICMC_Bot)
+bot = telebot.TeleBot('8192966707:AAEDNYYBAnuIkLUA451vBjr-FFohOIZ8Pbw')
+ 
+# função para verificar os alimentos no cardápio
+def verifica_alimentos():
     print("Esse bot verifica se alguns alimentos estarão presentes no bandejão da USP São Carlos essa semana.")
+    # palavras a serem verificadas
     palavras = ['pudim', 'frango', 'lasanha', 'estrogonofe', 'flan de baunilha']
+    # lista para armazenar os resultados
+    resultados_finais = []
     for palavra in palavras:
         dias_encontrados = []
 
@@ -34,11 +42,28 @@ def main():
                 if palavra in cardapio_dia_inteiro.lower():
                     dias_encontrados.append(dia)
         
-        # resultado
+        # armazena o resultado em resultados_finais
         if dias_encontrados:
             dias_formatados = ", ".join(dias_encontrados)
-            print(f"\nEssa semana irá ter '{palavra}' nos seguintes dias: {dias_formatados} no bandeco :D.")
+            resultados_finais.append(f" Essa semana irá ter '{palavra}' nos seguintes dias: {dias_formatados}.")
         else:
-            print(f"\nEssa semana não irá ter '{palavra}' no bandeco :C.")
+            resultados_finais.append(f" Essa semana não irá ter '{palavra}'.")
+    
+    # junta todos os resultados em uma única mensagem
+    return "\n\n".join(resultados_finais)
 
-main()
+
+# comandos iniciais
+@bot.message_handler(commands=['start', 'help'])
+def start_msg(msg:telebot.types.Message):
+    bot.reply_to(msg, "Esse bot verifica se alguns alimentos estarão presentes no bandejão da USP São Carlos essa semana.\n"
+                      "Use o comando /check para verificar os alimentos.")
+
+# comando para verificar o cardápio
+@bot.message_handler(commands=['check'])
+def check_alimentos(msg:telebot.types.Message):    
+    bot.reply_to(msg, "Verificando cardápio do bandejão...")
+    resultado = verifica_alimentos()
+    bot.reply_to(msg, resultado)
+
+bot.infinity_polling()              
