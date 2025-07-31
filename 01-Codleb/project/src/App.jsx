@@ -2,11 +2,14 @@ import "./index.css";
 import Header from "./components/Header.jsx";
 import Board from "./components/Textbox.jsx";
 import Teclado from "./components/Teclado.jsx";
-import { boardPadrao } from "./components/Palavras.jsx";
 import React from "react";
 import { AppContext } from "./components/AppContext.jsx";
+import { getPalavraAleatoria, boardPadrao } from "./components/Palavras.jsx"
+
 
 export default function App() {
+    const [correct, setCorrect] = React.useState(getPalavraAleatoria());
+    console.log(correct)
     const [board, setBoard] = React.useState(boardPadrao);
     const [tentativaAtual, setTentativaAtual] = React.useState({ tentativa: 0, posicao: 0});
 
@@ -33,7 +36,15 @@ export default function App() {
     return (
       <div className="App">
         <Header />
-        <AppContext.Provider value={{board, setBoard ,tentativaAtual, setTentativaAtual, onEnter, onDelete, onSelect}}>
+        <AppContext.Provider value=
+        {{board,
+         setBoard,
+         tentativaAtual,
+         setTentativaAtual,
+         onEnter,
+         onDelete,
+         onSelect,
+         correct}}>
           <div className="game">
             <Board />
             <Teclado />

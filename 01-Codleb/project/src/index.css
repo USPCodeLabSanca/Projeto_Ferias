@@ -103,3 +103,15 @@ body {
   width: 100px;
 }
 
+#correta {
+  background-color: #528d4e;
+}
+
+#erro {
+  background-color: #3a393c;
+}
+
+#quase {
+  background-color: #b49f39;
+}
+
