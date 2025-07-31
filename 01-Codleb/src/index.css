@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  box-sizing: border-box;
-}
 html, body {
   height: 100%;
   display: flex;
@@ -12,6 +8,25 @@ html, body {
   font-family: 'Montserrat', sans-serif;
 }
 
-main {
-  margin-top: 1.1rem;
+@layer 
+base
+ {
+  *, *::before, *::after {
+    
+box-sizing
+: border-box;
+  }
+
+  * {
+    
+margin
+: 0;
+    
+padding
+: 0;
+    
+box-sizing
+: border-box;
+  }
+
 }

@@ -6,6 +6,9 @@ export default function Keyboard(props) {
   ];
 
   const handleClassName = (keyChar) => {
+    if (keyChar === "ENTER" || keyChar === "<")
+      return "bg-[#333333] ml-1 rounded px-3 py-2 text-white text-lg font-bold cursor-pointer";
+
     if (!props.usedLetters || props.usedLetters.length === 0) {
       return "bg-[#333333] rounded px-3 py-2 text-white text-lg font-bold cursor-pointer";
     }
@@ -25,7 +28,6 @@ export default function Keyboard(props) {
     }
 
     return "bg-[#333333] rounded px-3 py-2 text-white text-lg font-bold cursor-pointer";
-    
   };
 
   return (
