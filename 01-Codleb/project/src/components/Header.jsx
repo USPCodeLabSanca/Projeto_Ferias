@@ -1,4 +1,5 @@
-import CodlabLogo from "../../assets/images/logo.png";
+import CodlabLogo from "../assets/images/logo.png";
+
 export default function Header() {
     return (
       <header>

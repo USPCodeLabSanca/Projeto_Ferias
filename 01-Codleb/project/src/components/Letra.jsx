@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AppContext } from "../App";
+import { AppContext } from "./AppContext";
 
 export default function Letra(props) {
     const { board } = useContext(AppContext)

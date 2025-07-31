@@ -27,12 +27,79 @@ body {
 .letra {
   flex: 33%;
   height: 100%;
-  border: 1px solid grey;
+  border: 3px solid rgb(98, 114, 255);
   margin: 5px;
   display: grid;
   place-items: center;
   font-size: 30px;
-  font-weight: bolder;
+  font-weight: 300;
   color: white;
   font-family: 'Inter', sans-serif;
 }
+.container {
+  width: 450px;
+  height: 550px;
+  border: 1px solid rgb(88, 88, 88);
+  display: flex;
+  flex-direction: column;
+}
+.linha{
+  flex: 33%;
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+}
+.tecla {
+  width: 50px;
+  height: 70px;
+  margin: 5px;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  background-color: grey;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.teclado{
+  width: 700px;
+  height: 300px;
+  margin-top: 60px;
+}
+
+.linha1 {
+  flex: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px;
+}
+.linha2 {
+  flex: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px;
+}
+.linha3 {
+  flex: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px;
+}
+.game {
+  padding-top: 20px;
+  width: 100vw;
+  height: calc(100vh - 170px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#big {
+  width: 100px;
+}
+
