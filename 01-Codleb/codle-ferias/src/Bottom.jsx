@@ -1,44 +1,59 @@
-
-
-function Bottom ()
+const keyStatusStyles = 
 {
+    padrão: "bg-[#333333]",
+    correto: "bg-[#5dc8ae]",
+    quase: "bg-ambar-700 ",
+    incorreto: "bg-black",
+}
+
+function Key({ value, status, onClick }) 
+{
+    const keyStyle = `rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200 cursor-pointer ${keyStatusStyles[status] || keyStatusStyles['padrão']}`;
+    let specialClasses = '';
+
+    if (value === 'ENTER') 
+    {
+        specialClasses = 'ml-7 md:ml-9 w-26 md:w-33';
+    } 
+    else if (value === '<')
+    {
+        specialClasses = 'ml-6 md:ml-4 w-10 md:w-12';
+    }
+
+    return (
+        <div className={`${keyStyle} ${specialClasses}`} onClick={onClick}>
+            {value}
+        </div>
+    );
+}
+
+function Bottom ({keyboardStatus, onEnterPress})
+{
+    const row1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
+    const row2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '<'];
+    const row3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'ENTER'];
+
     return (
         <div className="row-span-2 grid grid-rows-3">
             <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 mb-2 -mt-2 -translate-x-7">
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">Q</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">W</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">E</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">R</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">T</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">Y</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">U</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">I</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">O</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">P</div>
+                {row1.map(key => <Key key={key} value={key} status={keyboardStatus[key]} />)}
             </div>
             <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2">
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">A</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">S</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">D</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">F</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">G</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">H</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">J</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">K</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">L</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center ml-6 md:ml-4 w-10 md:w-12 hover:-translate-y-0.5 duration-200">&lt;</div>
+                {row2.map(key => <Key key={key} value={key} status={keyboardStatus[key]} />)}
             </div>
             <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 mt-2 -mb-2 translate-x-6">
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">Z</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">X</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">C</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">V</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">B</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">N</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center hover:-translate-y-0.5 duration-200">M</div>
-                <div className="bg-[#333333] rounded text-white text-xl flex justify-center items-center ml-7 md:ml-9 w-26 md:w-33 hover:-translate-y-0.5 duration-200">ENTER</div>
+                {row3.map(key => 
+                    (
+                        <Key 
+                            key={key} 
+                            value={key} 
+                            status={keyboardStatus[key]}
+                            onClick={key === 'ENTER' ? onEnterPress : null} 
+                        />
+                    ))
+                }
             </div>
         </div>
-    )
+    );
 }
 export default Bottom
