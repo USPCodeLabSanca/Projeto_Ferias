@@ -2,7 +2,6 @@ const statusStyles =
 {
     bloqueado: "bg-[#1D3D35] border-4 border-[#1D3D35]",
     vazio: "border-4 border-[#1D3D35]",
-    ativo: "border-4 border-gray-500",
     correto: "bg-[#5dc8ae] border-4 border-[#5dc8ae] text-white",
     quase: "bg-amber-500 border-4 border-ambar-700 text-white",
     incorreto: "bg-black border-4 border-black text-white",
@@ -12,11 +11,11 @@ function Cell({ cell, rowIndex, indexLinhaAtual })
 {
   let styleKey = cell.status;
 
-  if (cell.status === 'vazio' && rowIndex === indexLinhaAtual)
+  if (cell.status === 'bloqueado' && rowIndex === indexLinhaAtual)
   {
-      styleKey = 'ativo';
+    styleKey = 'vazio';
   }
-  const cellStyle = `border-4 rounded outline-0 text-center text-white text-4xl duration-500 ${statusStyles[cell.status] || statusStyles['empty']}`;
+  const cellStyle = `border-4 rounded outline-0 flex justify-center items-center text-white text-4xl focus:border-b-[#5dc8ae] duration-500 ${statusStyles[styleKey]}`;
 
   return (
     <div className={cellStyle}>

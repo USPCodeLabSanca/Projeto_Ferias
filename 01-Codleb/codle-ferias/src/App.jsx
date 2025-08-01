@@ -173,7 +173,6 @@ function App ()
         }
 
         const resultado = comparaPalavras(tentativa, resposta);
-        console.log("Resultado da comparação:", resultado);
 
         //atualiza o estado do grid
         const newGrid = [...grid];
