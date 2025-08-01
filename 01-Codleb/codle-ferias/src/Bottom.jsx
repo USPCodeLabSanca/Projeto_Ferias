@@ -2,7 +2,7 @@ const keyStatusStyles =
 {
     padrão: "bg-[#333333]",
     correto: "bg-[#5dc8ae]",
-    quase: "bg-ambar-700 ",
+    quase: "bg-amber-500 ",
     incorreto: "bg-black",
 }
 
@@ -27,31 +27,38 @@ function Key({ value, status, onClick })
     );
 }
 
-function Bottom ({keyboardStatus, onEnterPress})
+function Bottom ({keyboardStatus, onEnterPress, onCharPress, onBackspacePress})
 {
     const row1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
     const row2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '<'];
     const row3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'ENTER'];
 
+    const click = (key) => 
+    {
+        if (key === 'ENTER') 
+        {
+            onEnterPress();
+        } 
+        else if (key === '<') 
+        { 
+            onBackspacePress();
+        } 
+        else 
+        {
+            onCharPress(key);
+        }
+    };
+
     return (
         <div className="row-span-2 grid grid-rows-3">
             <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 mb-2 -mt-2 -translate-x-7">
-                {row1.map(key => <Key key={key} value={key} status={keyboardStatus[key]} />)}
+                {row1.map(key => <Key key={key} value={key} status={keyboardStatus[key]} onClick={() => click(key)} />)}
             </div>
             <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2">
-                {row2.map(key => <Key key={key} value={key} status={keyboardStatus[key]} />)}
+                {row2.map(key => <Key key={key} value={key} status={keyboardStatus[key]} onClick={() => click(key)} />)}
             </div>
             <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 mt-2 -mb-2 translate-x-6">
-                {row3.map(key => 
-                    (
-                        <Key 
-                            key={key} 
-                            value={key} 
-                            status={keyboardStatus[key]}
-                            onClick={key === 'ENTER' ? onEnterPress : null} 
-                        />
-                    ))
-                }
+                {row3.map(key => <Key key={key} value={key} status={keyboardStatus[key]} onClick={() => click(key)} />)}
             </div>
         </div>
     );
