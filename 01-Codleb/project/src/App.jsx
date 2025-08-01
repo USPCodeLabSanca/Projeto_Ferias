@@ -12,26 +12,33 @@ export default function App() {
     console.log(correct)
     const [board, setBoard] = React.useState(boardPadrao);
     const [tentativaAtual, setTentativaAtual] = React.useState({ tentativa: 0, posicao: 0});
+    const [acertou, setAcertou] = React.useState(false);
 
     const onSelect = (val) => {
-    if (tentativaAtual.posicao > 4) return;
-    const newBoard = [...board]
-    newBoard[tentativaAtual.tentativa][tentativaAtual.posicao] = val
-    setBoard(newBoard)
-    setTentativaAtual({ ...tentativaAtual, posicao: tentativaAtual.posicao + 1}); 
+      if (tentativaAtual.posicao > 4 || acertou) return;
+      const newBoard = [...board]
+      newBoard[tentativaAtual.tentativa][tentativaAtual.posicao] = val
+      setBoard(newBoard)
+      setTentativaAtual({ ...tentativaAtual, posicao: tentativaAtual.posicao + 1}); 
     }
 
     const onDelete = () => {
-    if (tentativaAtual.posicao === 0) return;
-    const newBoard = [...board]
-    newBoard[tentativaAtual.tentativa][tentativaAtual.posicao - 1] = ""
-    setBoard(newBoard)
-    setTentativaAtual({ ...tentativaAtual, posicao: tentativaAtual.posicao -1 })
+      if (tentativaAtual.posicao === 0 || acertou) return;
+      const newBoard = [...board]
+      newBoard[tentativaAtual.tentativa][tentativaAtual.posicao - 1] = ""
+      setBoard(newBoard)
+      setTentativaAtual({ ...tentativaAtual, posicao: tentativaAtual.posicao -1 })
     }
 
     const onEnter = () => {
-    if (tentativaAtual.posicao !== 5) return;
-    setTentativaAtual({tentativa : tentativaAtual.tentativa + 1, posicao: 0})
+      if (tentativaAtual.posicao !== 5 || acertou) return;
+      const tentativaPalavra = board[tentativaAtual.tentativa].join("").toLowerCase()
+      if (tentativaPalavra === correct.toLowerCase()) {
+        setAcertou(true);
+        alert("Acertou!")
+        return;
+      }
+      setTentativaAtual({tentativa : tentativaAtual.tentativa + 1, posicao: 0})
     }
     return (
       <div className="App">
@@ -44,7 +51,8 @@ export default function App() {
          onEnter,
          onDelete,
          onSelect,
-         correct}}>
+         correct,
+         acertou}}>
           <div className="game">
             <Board />
             <Teclado />

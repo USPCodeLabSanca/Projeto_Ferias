@@ -9,7 +9,7 @@ export default function Teclado() {
   const teclas1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
   const teclas2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
   const teclas3 = ["Z", "X", "C", "V", "B", "N", "M"];
-
+  
   const handleTeclado = useCallback((event) => {
       if (event.key === "Enter") {
         onEnter()
