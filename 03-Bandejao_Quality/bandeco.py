@@ -15,16 +15,17 @@ def verifica_alimentos():
     print("Esse bot verifica se alguns alimentos estarão presentes no bandejão da USP São Carlos essa semana.")
     # palavras a serem verificadas
     palavras = ['pudim', 'frango', 'lasanha', 'estrogonofe', 'flan de baunilha']
+
+    # carrega dados do site
+    response = requests.get('https://www.puspsc.usp.br/cardapio')
+    soup = BeautifulSoup(response.content, 'html.parser')
+    linhas = soup.find_all('tr')
+    
     # lista para armazenar os resultados
     resultados_finais = []
     for palavra in palavras:
         dias_encontrados = []
 
-        # carrega dados do site
-        response = requests.get('https://www.puspsc.usp.br/cardapio')
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        linhas = soup.find_all('tr')
         # percorrer as linhas da tabela
         for linha in linhas:
             # pega a coluna do dia, almoço e jantar
