@@ -27,7 +27,7 @@ app.get('/nomes/aleatorio', (req, res) => {
 
 });
 
-//rota para  verificar se o nome é valido ou não
+//rota para verificar se o nome é valido ou não
 app.post('/verificar', (req, res) => {
 
   const nomeRecebido = req.body.nome;
