@@ -53,9 +53,29 @@ function cadastarNomeValido(nome) {
   nomes.push({ nome: nome });
   escreverJSON(nomesValidosPath, nomes);
 
-  //verificar se o novo nome válido já n foi cadastrado como errado. se sim, remover
+  //Caso o novo nome válido já tenha entrado na estatística de erros, remover
+  const erros = lerJSON(estatisticasPath);
+
+  const verificadorIndex = erros.findIndex(n => n.nome.toLowerCase() === nome.toLowerCase());
+
+  if (verificadorIndex !== -1) {
+    erros.splice(verificadorIndex, 1);
+    escreverJSON(estatisticasPath, erros);
+  }
 }
 
+
+function getRanking(){
+  const nomes = lerJSON(estatisticasPath);
+
+  nomes.sort((a, b) => b.quantidade - a.quantidade);
+
+  for (let i = 0; i < nomes.length; i++) {
+    nomes[i]['ranking'] = i + 1;
+  }
+
+  return nomes;
+}
 
 
 module.exports = {
@@ -84,6 +104,9 @@ module.exports = {
         cadastarNomeValido(nome);
         res.send('Cadastro realizado com sucesso');
       }
+    },
 
+    estatisticasErros: (req, res) => {
+      res.send(getRanking());
     }
 }
