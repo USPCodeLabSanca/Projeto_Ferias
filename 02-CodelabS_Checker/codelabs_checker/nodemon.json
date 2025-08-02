@@ -1,0 +1,4 @@
+{
+    "ignore": ["*.json", "src/db/*.json"]
+}
+  
