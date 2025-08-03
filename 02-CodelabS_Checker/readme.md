@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Projeto Férias - USP CodeLab Sanca
 
 ## 🧪 Bem-vindo(a), Codelaber\!
@@ -274,3 +273,4 @@ Não se preocupe se esses conceitos são novos! A ideia é aprender fazendo.
 Desejamos a você um **ótimo desenvolvimento!** Este é um projeto desafiador, mas incrivelmente recompensador, que irá expandir suas habilidades em desenvolvimento backend. Não hesite em buscar ajuda, compartilhar seu progresso e tirar dúvidas com os membros do Codelab.
 
 >>>>>>> df6cabb (add nomes_corretos.json, corretos_json, incorretos.json e contadores nos dois ultimos)
+
