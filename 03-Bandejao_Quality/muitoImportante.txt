@@ -1,0 +1,2 @@
+Aprendizados para levar para o coração
+    -Não nomeie o seu arquivo com o mesmo nome da biblioteca que você quer importar, pq se não o python só importa o seu próprio arquivo
