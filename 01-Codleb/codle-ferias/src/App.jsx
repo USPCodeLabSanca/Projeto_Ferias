@@ -18,12 +18,15 @@ function App ()
         teclar,
         apagar,
         tentativaEnviada,
+        reiniciarJogo,
     } = Logic();
 
     return (
         <div>
             <Background>
-                <Top/>
+                <Top
+                    onReiniciar={reiniciarJogo}
+                />
                 <Termo 
                     grid={grid}
                     indexLinhaAtual={indexLinhaAtual}

@@ -208,6 +208,21 @@ function useLogic ()
         setFoco({ linha: indexLinhaAtual + 1, coluna: 0 })   
     }
 
+    const reiniciarJogo = () => 
+    {
+        // sorteia uma nova palavra
+        const listaDePalavras = words.words;
+        const indexAleatorio = Math.floor(Math.random() * listaDePalavras.length);
+        const palavraAleatoria = listaDePalavras[indexAleatorio].toUpperCase();
+        setResposta(palavraAleatoria);
+
+        // reseta os estados para seus valores iniciais
+        setGrid(criaGrid());
+        setKeyboardStatus({});
+        setIndexLinhaAtual(0);
+        setFoco({ linha: 0, coluna: 0 });
+    };
+
     //USE EFFECTS
     //importa uma palavra aleatória de words.json para ser a resposta
     useEffect (() =>
@@ -271,6 +286,7 @@ function useLogic ()
         teclar,
         apagar,
         tentativaEnviada,
+        reiniciarJogo,
     };
 }
 export default useLogic

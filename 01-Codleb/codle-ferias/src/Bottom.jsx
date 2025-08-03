@@ -51,13 +51,13 @@ function Bottom ({keyboardStatus, onEnterPress, onCharPress, onBackspacePress})
 
     return (
         <div className="row-span-2 grid grid-rows-3">
-            <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 mb-2 -mt-2 -translate-x-7">
+            <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 -translate-y-2 -translate-x-7">
                 {row1.map(key => <Key key={key} value={key} status={keyboardStatus[key]} onClick={() => click(key)} />)}
             </div>
             <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2">
                 {row2.map(key => <Key key={key} value={key} status={keyboardStatus[key]} onClick={() => click(key)} />)}
             </div>
-            <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 mt-2 -mb-2 translate-x-6">
+            <div className="row-span-1 grid grid-cols-10 gap-1 md:gap-2 translate-y-2 translate-x-6">
                 {row3.map(key => <Key key={key} value={key} status={keyboardStatus[key]} onClick={() => click(key)} />)}
             </div>
         </div>

@@ -3,7 +3,7 @@ const statusStyles =
     bloqueado: "bg-[#1D3D35] border-4 border-[#1D3D35]",
     vazio: "border-4 border-[#1D3D35]",
     correto: "bg-[#5dc8ae] border-4 border-[#5dc8ae] text-white",
-    quase: "bg-amber-500 border-4 border-ambar-700 text-white",
+    quase: "bg-amber-500 border-4 text-white",
     incorreto: "bg-black border-4 border-black text-white",
 }
 
