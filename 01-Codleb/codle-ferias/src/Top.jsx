@@ -1,13 +1,14 @@
 import logo from '../assets/images/logo.png';
 import refresh from "../assets/images/ec339611d269199fb90173724581cd4a4d4f1b15.png";
 
-function Top ({onReiniciar})
+function Top ({onReiniciar, onAbrirInstruções})
 {
     return (
         <div className="row-span-1 flex justify-between items-start mx-4 md:mx-10">
             
             <button 
                 id="instructions" 
+                onClick={onAbrirInstruções}
                 className="border border-white text-white rounded flex justify-center items-center w-8 h-8 md:w-10 md:h-10 md:text-xl md:border-2 hover:scale-[1.1] duration-500 cursor-pointer"
             >
                 ?

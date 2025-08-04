@@ -3,6 +3,7 @@ import Top from "./Top"
 import Termo from "./Termo"
 import Bottom from "./Bottom"
 import Logic from "./useLogic"
+import ModalInstruções from "./ModalInstruções"
 
 
 function App ()
@@ -19,6 +20,9 @@ function App ()
         apagar,
         tentativaEnviada,
         reiniciarJogo,
+        instruçõesAberto,
+        abreInstruções,
+        fechaInstruções,
     } = Logic();
 
     return (
@@ -26,6 +30,7 @@ function App ()
             <Background>
                 <Top
                     onReiniciar={reiniciarJogo}
+                    onAbrirInstruções={abreInstruções}
                 />
                 <Termo 
                     grid={grid}
@@ -40,6 +45,7 @@ function App ()
                     onBackspacePress={apagar}
                 />
             </Background>
+            {instruçõesAberto && <ModalInstruções onClose={fechaInstruções}/>}
         </div>
     )
 }

@@ -1,10 +1,10 @@
 const statusStyles = 
 {
-    bloqueado: "bg-[#1D3D35] border-4 border-[#1D3D35]",
-    vazio: "border-4 border-[#1D3D35]",
-    correto: "bg-[#5dc8ae] border-4 border-[#5dc8ae] text-white",
-    quase: "bg-amber-500 border-4 text-white",
-    incorreto: "bg-black border-4 border-black text-white",
+  bloqueado: "bg-[#1D3D35] border-4 border-[#1D3D35]",
+  vazio: "border-4 border-[#1D3D35]",
+  correto: "bg-[#5dc8ae] border-4 border-[#5dc8ae] text-white",
+  quase: "bg-amber-400 border-4 border-amber-400 text-white",
+  incorreto: "bg-black border-4 border-black text-white",
 }
 
 function Cell({ cell, rowIndex, cellIndex, indexLinhaAtual, inputRefs, onCellFocus }) 
@@ -49,7 +49,7 @@ function Cell({ cell, rowIndex, cellIndex, indexLinhaAtual, inputRefs, onCellFoc
 function Termo ({grid, indexLinhaAtual, inputRefs, onCellFocus})
 {
   return (
-    <div className="row-span-7 mx-4 md:mx-25 my-6 grid grid-cols-5 grid-rows-6 gap-4">
+    <div className="row-span-7 mx-10 md:mx-25 mb-6 mt-14 grid grid-cols-5 grid-rows-6 gap-4">
       {grid.map((row, rowIndex) => 
         (
           row.map((cell, cellIndex) => 

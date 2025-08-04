@@ -67,8 +67,17 @@ function useLogic ()
     const [resposta, setResposta] = useState("");
     const [indexLinhaAtual, setIndexLinhaAtual] = useState(0);
     const [foco, setFoco] = useState({linha:0, coluna:0});
+    const [notificacao, setNotificacao] = useState('');
+    const [instruçõesAberto, setInstruçõesAberto] = useState(false);
+
+    const abreInstruções = () => setInstruçõesAberto(true);
+    const fechaInstruções = () => setInstruçõesAberto(false);
+
+    const timeoutRef = useRef(null);
     const guardaFunções = useRef();
     const inputRefs = useRef(Array(6).fill(null).map(() => Array(5).fill(null)));
+
+
 
     const atualizaFoco = (linha, coluna) =>
     {
@@ -144,6 +153,10 @@ function useLogic ()
             {
                 celulaAtual.letter = '';
             }
+            else if (coluna > 0)
+            {
+                setFoco ({linha, coluna: coluna - 1});
+            }
             
             return newGrid;
         });
@@ -194,7 +207,6 @@ function useLogic ()
         if (tentativa === resposta) 
         {
             setTimeout(() => alert("Parabéns, você acertou!"), 500); //mudar depois para algo mais bonito
-            //adicionar lógica para parar o jogo
             return; 
         }
 
@@ -287,6 +299,9 @@ function useLogic ()
         apagar,
         tentativaEnviada,
         reiniciarJogo,
+        instruçõesAberto,
+        abreInstruções,
+        fechaInstruções,
     };
 }
 export default useLogic

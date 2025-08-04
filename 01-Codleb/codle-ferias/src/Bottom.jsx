@@ -2,7 +2,7 @@ const keyStatusStyles =
 {
     padrão: "bg-[#333333]",
     correto: "bg-[#5dc8ae]",
-    quase: "bg-amber-500 ",
+    quase: "bg-amber-400 ",
     incorreto: "bg-black",
 }
 
