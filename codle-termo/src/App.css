@@ -1,0 +1,107 @@
+body{
+  background-color: #282828;
+  color: white;
+  font-family: 'Arial', sans-serif ;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container{
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.tabuleiro{
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.linha{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.letra{
+  width: 64px;
+  height: 64px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  background-color: #443f3f;
+}
+
+.correto{
+  background-color: #1D3D35;
+  color: white;
+}
+
+.presente{
+  background-color: #8B8F4D;
+  color: white;
+}
+
+.ausente{
+  background-color: #282828;
+  color: white;
+}
+
+.teclado{
+    display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  user-select: none;
+}
+
+.botao-tecla{
+  padding: 12px;
+  min-width: 40px;
+  background-color: #222;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.botao-tecla:hover{
+  background-color: #444;
+}
+
+.botao-tecla:disabled{
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.mensagem{
+  margin-top: 15px;
+  height: 24px;
+  font-weight: bold;
+  color: #f00;
+}
+
+h1{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: white;
+  letter-spacing: 1px;
+}
