@@ -1,0 +1,4 @@
+const WORD_LENGTH = 5;
+const NUM_ATTEMPTS = 6;
+
+export { WORD_LENGTH, NUM_ATTEMPTS };
