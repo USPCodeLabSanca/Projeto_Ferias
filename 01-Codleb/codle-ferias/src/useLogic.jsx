@@ -67,13 +67,12 @@ function useLogic ()
     const [resposta, setResposta] = useState("");
     const [indexLinhaAtual, setIndexLinhaAtual] = useState(0);
     const [foco, setFoco] = useState({linha:0, coluna:0});
-    const [notificacao, setNotificacao] = useState('');
+    const [statusJogo, setStatusJogo] = useState('JOGANDO');
     const [instruçõesAberto, setInstruçõesAberto] = useState(false);
 
     const abreInstruções = () => setInstruçõesAberto(true);
     const fechaInstruções = () => setInstruçõesAberto(false);
 
-    const timeoutRef = useRef(null);
     const guardaFunções = useRef();
     const inputRefs = useRef(Array(6).fill(null).map(() => Array(5).fill(null)));
 
@@ -99,7 +98,6 @@ function useLogic ()
         setGrid(prevGrid => 
         {
             const newGrid = [...prevGrid];
-            const celulaAtual = newGrid[linha][coluna];
 
             if (newGrid[linha][coluna].letter === '') 
             {
@@ -170,8 +168,9 @@ function useLogic ()
 
         if (tentativa.length !== 5) 
         {
-        alert("A palavra precisa ter 5 letras!"); //mudar depois para algo mais bonito
-        return;
+            setStatusJogo("ERRO_LETRAS")
+            setTimeout( () => setStatusJogo("JOGANDO"), 3000);
+            return;
         }
 
         const resultado = comparaPalavras(tentativa, resposta);
@@ -206,13 +205,13 @@ function useLogic ()
 
         if (tentativa === resposta) 
         {
-            setTimeout(() => alert("Parabéns, você acertou!"), 500); //mudar depois para algo mais bonito
+            setStatusJogo("VITORIA");
             return; 
         }
 
         if (indexLinhaAtual === 5) 
         {
-            setTimeout(() => alert(`Fim de jogo! A palavra era: ${resposta}`), 500); //mudar
+            setStatusJogo("DERROTA");
             return;
         }
 
@@ -227,12 +226,14 @@ function useLogic ()
         const indexAleatorio = Math.floor(Math.random() * listaDePalavras.length);
         const palavraAleatoria = listaDePalavras[indexAleatorio].toUpperCase();
         setResposta(palavraAleatoria);
+        console.log(palavraAleatoria);
 
         // reseta os estados para seus valores iniciais
         setGrid(criaGrid());
         setKeyboardStatus({});
         setIndexLinhaAtual(0);
         setFoco({ linha: 0, coluna: 0 });
+        setStatusJogo("JOGANDO");
     };
 
     //USE EFFECTS
@@ -242,7 +243,7 @@ function useLogic ()
         const listaDePalavras = words.words;
         const indexAleatorio = Math.floor(Math.random() * listaDePalavras.length);
         const palavraAleatoria = listaDePalavras[indexAleatorio].toUpperCase();  //a palavra secreta precisa ser maiúscula para não dar incorreto na comparação com a palavra tentada
-
+        console.log(palavraAleatoria);
         setResposta(palavraAleatoria);
     }, []);
 
@@ -302,6 +303,8 @@ function useLogic ()
         instruçõesAberto,
         abreInstruções,
         fechaInstruções,
+        statusJogo,
+        resposta,
     };
 }
 export default useLogic

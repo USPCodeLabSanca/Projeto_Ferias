@@ -46,10 +46,37 @@ function Cell({ cell, rowIndex, cellIndex, indexLinhaAtual, inputRefs, onCellFoc
   )
 }
 
-function Termo ({grid, indexLinhaAtual, inputRefs, onCellFocus})
+function MensagemStatus({ status, resposta }) 
+{
+  const mensagens = 
+  {
+    VITORIA: { texto: "Parabéns, você acertou!", cor: "bg-[#5dc8ae]" },
+    DERROTA: { texto: `Que pena! A palavra era ${resposta}`, cor: "bg-black" },
+    ERRO_LETRAS: { texto: "A palavra deve ter 5 letras", cor: "bg-amber-400" },
+  };
+
+    // Se o status for 'JOGANDO' ou não existir no mapa, não renderiza nada
+    if (!mensagens[status]) 
+    {
+      return null;
+    }
+
+    const { texto, cor } = mensagens[status];
+
+    return (
+      <div className={`absolute h-[2.5em] w-[23em] md:w-[28em] -top-14 left-1/2 -translate-x-1/2  text-white font-bold p-2 px-4 rounded-sm text-center ${cor}`}>
+        {texto}
+      </div>
+    );
+}
+
+function Termo ({grid, indexLinhaAtual, inputRefs, onCellFocus, statusJogo, resposta})
 {
   return (
-    <div className="row-span-7 mx-10 md:mx-25 mb-6 mt-14 grid grid-cols-5 grid-rows-6 gap-4">
+    <div className="row-span-7 mx-10 md:mx-25 mb-6 mt-14 grid grid-cols-5 grid-rows-6 gap-4 relative">
+      
+      <MensagemStatus status={statusJogo} resposta={resposta}/>
+      
       {grid.map((row, rowIndex) => 
         (
           row.map((cell, cellIndex) => 

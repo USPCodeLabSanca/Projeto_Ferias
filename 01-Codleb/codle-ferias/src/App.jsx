@@ -23,6 +23,8 @@ function App ()
         instruçõesAberto,
         abreInstruções,
         fechaInstruções,
+        statusJogo,
+        resposta,
     } = Logic();
 
     return (
@@ -37,6 +39,8 @@ function App ()
                     indexLinhaAtual={indexLinhaAtual}
                     inputRefs={inputRefs}
                     onCellFocus={atualizaFoco}
+                    statusJogo={statusJogo}
+                    resposta={resposta}
                 />
                 <Bottom
                     keyboardStatus={keyboardStatus}
