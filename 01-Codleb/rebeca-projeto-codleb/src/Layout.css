@@ -1,0 +1,30 @@
+.maioral {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    padding: 50px;
+    gap: 15px;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    color: white;
+}
+  
+.linha {
+  display: flex;
+  gap: 15px;
+}
+
+.celula {
+  width: 70px;
+  height: 70px;
+  background-color: #22342f;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
