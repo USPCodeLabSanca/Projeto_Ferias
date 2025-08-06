@@ -118,7 +118,7 @@ function App() {
           type="button"
           onClick={handleOpenModal}
           onMouseDown={(e) => e.preventDefault()}
-          //mousedown so the button does not get focused when clicked
+          //mousedown so the button does not get focused when clicked, because, if it does, pressing enter resets the gameFinished
           className="w-[30px] h-[30px] flex items-center justify-center border border-white rounded-sm p-0.5 px-2.5 text-white hover:text-gray-50 text-2xl font-bold transition-colors duration-200 hover:scale-110"
         >
           ?
