@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body, #root {
-    @apply bg-gray-100 text-white;
+    @apply bg-gray-900 text-slate-100 min-h-screen flex flex-col items-center;
 }

@@ -15,6 +15,7 @@ function App() {
   const [letrasUsadas, setLetrasUsadas] = useState({}); // objeto para armazenar as letras usadas e suas cores
   const [fimDeJogo, setFimDeJogo] = useState(false); // flag para indicar se o jogo acabou
   const [ganhou, setGanhou] = useState(false); // flag para indicar se o jogador ganhou
+  const [shake, setShake] = useState(false); // estado para realizar efeito de "tremer" em tentativa inválida
 
   // função para pegar uma nova palavra aleatória do dicionário. usada no início e possível reinício do jogo
   const pegarNovaPalavra = useCallback(() => {
@@ -71,15 +72,15 @@ function App() {
     if (fimDeJogo) return; // não faz nada se o jogo já acabou
 
     if (key === 'ENTER' || key === 'Enter') { // submeter tentativa
-      if (atualTentativa.length !== 5) { 
-        console.log('Tentativa inválida: deve ter 5 letras');
+      const palavraInvalida = atualTentativa.length !== 5 || !palavrasValidas.current.has(atualTentativa.toLowerCase());
+
+      if (palavraInvalida) {
+        console.log('Tentativa inválida');
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
         return;
       }
-      if (!palavrasValidas.current.has(atualTentativa.toLowerCase())) { 
-        console.log('Tentativa inválida: palavra não está no dicionário do jogo');
-        return; 
-      }
-
+      
       const tentativaFormatada = formataTentativa();
       
       const novasLetrasUsadas = { ...letrasUsadas };
@@ -143,7 +144,7 @@ function App() {
     <div className="bg-gray-900 text-white h-screen flex flex-col items-center justify-center p-4">
       <h1 className="text-5xl font-bold tracking-widest">CODLE</h1>
       
-      <Tabuleiro atualTentativa={atualTentativa} tentativas={tentativas} turno={turno} />
+      <Tabuleiro atualTentativa={atualTentativa} tentativas={tentativas} turno={turno} shake={shake} />
 
       <Teclado letrasUsadas={letrasUsadas} onKeyClick={handleKeyClick} />
 
